@@ -12,4 +12,4 @@
    
 
 ## wikis :
-    - starter: https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/wikis/Panda-parser-Starter
+- starter: https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/wikis/Panda-parser-Starter
