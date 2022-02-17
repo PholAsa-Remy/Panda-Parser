@@ -22,6 +22,7 @@ stages:
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
+# build job - compilation de projet
 build:
   stage: build
   script:
@@ -30,6 +31,7 @@ build:
     paths:
       - build
 
+# test job - verifier si tous les tests sont bien passés
 test:
   stage: test
   script: gradle check
@@ -39,3 +41,4 @@ test:
     paths:
       - build
       - .gradle
+
