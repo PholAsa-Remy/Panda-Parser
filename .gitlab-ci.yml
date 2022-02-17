@@ -22,7 +22,7 @@ before_script:
 build:
   stage: build
   script:
-    - gradle --build-cache assemble
+    - gradle clean build
   artifacts:
     paths:
       - build
