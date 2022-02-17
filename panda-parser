@@ -1,0 +1,25 @@
+###############################################
+##  Local script (basic) to run the project  ##
+###############################################
+
+# Commande java pour exécuter l'application (ajouter des option jvm ?)
+JAVA_CMD=java
+
+# Les jars utiliser (en local)
+CLASSPATH=build/libs/panda-parser.jar
+
+# Le chemin vers la classe main
+MAIN_CLASS=fr.uparis.pandaparser.Application
+
+# Stocker les arguments dans ARGS
+ARGS=""
+for arg in "$@"; do
+  # add arg to args
+  ARGS="$ARGS $arg"
+done
+
+# Compilation - to delete ?
+gradle --warning-mode all clean build > /dev/null
+
+# Execution
+exec "$JAVA_CMD" -cp "$CLASSPATH" "$MAIN_CLASS" "$ARGS"
