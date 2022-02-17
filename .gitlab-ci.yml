@@ -14,6 +14,9 @@ image: gradle:alpine
 # Les stages à exécuter
 stages:
   - build
+  - test
+  - binaries
+  - release
 
 # export env variables
 before_script:
@@ -26,3 +29,13 @@ build:
   artifacts:
     paths:
       - build
+
+test:
+  stage: test
+  script: gradle check
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
