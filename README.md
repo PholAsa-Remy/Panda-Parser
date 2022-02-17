@@ -6,7 +6,7 @@
 
 ## Exécution  local:
  - Linux / macOs
-    ```
+    ```shell
         $ ./panda-parser $args
     ```
    

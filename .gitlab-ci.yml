@@ -1,0 +1,28 @@
+# CI - CD
+# Voir aussi :
+#   - https://gradle.org/
+#   - https://github.com/gradle/gradle
+#   - https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Gradle.gitlab-ci.yml
+
+# inclure les variables et les modèles
+include:
+  - local: .gitlab-ci-variables.yml
+
+# gradle Image - par default
+image: gradle:alpine
+
+# Les stages à exécuter
+stages:
+  - build
+
+# export env variables
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+build:
+  stage: build
+  script:
+    - gradle --build-cache assemble
+  artifacts:
+    paths:
+      - build
