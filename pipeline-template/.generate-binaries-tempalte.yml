@@ -1,0 +1,7 @@
+.generate-binaries-tempalte:
+  script:
+    - echo -e " Template to generate binaries files"
+    - mkdir $BINARIES_DIR
+    - cd $BINARIES_DIR
+    - cp "../$JAR_PATH/$APP_NAME.jar" .
+    - echo "java -cp $APP_NAME.jar $MAIN_CLASS_PATH" >> $SCRIPT_NAME
