@@ -13,3 +13,4 @@ variables:
   JAR_PATH: "build/libs"
   JOB_ID_DIR: "job-id"
   PROJECT_URL: "https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/"
+  LIBS_PATH: "libs"
