@@ -24,4 +24,4 @@
 
     artifacts:
       paths:
-      - $BINARIES_DIR
+        - $BINARIES_DIR
