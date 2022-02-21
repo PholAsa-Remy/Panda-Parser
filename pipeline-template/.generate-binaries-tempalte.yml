@@ -21,3 +21,7 @@
     - |
       export CLASS_PATHS=$(for name in $(ls -1 $LIBS_PATH); do echo "$LIBS_PATH/$name"; done | tr '\n' ':')"$MAIN_JAR"
       echo java -cp "$CLASS_PATHS" $MAIN_CLASS_PATH > $SCRIPT_NAME
+
+    artifacts:
+      paths:
+      - $BINARIES_DIR

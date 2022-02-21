@@ -53,9 +53,6 @@ linux-macOS-binary:
   variables:
     BINARIES_DIR: "linux-macOS-binary"
     SCRIPT_NAME: $APP_NAME
-  artifacts:
-    paths:
-      - $BINARIES_DIR
 
 windows-binary:
   stage: binaries
@@ -63,6 +60,3 @@ windows-binary:
   variables:
     BINARIES_DIR: "windows-binary"
     SCRIPT_NAME: "$APP_NAME.bat"
-  artifacts:
-    paths:
-      - $BINARIES_DIR
