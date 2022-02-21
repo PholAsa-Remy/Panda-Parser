@@ -8,6 +8,7 @@
 include:
   - local: .gitlab-ci-variables.yml
   - local: pipeline-template/.generate-binaries-tempalte.yml
+  - local: pipeline-template/.release-from-tag-template.yml
 
 # gradle Image - par default
 image: gradle:alpine
@@ -60,3 +61,37 @@ windows-binary:
   variables:
     BINARIES_DIR: "windows-binary"
     SCRIPT_NAME: "$APP_NAME.bat"
+
+
+
+#######################################
+##   RELEASES - for linux & windows  ##
+#######################################
+
+linux-macOs-release:
+  stage: release
+  image: docker:stable
+  extends: .release-from-tag-template
+  variables:
+    OS: "linux-macOS"
+    BINARY_NAME: "$APP_NAME-linux-macOs-$CI_COMMIT_TAG"
+  before_script:
+    - apk add --update curl && rm -rf /var/cache/apk/*
+    - export BINARY_JOB_ID=$(($CI_JOB_ID - 1))
+    - export ARTIFECTS_URL="$PROJECT_URL-/jobs/$BINARY_JOB_ID/artifacts/download?job=linux-macOs-binary"
+  only:
+    - tags
+
+windows-release:
+  stage: release
+  image: docker:stable
+  extends: .release-from-tag-template
+  variables:
+    OS: "windows"
+    BINARY_NAME: "$APP_NAME-windows-$CI_COMMIT_TAG"
+  before_script:
+    - apk add --update curl && rm -rf /var/cache/apk/*
+    - export BINARY_JOB_ID=$(($CI_JOB_ID - 2))
+    - export ARTIFECTS_URL="$PROJECT_URL-/jobs/$BINARY_JOB_ID/artifacts/download?job=windows-binary"
+  only:
+    - tags
