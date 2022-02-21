@@ -42,3 +42,12 @@ test:
       - build
       - .gradle
 
+linux-macOS-binary:
+  stage: binaries
+  extends: .generate-binaries-tempalte
+  variables:
+    BINARIES_DIR: "linux-macOS-binary"
+    SCRIPT_NAME: $APP_NAME
+  artifacts:
+    paths:
+      - $BINARIES_DIR
