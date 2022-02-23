@@ -33,16 +33,15 @@ build:
     paths:
       - build
 
-# test job - verifier si tous les tests sont bien passés
+# test reports job - verifier si tous les tests sont bien passés
 test:
   stage: test
-  script: gradle check
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: pull
-    paths:
-      - build
-      - .gradle
+  script:
+    - gradle test
+  artifacts:
+    when: always
+    reports:
+      junit: build/test-results/test/TEST-*.xml
 
 ###################################################
 ##   CREATE DISTRIBUTION - for windows & linux   ##
