@@ -20,6 +20,7 @@ class Md2HtmlTest {
         return (checker.getParseErrors() == 0);
     }
 
+    /*  Check if the html we get from the parse using the file filename is valid  */
     private void testParsingOfFileWithMd2HTMLCreateValidHTML(String filename){
         Md2Html parser = new Md2Html();
         URL resource = getClass().getClassLoader().getResource(filename);
