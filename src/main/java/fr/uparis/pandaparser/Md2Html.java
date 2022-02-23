@@ -21,13 +21,26 @@ public class Md2Html implements IParser{
         return sb.toString();
     }
 
+    private String buildHeader(String fileContent){
+        return "<head><title>Title</title></head>";
+    }
+
+    private String buildBody(String fileContent){
+        Node document = parser.parse(fileContent);
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        return "<body>" + renderer.render(document) + "</body>" ;
+    }
+
+    private String buildHtml(String fileContent){
+        String header = buildHeader(fileContent);
+        String body = buildBody(fileContent);
+        return "<!DOCTYPE html><html>" + header + body + "</html>" ;
+    }
     @Override
     public String parse(String fileName) {
         try {
             String fileContent = readFile(fileName);
-            Node document = parser.parse(fileContent);
-            HtmlRenderer renderer = HtmlRenderer.builder().build();
-            return renderer.render(document);
+            return buildHtml(fileContent);
         }catch (IOException e){
             //Do Something ?
         }
