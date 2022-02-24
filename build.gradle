@@ -9,9 +9,10 @@ repositories {
 }
 
 dependencies {
-    // Junit JARs
-    testRuntimeOnly files('libs/junit/junit-jupiter-engine-5.8.2.jar')
-    testImplementation files('libs/junit/junit-jupiter-api-5.8.2.jar', 'libs/junit/apiguardian-api-1.1.2.jar', 'libs/junit/junit-platform-commons-1.8.2.jar', 'libs/junit/junit-platform-engine-1.8.2.jar', 'libs/junit/opentest4j-1.2.0.jar')
+    // Junit
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
 
     // commonmark-java jar
     implementation files('libs/commonmark-0.18.1.jar')
