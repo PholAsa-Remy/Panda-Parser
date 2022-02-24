@@ -33,15 +33,21 @@ build:
     paths:
       - build
 
-# test reports job - verifier si tous les tests sont bien passés
+# test reports job - verifier si tous les tests sont bien passés & jacoco conerag
 test:
   stage: test
   script:
-    - gradle test
+    - gradle ckeck
   artifacts:
     when: always
     reports:
       junit: build/test-results/test/TEST-*.xml
+
+coverage:
+  stage: test
+  script:
+    - cat build/jacocoHtml/index.html | grep -o '<tfoot>.*</tfoot>'
+
 
 ###################################################
 ##   CREATE DISTRIBUTION - for windows & linux   ##

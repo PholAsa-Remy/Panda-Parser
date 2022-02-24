@@ -3,9 +3,10 @@
 ---
 
 ## Rapport des Tests
-- ### branch master: [![pipeline status](https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/badges/master/pipeline.svg)](https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/commits/master)
-- ### branch develop: [![pipeline status](https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/badges/develop/pipeline.svg)](https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/commits/develop)
-
+| Branches | Tests | Couverture                                                                                                                                                                                     |
+| --- | --- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Develop | [![pipeline status](https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/badges/develop/pipeline.svg)](https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/commits/develop) | [![coverage report](https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/badges/develop/coverage.svg)](https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/commits/develop) |
+| Master | [![pipeline status](https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/badges/master/pipeline.svg)](https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/commits/master) | [![pipeline status](https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/badges/master/pipeline.svg)](https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/commits/master)   |
 
 ## Exécution  local:
  - Linux / macOs
