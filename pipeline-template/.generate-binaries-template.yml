@@ -18,6 +18,7 @@
     - cp ../$LIBS_PATH/*.jar $LIBS_PATH
     - echo 'Libs used :' $(ls -1 $LIBS_PATH)
     - |
+      # create script
       echo 'echo ARGS=""' > $SCRIPT_NAME
       echo -e '\tfor arg in "$@"; do' >> $SCRIPT_NAME
       echo -e '\tARGS="$ARGS $arg"' >> $SCRIPT_NAME
