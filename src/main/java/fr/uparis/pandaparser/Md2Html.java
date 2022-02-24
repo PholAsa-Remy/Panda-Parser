@@ -4,6 +4,7 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,16 +14,15 @@ public class Md2Html implements IParser{
 
     /**
      * Read the content of a file
-     * @param fileName the file name we want to read
+     * @param filePath the file name we want to read
      * @return fileContent
-     * @throws IOException
      */
-    private String readFile (String fileName) throws IOException {
+    private String readFile (String filePath){
         StringBuilder sb = new StringBuilder();
-        BufferedReader br = Files.newBufferedReader(Paths.get(fileName));
-        String line;
-        while ((line = br.readLine()) != null) {
-            sb.append(line).append("\n");
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            reader.lines().forEach(line -> sb.append(line).append("\n"));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return sb.toString();
     }
@@ -65,12 +65,7 @@ public class Md2Html implements IParser{
      */
     @Override
     public String parse(String fileName) {
-        try {
-            String fileContent = readFile(fileName);
-            return buildHtml(fileContent);
-        }catch (IOException e){
-            //Do Something ?
-        }
-        return "";
+        String fileContent = readFile(fileName);
+        return buildHtml(fileContent);
     }
 }
