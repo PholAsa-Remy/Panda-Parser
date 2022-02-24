@@ -21,5 +21,7 @@ done
 # Compilation - to delete ?
 gradle --warning-mode all clean build > /dev/null
 
+build
+clear
 # Execution
 exec "$JAVA_CMD" -cp "$CLASSPATH" "$MAIN_CLASS" "$ARGS"
