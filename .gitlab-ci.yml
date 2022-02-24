@@ -58,7 +58,6 @@ linux-macOS-binary:
   stage: binaries
   extends: .generate-binaries-template
   variables:
-    BINARIES_DIR: "linux-macOS-binary"
     SCRIPT_NAME: $APP_NAME
   only:
     - tags
@@ -67,7 +66,6 @@ windows-binary:
   stage: binaries
   extends: .generate-binaries-template
   variables:
-    BINARIES_DIR: "windows-binary"
     SCRIPT_NAME: "$APP_NAME.bat"
   only:
     - tags
