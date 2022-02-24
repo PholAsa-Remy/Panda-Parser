@@ -1,5 +1,6 @@
 plugins {
     id 'application'
+    id 'jacoco'
 }
 
 group 'uparis.panda-parser'
@@ -9,16 +10,33 @@ repositories {
 }
 
 dependencies {
+    // Junit
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
 
-    implementation 'org.commonmark:commonmark:0.18.1'
-
+    // commonmark-java jar
+    implementation files('libs/commonmark-0.18.1.jar')
 }
 
 test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
     useJUnitPlatform()
 }
+
+jacoco {
+    toolVersion = "0.8.7"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir') as Directory
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
+
 
 application {
     mainClass = 'fr.uparis.pandaparser.Application'
