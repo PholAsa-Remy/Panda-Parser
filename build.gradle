@@ -1,5 +1,6 @@
 plugins {
     id 'application'
+    id 'jacoco'
 }
 
 group 'uparis.panda-parser'
@@ -19,8 +20,23 @@ dependencies {
 }
 
 test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
     useJUnitPlatform()
 }
+
+jacoco {
+    toolVersion = "0.8.7"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir') as Directory
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
+
 
 application {
     mainClass = 'fr.uparis.pandaparser.Application'
