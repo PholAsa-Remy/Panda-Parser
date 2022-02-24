@@ -46,6 +46,7 @@ test:
 coverage:
   stage: test
   script:
+    - gradle test jacocoTestReport
     - cat build/jacocoHtml/index.html | grep -o '<tfoot>.*</tfoot>'
 
 
