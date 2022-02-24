@@ -58,6 +58,7 @@ linux-macOS-binary:
   stage: binaries
   extends: .generate-binaries-template
   variables:
+    BINARIES_DIR: "linux-macOS-binary"
     SCRIPT_NAME: $APP_NAME
   only:
     - tags
@@ -66,6 +67,7 @@ windows-binary:
   stage: binaries
   extends: .generate-binaries-template
   variables:
+    BINARIES_DIR: "windows-binary"
     SCRIPT_NAME: "$APP_NAME.bat"
   only:
     - tags
@@ -85,7 +87,7 @@ linux-macOs-release:
     BINARY_NAME: "$APP_NAME-linux-macOs-$CI_COMMIT_TAG"
   before_script:
     - apk add --update curl && rm -rf /var/cache/apk/*
-    - export BINARY_JOB_ID=$(($CI_JOB_ID - 1))
+    - export BINARY_JOB_ID=$(($CI_JOB_ID - 2))
     - export ARTIFECTS_URL="$PROJECT_URL-/jobs/$BINARY_JOB_ID/artifacts/download?job=linux-macOs-binary"
   only:
     - tags
@@ -99,7 +101,7 @@ windows-release:
     BINARY_NAME: "$APP_NAME-windows-$CI_COMMIT_TAG"
   before_script:
     - apk add --update curl && rm -rf /var/cache/apk/*
-    - export BINARY_JOB_ID=$(($CI_JOB_ID - 2))
+    - export BINARY_JOB_ID=$(($CI_JOB_ID - 3))
     - export ARTIFECTS_URL="$PROJECT_URL-/jobs/$BINARY_JOB_ID/artifacts/download?job=windows-binary"
   only:
     - tags
