@@ -41,8 +41,8 @@ public class CommandManager {
 
 
     private static void mostSimilarCommands(String noGoodCommand) {
-        print(appName + ": '" + noGoodCommand + "' is not a "+appName+" command. See '" + appName + " --help'.");
-        String[] similarCommands = likeStrings(allCommands,noGoodCommand);
+        print(appName + ": '" + noGoodCommand + "' is not a " + appName + " command. See '" + appName + " --help'.");
+        String[] similarCommands = likeStrings(allCommands, noGoodCommand);
         if (similarCommands.length > 0) {
             print("The most similar commands are");
             print(Arrays.toString(similarCommands));
@@ -51,7 +51,7 @@ public class CommandManager {
 
     private static String[] likeStrings(String[] all, String target) {
         ArrayList<String> rv = new ArrayList<String>();
-        for (String command: all) {
+        for (String command : all) {
             rv.add(command);
         }
         return (String[]) rv.toArray();
