@@ -20,7 +20,7 @@ public enum ParserType {
      * @return type
      */
     public static ParserType getType(String input) {
-        return (input == null || input.isBlank() || !input.endsWith(Extension.MD.getExtension()))
+        return (input == null || input.isBlank() || !input.endsWith(Extension.MD.getExtensionName()))
                 ? SITE
                 : SIMPLE;
     }

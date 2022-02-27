@@ -1,4 +1,4 @@
-package fr.uparis.pandaparser;
+package fr.uparis.pandaparser.config;
 
 
 import java.util.Arrays;
