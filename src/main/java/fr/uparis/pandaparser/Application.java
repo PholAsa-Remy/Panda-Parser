@@ -1,9 +1,10 @@
 package fr.uparis.pandaparser;
 
-import static fr.uparis.pandaparser.CommandManager.triggerCommand;
+
+import fr.uparis.pandaparser.old.CommandManager;
 
 public class Application {
     public static void main(String[] args) {
-        triggerCommand(args);
+        CommandManager.triggerCommand(args);
     }
 }
