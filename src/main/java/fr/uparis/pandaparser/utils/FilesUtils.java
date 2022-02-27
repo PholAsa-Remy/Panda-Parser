@@ -1,7 +1,15 @@
 package fr.uparis.pandaparser.utils;
 
 
+import lombok.NonNull;
+
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * FilesUtils class, help methods to manipulate files.
@@ -25,7 +33,7 @@ public class FilesUtils {
      * @param filePath the file name we want to read
      * @return fileContent
      */
-    public static String getFileCotent(final String filePath) throws IOException {
+    public static String getFileCotent(@NonNull final String filePath) throws IOException {
         StringBuilder sb = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             reader.lines().forEach(line -> sb.append(line).append("\n"));
@@ -39,9 +47,26 @@ public class FilesUtils {
      * @param filePath file path
      * @param text     text to write in file
      */
-    public static void createFileFromContent(final String filePath, final String text) throws IOException {
+    public static void createFileFromContent(@NonNull final String filePath, @NonNull final String text) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write(text);
+        }
+    }
+
+    /**
+     * list files within a directory.
+     * we  try-with-resources statement to  make sure the stream will be closed right
+     * after the stream operations are completed.
+     *
+     * @param directory directory
+     * @return set of files path
+     * @throws IOException if the directory doesn't exist.
+     */
+    public static Set<String> getAllFilesFromDirectory(@NonNull final String directory) throws IOException {
+        try (Stream<Path> stream = Files.list(Paths.get(directory))) {
+            return stream.filter(file -> !Files.isDirectory(file))
+                    .map(Path::toString)
+                    .collect(Collectors.toSet());
         }
     }
 }
