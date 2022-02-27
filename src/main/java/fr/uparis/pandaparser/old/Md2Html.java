@@ -1,4 +1,4 @@
-package fr.uparis.pandaparser;
+package fr.uparis.pandaparser.old;
 import org.commonmark.node.*;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -6,8 +6,6 @@ import org.commonmark.renderer.html.HtmlRenderer;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class Md2Html implements IParser{
     private final org.commonmark.parser.Parser parser = Parser.builder().build();
