@@ -9,6 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.NotDirectoryException;
+import java.nio.file.Path;
 
 /**
  * Class to Test FileUtilsMethods
@@ -16,21 +20,27 @@ import java.io.IOException;
 @Log
 class FilesUtilsTest {
 
-    private static final String NEW_FILE_PATH = "new-file-to-test";
-    private static final String EXISTING_FILE_PATH = "existing-file-to-test";
-    private static final String TEXT = "hello panda parser";
+    private static final String DIR_FOR_TESTING = "FilesUtilsTest-dir" + File.separator;
+    private static final String BUILD_DIR = "build";
+    private static final String NEW_DIR_PATH = "new-dir-to-test";
+
+    private static final String NEW_FILE_PATH = DIR_FOR_TESTING + "new-file-to-test";
+    private static final String EXISTING_FILE_PATH = DIR_FOR_TESTING + "existing-file-to-test";
+    private static final String TEXT = DIR_FOR_TESTING + "hello panda parser";
+
 
     @BeforeAll
     static void setUp() throws IOException {
+        Files.createDirectory(Path.of(DIR_FOR_TESTING));
         FilesUtils.createFileFromContent(EXISTING_FILE_PATH, TEXT);
     }
 
     /* *********************************** *
-     *   TEST getContentFromPath methods   *
+     *   TEST getContentFromPath method    *
      * *********************************** */
 
     @Test
-    void whenReadExistingFileUsingGetContentFromPath_thenExcept() throws IOException {
+    void whenReadExistingFileUsingGetContentFromPath_thenCorrect() throws IOException {
         assertEquals(TEXT, FilesUtils.getFileCotent(EXISTING_FILE_PATH));
     }
 
@@ -39,9 +49,14 @@ class FilesUtilsTest {
         assertThrows(IOException.class, () -> FilesUtils.getFileCotent(NEW_FILE_PATH));
     }
 
-    /* *********************************** *
-     *   TEST createFileFromContent methods   *
-     * *********************************** */
+    @Test
+    void whenReadNullFileUsingGetContentFromPath_thenExcept() {
+        assertThrows(NullPointerException.class, () -> FilesUtils.getFileCotent(null));
+    }
+
+    /* ************************************** *
+     *   TEST createFileFromContent method    *
+     * ************************************** */
 
     @Test
     void whenCreatingFileUsingCreateFileFromContent_thenCorrect() throws IOException {
@@ -58,10 +73,51 @@ class FilesUtilsTest {
         assertThrows(NullPointerException.class, () -> FilesUtils.createFileFromContent(NEW_FILE_PATH, null));
     }
 
+    /* ***************************************** *
+     *   TEST getAllFilesFromDirectory method    *
+     * ***************************************** */
+
+    @Test
+    void whenListingFilesUsingGetAllFilesFromDirectory_withNullDir_thenExcept() {
+        assertThrows(NullPointerException.class, () -> FilesUtils.getAllFilesFromDirectory(null));
+    }
+
+    @Test
+    void whenListingFilesUsingGetAllFilesFromDirectory_withNotExistingDir_thenExcept() {
+        assertThrows(NoSuchFileException.class, () -> FilesUtils.getAllFilesFromDirectory(NEW_DIR_PATH));
+    }
+
+    @Test
+    void whenListingFilesUsingGetAllFilesFromDirectory_withSimpleFile_thenExcept() {
+        assertThrows(NotDirectoryException.class, () -> FilesUtils.getAllFilesFromDirectory(EXISTING_FILE_PATH));
+    }
+
+    @Test
+    void whenListingFilesUsingGetAllFilesFromDirectory_withDir_thenEmpty() throws IOException {
+        assertTrue(FilesUtils.getAllFilesFromDirectory(BUILD_DIR).isEmpty());
+    }
+
+    @Test
+    void whenListingFilesUsingGetAllFilesFromDirectory_withExistingDir_thenCorrect() throws IOException {
+        FilesUtils.getAllFilesFromDirectory(DIR_FOR_TESTING);
+    }
+
+    @Test
+    void whenListingFilesUsingGetAllFilesFromDirectory_withExistingDir_withOneFile_thenCorrect() throws IOException {
+        assertEquals(1, FilesUtils.getAllFilesFromDirectory(DIR_FOR_TESTING).size());
+    }
+
+    @Test
+    void whenListingFilesUsingGetAllFilesFromDirectory_withExistingDir_checkContent_thenCorrect() throws IOException {
+        assertTrue( FilesUtils.getAllFilesFromDirectory(DIR_FOR_TESTING).contains(EXISTING_FILE_PATH));
+    }
+
     @AfterAll
-    static void cleanAll() {
-        File file = new File(NEW_FILE_PATH);
-        log.info(NEW_FILE_PATH + " deleted : " + file.delete());
-        log.info(EXISTING_FILE_PATH + " deleted : " + file.delete());
+    static void cleanAll() throws IOException {
+        Files.deleteIfExists(Path.of(EXISTING_FILE_PATH));
+        Files.deleteIfExists(Path.of(NEW_FILE_PATH));
+
+        Files.deleteIfExists(Path.of(NEW_DIR_PATH));
+        Files.deleteIfExists(Path.of(DIR_FOR_TESTING));
     }
 }

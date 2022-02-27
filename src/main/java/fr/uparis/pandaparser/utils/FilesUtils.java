@@ -64,7 +64,7 @@ public class FilesUtils {
      */
     public static Set<String> getAllFilesFromDirectory(@NonNull final String directory) throws IOException {
         try (Stream<Path> stream = Files.list(Paths.get(directory))) {
-            return stream.filter(file -> !Files.isDirectory(file))
+            return stream.filter(Files::isRegularFile)
                     .map(Path::toString)
                     .collect(Collectors.toSet());
         }
