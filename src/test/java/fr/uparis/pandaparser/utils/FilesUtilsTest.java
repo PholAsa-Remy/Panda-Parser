@@ -119,6 +119,11 @@ class FilesUtilsTest {
     }
 
     @Test
+    void whenListingSpecificNoFilesUsingGetAllFilesFromDirectory_thenEmpty_thenCorrect() throws IOException {
+        assertTrue(FilesUtils.getAllFilesFromDirectory(DIR_FOR_TESTING, Extension.TOML).isEmpty());
+    }
+
+    @Test
     void whenListingSpecificNullFilesUsingGetAllFilesFromDirectory_thenExcept()  {
         assertThrows(NullPointerException.class, () -> FilesUtils.getAllFilesFromDirectory(DIR_FOR_TESTING, null));
     }
