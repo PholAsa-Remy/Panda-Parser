@@ -1,6 +1,7 @@
 package fr.uparis.pandaparser.utils;
 
 
+import fr.uparis.pandaparser.config.Extension;
 import lombok.NonNull;
 
 import java.io.*;
@@ -54,9 +55,11 @@ public class FilesUtils {
     }
 
     /**
-     * list files within a directory.
-     * we  try-with-resources statement to  make sure the stream will be closed right
+     * List files within a directory.
+     * <p>
+     * try-with-resources statement to  make sure the stream will be closed right
      * after the stream operations are completed.
+     * </p>
      *
      * @param directory directory
      * @return set of files path
@@ -68,5 +71,19 @@ public class FilesUtils {
                     .map(Path::toString)
                     .collect(Collectors.toSet());
         }
+    }
+
+    /**
+     * List specific files within a directory.
+     *
+     * @param directory directory path
+     * @param extension extension (.txt, .md, .html, ...)
+     * @return set of file paths
+     * @throws IOException if the directory doesn't exist.
+     */
+    public static Set<String> getAllFilesFromDirectory(@NonNull final String directory, @NonNull Extension extension) throws IOException {
+        return getAllFilesFromDirectory(directory)
+                .stream().filter(file -> file.endsWith(extension.getExtensionName()))
+                .collect(Collectors.toSet());
     }
 }
