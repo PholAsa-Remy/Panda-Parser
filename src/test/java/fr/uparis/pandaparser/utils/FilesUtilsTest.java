@@ -1,5 +1,6 @@
 package fr.uparis.pandaparser.utils;
 
+import fr.uparis.pandaparser.config.Extension;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,9 +25,9 @@ class FilesUtilsTest {
     private static final String BUILD_DIR = "build";
     private static final String NEW_DIR_PATH = "new-dir-to-test";
 
-    private static final String NEW_FILE_PATH = DIR_FOR_TESTING + "new-file-to-test";
-    private static final String EXISTING_FILE_PATH = DIR_FOR_TESTING + "existing-file-to-test";
-    private static final String TEXT = DIR_FOR_TESTING + "hello panda parser";
+    private static final String NEW_FILE_PATH = DIR_FOR_TESTING + "new-file-to-test.md";
+    private static final String EXISTING_FILE_PATH = DIR_FOR_TESTING + "existing-file-to-test.md";
+    private static final String TEXT = DIR_FOR_TESTING + "# hello panda parser";
 
 
     @BeforeAll
@@ -108,12 +109,33 @@ class FilesUtilsTest {
     }
 
     @Test
-    void whenListingFilesUsingGetAllFilesFromDirectory_withExistingDir_checkContent_thenCorrect() throws IOException {
-        assertTrue( FilesUtils.getAllFilesFromDirectory(DIR_FOR_TESTING).contains(EXISTING_FILE_PATH));
+    void whenListingFilesUsingGetAllFilesFromDirectory_withExistingDirAndCheckContent_thenCorrect() throws IOException {
+        assertTrue(FilesUtils.getAllFilesFromDirectory(DIR_FOR_TESTING).contains(EXISTING_FILE_PATH));
+    }
+
+    @Test
+    void whenListingSpecificFilesUsingGetAllFilesFromDirectory_thenCorrect() throws IOException {
+        assertTrue(FilesUtils.getAllFilesFromDirectory(DIR_FOR_TESTING, Extension.MD).contains(EXISTING_FILE_PATH));
+    }
+
+    @Test
+    void whenListingSpecificNullFilesUsingGetAllFilesFromDirectory_thenExcept()  {
+        assertThrows(NullPointerException.class, () -> FilesUtils.getAllFilesFromDirectory(DIR_FOR_TESTING, null));
+    }
+
+    @Test
+    void whenListingSpecificFilesUsingGetAllFilesFromDirectory_withNullDirectory_thenExcept()  {
+        assertThrows(NullPointerException.class, () -> FilesUtils.getAllFilesFromDirectory(null, Extension.MD));
+    }
+
+    @Test
+    void whenListingSpecificFilesUsingGetAllFilesFromDirectory_withNoDirectory_thenExcept()  {
+        assertThrows(NoSuchFileException.class, () -> FilesUtils.getAllFilesFromDirectory(NEW_DIR_PATH, Extension.MD));
     }
 
     @AfterAll
     static void cleanAll() throws IOException {
+
         Files.deleteIfExists(Path.of(EXISTING_FILE_PATH));
         Files.deleteIfExists(Path.of(NEW_FILE_PATH));
 
