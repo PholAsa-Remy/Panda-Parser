@@ -3,9 +3,14 @@ package fr.uparis.pandaparser.core.build;
 import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.core.build.simple.Simple;
 import fr.uparis.pandaparser.core.build.site.Site;
+import fr.uparis.pandaparser.utils.PandaParserPath;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * Classe abstraite PandaParser + classe interne pandaParser. Builder pour créer un Parser.
@@ -17,11 +22,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class PandaParser {
 
-    private final String input;
-    private final String output;
-    private final boolean watch;
-    private final int jobs;
-    private final ParserType type;
+    protected final PandaParserPath input;
+    protected final String output;
+    protected final boolean watch;
+    protected final int jobs;
+    protected final ParserType type;
 
     /**
      * Permet de faire une traduction d'un fichier MDs en HTMLs.
@@ -44,22 +49,31 @@ public abstract class PandaParser {
     public static class Builder implements fr.uparis.pandaparser.core.build.Builder {
 
         /* Les valeurs par default */
-        private String input = ".";
-        private String output = "_output";
-        private ParserType type = ParserType.SITE;
+        private PandaParserPath input = Config.DEFAULT_INPUT;
+        private String output = Config.DEFAULT_OUTPUT;
+        private ParserType type = Config.DEFAULT_PARSER_TYPE;
         /* Nombre de cœurs de la machine*/
         private int jobs = Config.DEFAULT_MACHINE_JOB;
         private boolean watch = false;
 
         @Override
         public Builder setInput(String input) {
-            this.input = input;
+            this.input = (Files.isRegularFile(Path.of(input)))
+                    ? PandaParserPath.builder().filePath(input).build()
+                    : PandaParserPath.builder().hostPath(input).build();
+            return this;
+        }
+
+        @Override
+        public Builder setInput(PandaParserPath pandaParserPath) {
+            this.input = pandaParserPath;
             return this;
         }
 
         @Override
         public Builder setOutput(String output) {
-            this.output = output;
+            if (!output.endsWith(File.separator))
+                this.output = output + File.separator;
             return this;
         }
 
@@ -81,10 +95,10 @@ public abstract class PandaParser {
          * @return PandaParser
          */
         public PandaParser build() {
-            this.type = ParserType.getType(this.input);
-            return (type.equals(ParserType.SIMPLE))
-                    ? new Simple(this.input, this.output, this.watch, this.jobs)
-                    : new Site(this.input, this.output, this.watch, this.jobs);
+            this.type = ParserType.getType(this.input.path());
+            return (type == ParserType.SITE)
+                    ? new Site(this.input, this.output, this.watch, this.jobs)
+                    : new Simple(this.input, this.output, this.watch, this.jobs);
         }
     }
 }
