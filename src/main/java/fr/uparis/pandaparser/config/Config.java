@@ -7,9 +7,13 @@ import java.io.File;
 import java.util.List;
 
 public class Config {
-    public static final String APP_NAME = "panda-parser";
-    public static List<String> OPTION = List.of("MD");
 
+    private Config () {}
+
+
+    public static final String APP_NAME = "panda-parser";
+
+    /* Parser configs */
     public static final String DEFAULT_INPUT = "." + File.separator;
     public static final String DEFAULT_OUTPUT = "_output" + File.separator;
     public static final ParserType DEFAULT_PARSER_TYPE = ParserType.SITE;
