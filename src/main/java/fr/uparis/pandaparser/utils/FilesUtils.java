@@ -86,4 +86,14 @@ public class FilesUtils {
                 .stream().filter(file -> file.endsWith(extension.getExtensionName()))
                 .collect(Collectors.toSet());
     }
+
+    /**
+     * Get file name from path
+     *
+     * @param filePath path to the file.
+     * @return file name
+     */
+    public static String getFileName(@NonNull final String filePath) {
+        return Path.of(filePath).getFileName().toString();
+    }
 }
