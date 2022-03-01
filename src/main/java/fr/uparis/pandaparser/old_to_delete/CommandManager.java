@@ -1,12 +1,15 @@
 package fr.uparis.pandaparser.old_to_delete;
 
+import lombok.extern.java.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import static fr.uparis.pandaparser.config.Config.APP_NAME;
-import static fr.uparis.pandaparser.debug.TmpDebug.print;
 import static java.lang.System.exit;
 
+@Log
 public class CommandManager {
 
     private static final String[] allCommands = {"md2html", "buildsite", "help", "metadata"};
@@ -16,9 +19,9 @@ public class CommandManager {
     }
 
     private static int checkArguments(String[] args) {
-        print("Voici les arguments :gg" + Arrays.toString(args));
+        log.info("Voici les arguments :gg" + Arrays.toString(args));
         if (args.length == 0) {
-            print("usage"); // Help.usage();
+            log.info("usage"); // Help.usage();
             return 1;
         }
 
@@ -33,19 +36,17 @@ public class CommandManager {
 
 
     private static void mostSimilarCommands(String noGoodCommand) {
-        print(APP_NAME + ": '" + noGoodCommand + "' is not a " + APP_NAME + " command. See '" + APP_NAME + " --help'.");
+        log.info(APP_NAME + ": '" + noGoodCommand + "' is not a " + APP_NAME + " command. See '" + APP_NAME + " --help'.");
         String[] similarCommands = likeStrings(allCommands, noGoodCommand);
         if (similarCommands.length > 0) {
-            print("The most similar commands are");
-            print(Arrays.toString(similarCommands));
+            log.info("The most similar commands are");
+            log.info(Arrays.toString(similarCommands));
         }
     }
 
     private static String[] likeStrings(String[] all, String target) {
         ArrayList<String> rv = new ArrayList<String>();
-        for (String command : all) {
-            rv.add(command);
-        }
+        Collections.addAll(rv, all);
         return (String[]) rv.toArray();
     }
 
