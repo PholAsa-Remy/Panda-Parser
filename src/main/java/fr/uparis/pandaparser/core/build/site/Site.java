@@ -4,7 +4,6 @@ import fr.uparis.pandaparser.config.Extension;
 import fr.uparis.pandaparser.core.build.PandaParser;
 import fr.uparis.pandaparser.core.build.ParserType;
 import fr.uparis.pandaparser.utils.FilesUtils;
-import fr.uparis.pandaparser.utils.PandaParserPath;
 import lombok.extern.java.Log;
 
 import java.io.IOException;
@@ -19,13 +18,14 @@ import java.io.IOException;
 @Log
 public class Site extends PandaParser {
 
-    public Site(PandaParserPath input, String output, boolean watch, int jobs) {
+    public Site(String input, String output, boolean watch, int jobs) {
         super(input, output, watch, jobs, ParserType.SITE);
     }
 
 
     @Override
     public void parse() {
+        log.info("Build site parser: input " + this.input);
         try {
             md2html();
         } catch (IOException e) {
@@ -34,9 +34,9 @@ public class Site extends PandaParser {
     }
 
     public void md2html() throws IOException {
-        FilesUtils.getAllFilesFromDirectory(this.input.path(), Extension.MD)
+        FilesUtils.getAllFilesFromDirectory(this.input, Extension.MD)
                 .forEach(inputFilePath -> PandaParser.builder()
-                        .setInput(this.input.clone(inputFilePath))
+                        .setInput(inputFilePath)
                         .setOutput(this.output)
                         .build()
                         .parse());

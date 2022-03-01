@@ -1,7 +1,5 @@
 package fr.uparis.pandaparser.core.build;
 
-import fr.uparis.pandaparser.utils.PandaParserPath;
-
 /**
  * Interface Builder
  *
@@ -23,14 +21,6 @@ public interface Builder {
      * @return le builder.
      */
     Builder setInput(final String input);
-
-    /**
-     * Spécifier l'arborescence à traiter différente du répertoire courant
-     *
-     * @param pandaParserPath chemin vers l'input
-     * @return le builder
-     */
-    Builder setInput(final PandaParserPath pandaParserPath);
 
     /**
      * Spécifier l'arborescence ou stocke les résultats de la traduction.

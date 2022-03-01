@@ -2,7 +2,7 @@ package fr.uparis.pandaparser.core.build.simple;
 
 import fr.uparis.pandaparser.core.build.PandaParser;
 import fr.uparis.pandaparser.core.build.ParserType;
-import fr.uparis.pandaparser.utils.PandaParserPath;
+import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.extern.java.Log;
 
 /**
@@ -15,13 +15,12 @@ import lombok.extern.java.Log;
 @Log
 public class Simple extends PandaParser {
 
-    public Simple(PandaParserPath input, String output, boolean watch, int jobs) {
+    public Simple(String input, String output, boolean watch, int jobs) {
         super(input, output, watch, jobs, ParserType.SIMPLE);
     }
 
     @Override
     public void parse() {
-        log.info("MD 2 HTML parser");
-        // TODO implement this methode
+        log.info("MD 2 HTML parser : input" + this.input + " -> out: " + this.output + FilesUtils.getFileName(this.input));
     }
 }
