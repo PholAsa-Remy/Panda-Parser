@@ -3,19 +3,11 @@ package fr.uparis.pandaparser.old;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static fr.uparis.pandaparser.config.Config.appName;
+import static fr.uparis.pandaparser.config.Config.APP_NAME;
 import static fr.uparis.pandaparser.debug.TmpDebug.print;
 import static java.lang.System.exit;
 
 public class CommandManager {
-//    private static CommandManager instance;
-//
-//    public static CommandManager getInstance() {
-//        if (instance == null) {
-//            instance = new CommandManager();
-//        }
-//        return instance;
-//    }
 
     private static final String[] allCommands = {"md2html", "buildsite", "help", "metadata"};
 
@@ -41,7 +33,7 @@ public class CommandManager {
 
 
     private static void mostSimilarCommands(String noGoodCommand) {
-        print(appName + ": '" + noGoodCommand + "' is not a " + appName + " command. See '" + appName + " --help'.");
+        print(APP_NAME + ": '" + noGoodCommand + "' is not a " + APP_NAME + " command. See '" + APP_NAME + " --help'.");
         String[] similarCommands = likeStrings(allCommands, noGoodCommand);
         if (similarCommands.length > 0) {
             print("The most similar commands are");
