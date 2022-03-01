@@ -1,6 +1,6 @@
 package fr.uparis.pandaparser;
 
-import fr.uparis.pandaparser.old.Md2Html;
+import fr.uparis.pandaparser.old_to_delete.Md2Html;
 import org.junit.jupiter.api.Test;
 import org.w3c.tidy.Tidy;
 import java.io.ByteArrayInputStream;

@@ -1,7 +1,7 @@
 package fr.uparis.pandaparser;
 
 
-import fr.uparis.pandaparser.old.CommandManager;
+import fr.uparis.pandaparser.core.commande.CommandManager;
 
 public class Application {
     /**

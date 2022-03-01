@@ -1,4 +1,4 @@
-package fr.uparis.pandaparser.old;
+package fr.uparis.pandaparser.old_to_delete;
 
 import org.commonmark.node.*;
 import org.commonmark.parser.Parser;
@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Md2Html implements IParser {
+public class Md2Html {
     private final org.commonmark.parser.Parser parser = Parser.builder().build();
 
     /**
@@ -61,13 +61,7 @@ public class Md2Html implements IParser {
         return "<!DOCTYPE html><html>" + header + body + "</html>";
     }
 
-    /**
-     * Parse a file to get a Html content
-     *
-     * @param fileName the name of the file to parse
-     * @return html the content of the html page
-     */
-    @Override
+
     public String parse(String fileName) {
         String fileContent = readFile(fileName);
         return buildHtml(fileContent);

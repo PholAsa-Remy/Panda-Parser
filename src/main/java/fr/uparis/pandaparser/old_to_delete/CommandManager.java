@@ -1,4 +1,4 @@
-package fr.uparis.pandaparser.old;
+package fr.uparis.pandaparser.old_to_delete;
 
 import java.util.ArrayList;
 import java.util.Arrays;
