@@ -93,7 +93,7 @@ public class FilesUtils {
      * @param filePath path to the file.
      * @return file name
      */
-    public static String getFileName(final String filePath) {
+    public static String getFileName(@NonNull final String filePath) {
         return Path.of(filePath).getFileName().toString();
     }
 }

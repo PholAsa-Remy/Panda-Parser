@@ -25,7 +25,8 @@ class FilesUtilsTest {
     private static final String BUILD_DIR = "build";
     private static final String NEW_DIR_PATH = "new-dir-to-test";
 
-    private static final String NEW_FILE_PATH = DIR_FOR_TESTING + "new-file-to-test.md";
+    private static final String NEW_FILE_NAME = "new-file-to-test.md";
+    private static final String NEW_FILE_PATH = DIR_FOR_TESTING + NEW_FILE_NAME;
     private static final String EXISTING_FILE_PATH = DIR_FOR_TESTING + "existing-file-to-test.md";
     private static final String TEXT = DIR_FOR_TESTING + "# hello panda parser";
 
@@ -136,6 +137,19 @@ class FilesUtilsTest {
     @Test
     void whenListingSpecificFilesUsingGetAllFilesFromDirectory_withNoDirectory_thenExcept()  {
         assertThrows(NoSuchFileException.class, () -> FilesUtils.getAllFilesFromDirectory(NEW_DIR_PATH, Extension.MD));
+    }
+
+    /* **************************** *
+     *   TEST getFileName method    *
+     * **************************** */
+    @Test
+    void whenGetFileNameUsingGetAllFilesName_thenCorrect()  {
+        assertEquals(NEW_FILE_NAME, FilesUtils.getFileName(NEW_FILE_PATH));
+    }
+
+    @Test
+    void whenGetFileNameUsingGetAllFilesName_withNullPath_thenExcept()  {
+        assertThrows(NullPointerException.class, () -> FilesUtils.getFileName(null));
     }
 
     @AfterAll
