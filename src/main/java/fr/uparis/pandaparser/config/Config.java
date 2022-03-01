@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.List;
 
 public class Config {
-    public static final String appName = "panda-parser";
+    public static final String APP_NAME = "panda-parser";
     public static List<String> OPTION = List.of("MD");
 
     public static final String DEFAULT_INPUT = "." + File.separator;
