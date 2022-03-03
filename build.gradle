@@ -19,6 +19,7 @@ dependencies {
 
     // commonmark-java
     implementation files('libs/commonmark-0.18.1.jar')
+    implementation 'org.commonmark:commonmark:0.18.1'
     implementation 'jtidy:jtidy:4aug2000r7-dev' // A HTML Checker (Home page -> http://jtidy.sourceforge.net/)
 
     // lombok
