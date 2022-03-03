@@ -29,6 +29,10 @@ public abstract class PandaParser {
     protected final int jobs;
     protected final ParserType type;
 
+    public ParserType getType() {
+        return type;
+    }
+
     /**
      * Permet de faire une traduction d'un fichier MDs en HTMLs.
      */

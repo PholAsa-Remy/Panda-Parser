@@ -34,8 +34,8 @@ public class Site extends PandaParser {
         }
     }
 
-    public void md2html() throws IOException {
-        FilesUtils.getAllFilesFromDirectory(this.input + Config.CONTENT, Extension.MD)
+    private void md2html() throws IOException {
+        FilesUtils.getAllFilesFromDirectory(this.input + Config.DEFAULT_CONTENT_DIR, Extension.MD)
                 .forEach(inputFilePath -> PandaParser.builder()
                         .setInput(inputFilePath)
                         .setOutput(this.output)
