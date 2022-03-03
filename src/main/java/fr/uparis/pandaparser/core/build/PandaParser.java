@@ -69,8 +69,9 @@ public abstract class PandaParser {
 
         @Override
         public Builder setOutput(String output) {
-            if (!output.endsWith(File.separator))
-                this.output = output + File.separator;
+            this.output = output;
+            if (!this.output.endsWith(File.separator))
+                this.output += File.separator;
             return this;
         }
 

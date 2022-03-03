@@ -1,5 +1,6 @@
 package fr.uparis.pandaparser.core.build.site;
 
+import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.config.Extension;
 import fr.uparis.pandaparser.core.build.PandaParser;
 import fr.uparis.pandaparser.core.build.ParserType;
@@ -34,7 +35,7 @@ public class Site extends PandaParser {
     }
 
     public void md2html() throws IOException {
-        FilesUtils.getAllFilesFromDirectory(this.input, Extension.MD)
+        FilesUtils.getAllFilesFromDirectory(this.input + Config.CONTENT, Extension.MD)
                 .forEach(inputFilePath -> PandaParser.builder()
                         .setInput(inputFilePath)
                         .setOutput(this.output)

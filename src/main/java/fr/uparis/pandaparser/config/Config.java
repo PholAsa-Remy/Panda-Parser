@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Config {
 
+
     private Config () {}
 
 
@@ -18,6 +19,6 @@ public class Config {
     public static final String DEFAULT_OUTPUT = "_output" + File.separator;
     public static final ParserType DEFAULT_PARSER_TYPE = ParserType.SITE;
     public static final int DEFAULT_MACHINE_JOB = Runtime.getRuntime().availableProcessors();
-
+    public static final String CONTENT = "content";
 }
 
