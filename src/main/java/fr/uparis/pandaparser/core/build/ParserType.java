@@ -1,6 +1,7 @@
 package fr.uparis.pandaparser.core.build;
 
 import fr.uparis.pandaparser.config.Extension;
+import lombok.NonNull;
 
 /**
  * Type de parser
@@ -19,8 +20,8 @@ public enum ParserType {
      * @param input fichier
      * @return type
      */
-    public static ParserType getType(String input) {
-        return (input == null || input.isBlank() || !input.endsWith(Extension.MD.getExtensionName()))
+    public static ParserType getType(final @NonNull String input) {
+        return input.isBlank() || !input.endsWith(Extension.MD.getExtensionName())
                 ? SITE
                 : SIMPLE;
     }

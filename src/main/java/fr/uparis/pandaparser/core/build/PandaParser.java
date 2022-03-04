@@ -3,14 +3,13 @@ package fr.uparis.pandaparser.core.build;
 import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.core.build.simple.Simple;
 import fr.uparis.pandaparser.core.build.site.Site;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.java.Log;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 
 /**
  * Classe abstraite PandaParser + classe interne pandaParser. Builder pour créer un Parser.
@@ -23,15 +22,14 @@ import java.nio.file.Path;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class PandaParser {
 
+    @Getter
     protected final String input;
+    @Getter
     protected final String output;
     protected final boolean watch;
     protected final int jobs;
+    @Getter
     protected final ParserType type;
-
-    public ParserType getType() {
-        return type;
-    }
 
     /**
      * Permet de faire une traduction d'un fichier MDs en HTMLs.
