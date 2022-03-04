@@ -9,6 +9,7 @@ import picocli.CommandLine;
  *
  * @author panda-parser group
  * @version 1.0.0
+ * @see BuildCommand
  * @since Fev 2022
  */
 @CommandLine.Command(name = "panda-parser",
@@ -22,7 +23,6 @@ public class Application {
      * main method
      *
      * @param args args
-     * @see CommandManager
      */
     public static void main(String[] args) {
         int exitCode = new CommandLine(new Application()).execute(args);
