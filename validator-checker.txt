@@ -1,5 +1,4 @@
-#
-#Récuperer le docker avec le validator
+#Récuperer le docker avec le validator (A faire que la première fois )
 docker pull ghcr.io/validator/validator:latest
 
 #Démarrer le serveur pour le validator
