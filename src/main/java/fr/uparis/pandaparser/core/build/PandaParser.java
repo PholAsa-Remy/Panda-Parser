@@ -87,8 +87,8 @@ public abstract class PandaParser {
         }
 
         @Override
-        public Builder isWatched() {
-            this.watch = true;
+        public Builder isWatched(final boolean watched) {
+            this.watch = watched;
             return this;
         }
 

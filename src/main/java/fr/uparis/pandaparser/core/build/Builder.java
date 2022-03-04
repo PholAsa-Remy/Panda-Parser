@@ -50,5 +50,5 @@ public interface Builder {
      *
      * @return le builder
      */
-    Builder isWatched();
+    Builder isWatched(final boolean watched);
 }

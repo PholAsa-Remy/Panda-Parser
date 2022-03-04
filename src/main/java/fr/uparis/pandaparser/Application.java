@@ -1,7 +1,8 @@
 package fr.uparis.pandaparser;
 
 
-import fr.uparis.pandaparser.core.commande.CommandManager;
+import fr.uparis.pandaparser.core.cmd.BuildCommand;
+import picocli.CommandLine;
 
 /**
  * Application - Main Class
@@ -10,6 +11,12 @@ import fr.uparis.pandaparser.core.commande.CommandManager;
  * @version 1.0.0
  * @since Fev 2022
  */
+@CommandLine.Command(name = "panda-parser",
+        subcommands = {CommandLine.HelpCommand.class, BuildCommand.class},
+        mixinStandardHelpOptions = true,
+        version = "1.0.0"
+
+)
 public class Application {
     /**
      * main method
@@ -18,6 +25,7 @@ public class Application {
      * @see CommandManager
      */
     public static void main(String[] args) {
-        // todo call to CommandManager
+        int exitCode = new CommandLine(new Application()).execute(args);
+        System.exit(exitCode);
     }
 }
