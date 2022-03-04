@@ -27,13 +27,13 @@ public class Site extends PandaParser {
 
     @Override
     public void parse() {
-        log.info("Build site parser: input " + this.input);
         try {
-            /**/
+            /* parse all files */
             this.parseAllMdFilesToHtml();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            // FIXME
+            log.warning("input <" + this.input + "> invalide format");
         }
     }
 
