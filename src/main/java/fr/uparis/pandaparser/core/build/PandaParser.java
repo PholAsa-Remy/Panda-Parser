@@ -55,12 +55,12 @@ public abstract class PandaParser {
     public static class Builder implements fr.uparis.pandaparser.core.build.Builder {
 
         /* Les valeurs par default */
-        private String input;
-        private String output;
-        private ParserType type;
+        private String input = Config.DEFAULT_INPUT;
+        private String output = Config.DEFAULT_OUTPUT;
+        private ParserType type = Config.DEFAULT_PARSER_TYPE;
         /* Nombre de cœurs de la machine*/
-        private int jobs;
-        private boolean watch;
+        private int jobs = Config.DEFAULT_MACHINE_JOB;
+        private boolean watch = false;
 
         @Override
         public Builder setInput(String input) {
