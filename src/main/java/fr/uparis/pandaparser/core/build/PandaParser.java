@@ -32,7 +32,10 @@ public abstract class PandaParser {
     protected final ParserType type;
 
     /**
-     * Permet de faire une traduction d'un fichier MDs en HTMLs.
+     * Permet de faire une traduction d'un/es fichier(s) MD(s) en HTML(s).
+     *
+     * @see Site
+     * @see Simple
      */
     public abstract void parse();
 
