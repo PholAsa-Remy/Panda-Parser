@@ -3,6 +3,7 @@ package fr.uparis.pandaparser;
 
 import fr.uparis.pandaparser.core.cmd.BuildCommand;
 import picocli.CommandLine;
+import picocli.CommandLine.*;
 
 /**
  * Application - Main Class
@@ -12,8 +13,8 @@ import picocli.CommandLine;
  * @see BuildCommand
  * @since Fev 2022
  */
-@CommandLine.Command(name = "panda-parser",
-        subcommands = {CommandLine.HelpCommand.class, BuildCommand.class},
+@Command(name = "panda-parser",
+        subcommands = {HelpCommand.class, BuildCommand.class},
         mixinStandardHelpOptions = true,
         version = "1.0.0"
 
