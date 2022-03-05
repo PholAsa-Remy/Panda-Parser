@@ -19,7 +19,7 @@ public class BuildCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"-j", "--jobs"}, paramLabel = "NB_JOBS", description = "...")
     private Integer jobs = Config.DEFAULT_MACHINE_JOB;
 
-    @CommandLine.Option(names = {"--w", "--watch"}, description = "...")
+    @CommandLine.Option(names = {"-w", "--watch"}, description = "...")
     private boolean watched;
 
 
