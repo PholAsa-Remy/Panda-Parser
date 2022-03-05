@@ -16,7 +16,7 @@ import picocli.CommandLine.*;
 @Command(name = "panda-parser",
         subcommands = {HelpCommand.class, BuildCommand.class},
         mixinStandardHelpOptions = true,
-        version = "1.0.0"
+        version = "panda-parser version 1.0.0"
 
 )
 public class Application {
