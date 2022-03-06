@@ -3,6 +3,7 @@ package fr.uparis.pandaparser.core.build.site;
 import fr.uparis.pandaparser.config.Extension;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * les extensions acceptables pour les fichiers statiques
@@ -13,18 +14,18 @@ import java.util.List;
  */
 public enum StaticFileType {
 
-    IMAGES(List.of(".png", ".jpg", "jpg")),
-    VIDEOS(List.of("mp4", "mkv", "avi")),
-    STYLES(List.of(".css", ".sass", ".scss"));
+    IMAGES(Set.of(".png", ".jpg", "jpg")),
+    VIDEOS(Set.of(".mp4", ".mkv", ".avi")),
+    STYLES(Set.of(".css", ".sass", ".scss"));
 
     /* List des formats */
-    private final List<String> extensions;
+    private final Set<String> extensions;
 
-    StaticFileType(List<String> extensions) {
+    StaticFileType(Set<String> extensions) {
         this.extensions = extensions;
     }
 
-    public List<String> getExtensions() {
+    public Set<String> getExtensions() {
         return extensions;
     }
 }

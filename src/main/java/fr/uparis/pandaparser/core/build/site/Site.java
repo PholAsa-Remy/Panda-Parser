@@ -1,5 +1,6 @@
 package fr.uparis.pandaparser.core.build.site;
 
+import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.config.Extension;
 import fr.uparis.pandaparser.core.build.PandaParser;
 import fr.uparis.pandaparser.core.build.ParserType;
@@ -7,6 +8,7 @@ import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.extern.java.Log;
 
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * Traduction d’un site complet
@@ -25,20 +27,34 @@ public class Site extends PandaParser {
 
     @Override
     public void parse() {
-        log.info("Build site parser: input " + this.input);
         try {
-            md2html();
+            /* parse all files */
+            this.parseAllMdFilesToHtml();
+
         } catch (IOException e) {
-            e.printStackTrace();
+            // FIXME
+            log.warning("input <" + this.input + "> invalide format");
         }
     }
 
-    public void md2html() throws IOException {
-        FilesUtils.getAllFilesFromDirectory(this.input, Extension.MD)
-                .forEach(inputFilePath -> PandaParser.builder()
-                        .setInput(inputFilePath)
-                        .setOutput(this.output)
-                        .build()
-                        .parse());
+    /**
+     * Parse All MDs files in content directory to html
+     */
+    private void parseAllMdFilesToHtml() throws IOException {
+        this.getAllMdFiles().forEach(inputFilePath -> PandaParser.builder()
+                .setInput(inputFilePath)
+                .setOutput(this.output)
+                .build()
+                .parse());
+    }
+
+    /**
+     * Helper methode to get All MDs filenames from content directory
+     *
+     * @return set Of filenames
+     */
+    private Set<String> getAllMdFiles() throws IOException {
+        String contentDirectoryPath = this.input + Config.DEFAULT_CONTENT_DIR;
+        return FilesUtils.getAllFilesFromDirectory(contentDirectoryPath, Extension.MD);
     }
 }
