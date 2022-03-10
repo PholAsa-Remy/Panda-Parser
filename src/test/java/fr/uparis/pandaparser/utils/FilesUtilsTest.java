@@ -52,17 +52,17 @@ class FilesUtilsTest {
 
     @Test
     void whenReadExistingFileUsingGetContentFromPath_thenCorrect() throws IOException {
-        assertEquals(TEXT, FilesUtils.getFileCotent(EXISTING_FILE_PATH));
+        assertEquals(TEXT, FilesUtils.getFileContent(EXISTING_FILE_PATH));
     }
 
     @Test
     void whenReadNotExistingFileUsingGetContentFromPath_thenExcept() {
-        assertThrows(IOException.class, () -> FilesUtils.getFileCotent(NEW_FILE_PATH));
+        assertThrows(IOException.class, () -> FilesUtils.getFileContent(NEW_FILE_PATH));
     }
 
     @Test
     void whenReadNullFileUsingGetContentFromPath_thenExcept() {
-        assertThrows(NullPointerException.class, () -> FilesUtils.getFileCotent(null));
+        assertThrows(NullPointerException.class, () -> FilesUtils.getFileContent(null));
     }
 
     /* ************************************** *

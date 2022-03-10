@@ -34,11 +34,13 @@ public class FilesUtils {
      * @param filePath the file name we want to read
      * @return fileContent
      */
-    public static String getFileCotent(@NonNull final String filePath) throws IOException {
+    public static String getFileContent(@NonNull final String filePath) throws IOException {
         StringBuilder sb = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             reader.lines().forEach(line -> sb.append(line).append("\n"));
         }
+        if (sb.isEmpty())
+            return "";
         return sb.substring(0, sb.length() - 1);
     }
 
