@@ -74,6 +74,7 @@ public class Simple extends PandaParser {
     private String beautifyHtml (String htmlContent){
         Tidy tidy = new Tidy();
         tidy.setIndentContent(true);
+        tidy.setErrout(null);
         ByteArrayInputStream inputStream = new ByteArrayInputStream(htmlContent.getBytes());
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         tidy.parse(inputStream,outputStream);
@@ -83,10 +84,11 @@ public class Simple extends PandaParser {
     @Override
     public void parse() {
         try{
+            String inputFileName = FilesUtils.getFileName(this.input);
             String fileContent = getFileContent(input);
             String html = beautifyHtml(buildHtml(fileContent));
-            createFileFromContent(output,html);
-            log.info("MD 2 HTML parser : input" + this.input + " -> out: " + this.output + FilesUtils.getFileName(this.input));
+            createFileFromContent(this.output + inputFileName ,html);
+            log.info("MD 2 HTML parser : input" + this.input + " -> out: " + this.output + inputFileName);
         }catch(IOException e){
             e.printStackTrace();
         }
