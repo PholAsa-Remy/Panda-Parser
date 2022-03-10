@@ -7,7 +7,10 @@ import lombok.extern.java.Log;
 import org.commonmark.node.*;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
-import java.io.IOException;
+
+import java.io.*;
+
+import org.w3c.tidy.Tidy;
 
 import static fr.uparis.pandaparser.utils.FilesUtils.createFileFromContent;
 import static fr.uparis.pandaparser.utils.FilesUtils.getFileContent;
@@ -63,11 +66,25 @@ public class Simple extends PandaParser {
         return "<!DOCTYPE html><html>" + header + body + "</html>";
     }
 
+    /**
+     * Make the html more readable
+     * @param htmlContent the content of the html to beautify
+     * @return beautifiedHtml the beautified html
+     */
+    private String beautifyHtml (String htmlContent){
+        Tidy tidy = new Tidy();
+        tidy.setIndentContent(true);
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(htmlContent.getBytes());
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        tidy.parse(inputStream,outputStream);
+        return outputStream.toString();
+    }
+
     @Override
     public void parse() {
         try{
             String fileContent = getFileContent(input);
-            String html = buildHtml(fileContent);
+            String html = beautifyHtml(buildHtml(fileContent));
             createFileFromContent(output,html);
             log.info("MD 2 HTML parser : input" + this.input + " -> out: " + this.output + FilesUtils.getFileName(this.input));
         }catch(IOException e){
