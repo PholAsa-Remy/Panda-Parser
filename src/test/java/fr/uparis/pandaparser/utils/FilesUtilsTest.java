@@ -44,6 +44,7 @@ class FilesUtilsTest {
         FilesUtils.createFileFromContent(EXISTING_FILE_PATH, TEXT);
 
         File readOnlyDir = new File(NO_ACCESS_DIR);
+        readOnlyDir.mkdirs();
         readOnlyDir.setReadOnly();
 
     }
@@ -91,11 +92,10 @@ class FilesUtilsTest {
         assertThrows(NullPointerException.class, () -> FilesUtils.createFileFromContent(NEW_FILE_PATH, null));
     }
 
-    // local only
-//    @Test
-//    void whenCreatingFileUsingCreateFileFromContent_WithRootDirectory_thenExcept() {
-//        assertThrows(RuntimeException.class, () -> FilesUtils.createFileFromContent(NO_ACCESS_DIR_INPUT + File.separator + NEW_MD_FILE_NAME, TEXT));
-//    }
+    @Test
+    void whenCreatingFileUsingCreateFileFromContent_WithRootDirectory_thenExcept() {
+        assertThrows(RuntimeException.class, () -> FilesUtils.createFileFromContent(NO_ACCESS_DIR_INPUT + File.separator + NEW_MD_FILE_NAME, TEXT));
+    }
 
     /* ***************************************** *
      *   TEST getAllFilesFromDirectory method    *
@@ -198,8 +198,7 @@ class FilesUtilsTest {
         Files.deleteIfExists(Path.of(NEW_DIR_PATH));
         Files.deleteIfExists(Path.of(DIR_FOR_TESTING));
 
-        File readOnlyDir = new File(NO_ACCESS_DIR);
-        readOnlyDir.setReadable(true);
+        Files.deleteIfExists(Path.of(NO_ACCESS_DIR));
 
     }
 }
