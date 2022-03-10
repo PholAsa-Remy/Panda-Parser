@@ -25,8 +25,9 @@ class FilesUtilsTest {
     private static final String BUILD_DIR = "build";
     private static final String NEW_DIR_PATH = "new-dir-to-test";
 
-    private static final String NEW_FILE_NAME = "new-file-to-test.md";
-    private static final String NEW_FILE_PATH = DIR_FOR_TESTING + NEW_FILE_NAME;
+    private static final String NEW_MD_FILE_NAME = "new-file-to-test.md";
+    private static final String NEW_HTML_FILE_NAME = "new-file-to-test.html";
+    private static final String NEW_FILE_PATH = DIR_FOR_TESTING + NEW_MD_FILE_NAME;
     private static final String EXISTING_FILE_PATH = DIR_FOR_TESTING + "existing-file-to-test.md";
     private static final String TEXT = DIR_FOR_TESTING + "# hello panda parser";
 
@@ -144,13 +145,28 @@ class FilesUtilsTest {
      * **************************** */
     @Test
     void whenGetFileNameUsingGetAllFilesName_thenCorrect()  {
-        assertEquals(NEW_FILE_NAME, FilesUtils.getFileName(NEW_FILE_PATH));
+        assertEquals(NEW_MD_FILE_NAME, FilesUtils.getFileName(NEW_FILE_PATH));
     }
 
     @Test
     void whenGetFileNameUsingGetAllFilesName_withNullPath_thenExcept()  {
         assertThrows(NullPointerException.class, () -> FilesUtils.getFileName(null));
     }
+
+    /* ****************************************** *
+     *   TEST getHtmlFilenameFromMdFile method    *
+     * ****************************************** */
+
+    @Test
+    void whenGetHtmlFilenameFromNullMdFile_thenNullPointerExcept() {
+        assertThrows(NullPointerException.class, () -> FilesUtils.getHtmlFilenameFromMdFile(null));
+    }
+
+    @Test
+    void whenGetHtmlFilenameFromValideMdFile_thenCorrect() {
+        assertEquals(NEW_HTML_FILE_NAME, FilesUtils.getHtmlFilenameFromMdFile(NEW_MD_FILE_NAME));
+    }
+
 
     @AfterAll
     static void cleanAll() throws IOException {

@@ -45,14 +45,17 @@ public class FilesUtils {
     }
 
     /**
-     * Create html file from text
+     * Create html file from content
      *
      * @param filePath file path
-     * @param text     text to write in file
+     * @param content     text to write in file
      */
-    public static void createFileFromContent(@NonNull final String filePath, @NonNull final String text) throws IOException {
+    public static void createFileFromContent(@NonNull final String filePath, @NonNull final String content) throws IOException {
+        File file = new File(filePath);
+        if (!file.getParentFile().exists() && !file.getParentFile().mkdirs())
+            throw new RuntimeException("can't create directory: " + file.getParentFile().getName());
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write(text);
+            writer.write(content);
         }
     }
 
@@ -97,5 +100,17 @@ public class FilesUtils {
      */
     public static String getFileName(@NonNull final String filePath) {
         return Path.of(filePath).getFileName().toString();
+    }
+
+    /**
+     * get html filename from md filename.
+     * example: file.md -> file.html
+     *
+     * @param mdFilename html filename
+     * @return html filename
+     */
+    public static String getHtmlFilenameFromMdFile(@NonNull final String mdFilename) {
+        return mdFilename.substring(0, mdFilename.length() - Extension.MD.getExtensionName().length())
+                + Extension.HTML.getExtensionName();
     }
 }
