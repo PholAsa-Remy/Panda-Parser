@@ -2,6 +2,7 @@ package fr.uparis.pandaparser;
 
 
 import fr.uparis.pandaparser.core.cmd.BuildCommand;
+import fr.uparis.pandaparser.core.cmd.ServeCommand;
 import picocli.CommandLine;
 import picocli.CommandLine.*;
 
@@ -13,8 +14,9 @@ import picocli.CommandLine.*;
  * @see BuildCommand
  * @since Fev 2022
  */
-@Command(name = "panda-parser",
-        subcommands = {HelpCommand.class, BuildCommand.class},
+@Command(name = "panda-parser",customSynopsis = {
+        "panda-parser [CMD]... [OPTION]... [ARGUMENT]...",},
+        subcommands = {HelpCommand.class, BuildCommand.class, ServeCommand.class},
         mixinStandardHelpOptions = true,
         version = "panda-parser version 1.0.0"
 
@@ -25,8 +27,13 @@ public class Application {
      *
      * @param args args
      */
+
+
     public static void main(String[] args) {
-        int exitCode = new CommandLine(new Application()).execute(args);
+
+
+        CommandLine commandLine=new CommandLine(new Application());
+        int exitCode = commandLine.execute(args);
         System.exit(exitCode);
     }
 }

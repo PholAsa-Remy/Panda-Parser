@@ -4,6 +4,7 @@ package fr.uparis.pandaparser.config;
 import fr.uparis.pandaparser.core.build.ParserType;
 
 import java.io.File;
+import java.util.Locale;
 
 public class Config {
 
@@ -20,5 +21,8 @@ public class Config {
     public static final int DEFAULT_MACHINE_JOB = Runtime.getRuntime().availableProcessors();
     public static final String DEFAULT_CONTENT_DIR = "content";
     public static final String DEFAULT_INDEX_NAME = "index.md";
+
+    /* Server Compile */
+    public static final Integer DEFAULT_PORT = 8080;
 }
 
