@@ -39,7 +39,7 @@ public class FilesUtils {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             reader.lines().forEach(line -> sb.append(line).append("\n"));
         }
-        return sb.substring(0, sb.length() - 1);
+        return sb.substring(0, sb.length());
     }
 
     /**

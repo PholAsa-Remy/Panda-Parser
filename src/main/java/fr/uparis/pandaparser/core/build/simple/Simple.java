@@ -22,7 +22,7 @@ import static fr.uparis.pandaparser.utils.FilesUtils.getFileContent;
 @Log
 public class Simple extends PandaParser {
 
-    /* An instance of the parser of common-markdown library*/
+    /* An instance of the parser of common-markdown library */
     private final org.commonmark.parser.Parser parser = Parser.builder().build();
 
     public Simple(String input, String output, boolean watch, int jobs) {
