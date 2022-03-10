@@ -1,11 +1,15 @@
 package fr.uparis.pandaparser.utils;
 
+import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.config.Extension;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javax.imageio.stream.FileImageInputStream;
+
+import static fr.uparis.pandaparser.config.TestConfig.INPUT_TEST_DIR;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
@@ -30,12 +34,18 @@ class FilesUtilsTest {
     private static final String NEW_FILE_PATH = DIR_FOR_TESTING + NEW_MD_FILE_NAME;
     private static final String EXISTING_FILE_PATH = DIR_FOR_TESTING + "existing-file-to-test.md";
     private static final String TEXT = DIR_FOR_TESTING + "# hello panda parser";
+    private static final String NO_ACCESS_DIR = "src/test/resources/read-only-dir";
+    private static final String NO_ACCESS_DIR_INPUT = "src/test/resources/read-only-dir/input";
 
 
     @BeforeAll
     static void setUp() throws IOException {
         Files.createDirectory(Path.of(DIR_FOR_TESTING));
         FilesUtils.createFileFromContent(EXISTING_FILE_PATH, TEXT);
+
+        File readOnlyDir = new File(NO_ACCESS_DIR);
+        readOnlyDir.setReadOnly();
+
     }
 
     /* *********************************** *
@@ -67,6 +77,11 @@ class FilesUtilsTest {
     }
 
     @Test
+    void whenCreatingFileUsingCreateFileFromContentInExistingDir_thenCorrect() throws IOException {
+        FilesUtils.createFileFromContent(INPUT_TEST_DIR + NEW_FILE_PATH, TEXT);
+    }
+
+    @Test
     void whenCreatingFileUsingCreateFileFromContent_WithNullPathFile_thenExcept() {
         assertThrows(NullPointerException.class, () -> FilesUtils.createFileFromContent(null, TEXT));
     }
@@ -74,6 +89,11 @@ class FilesUtilsTest {
     @Test
     void whenCreatingFileUsingCreateFileFromContent_WithNullContent_thenExcept() {
         assertThrows(NullPointerException.class, () -> FilesUtils.createFileFromContent(NEW_FILE_PATH, null));
+    }
+
+    @Test
+    void whenCreatingFileUsingCreateFileFromContent_WithRootDirectory_thenExcept() {
+        assertThrows(RuntimeException.class, () -> FilesUtils.createFileFromContent(NO_ACCESS_DIR_INPUT + File.separator + NEW_MD_FILE_NAME, TEXT));
     }
 
     /* ***************************************** *
@@ -126,17 +146,17 @@ class FilesUtilsTest {
     }
 
     @Test
-    void whenListingSpecificNullFilesUsingGetAllFilesFromDirectory_thenExcept()  {
+    void whenListingSpecificNullFilesUsingGetAllFilesFromDirectory_thenExcept() {
         assertThrows(NullPointerException.class, () -> FilesUtils.getAllFilesFromDirectory(DIR_FOR_TESTING, null));
     }
 
     @Test
-    void whenListingSpecificFilesUsingGetAllFilesFromDirectory_withNullDirectory_thenExcept()  {
+    void whenListingSpecificFilesUsingGetAllFilesFromDirectory_withNullDirectory_thenExcept() {
         assertThrows(NullPointerException.class, () -> FilesUtils.getAllFilesFromDirectory(null, Extension.MD));
     }
 
     @Test
-    void whenListingSpecificFilesUsingGetAllFilesFromDirectory_withNoDirectory_thenExcept()  {
+    void whenListingSpecificFilesUsingGetAllFilesFromDirectory_withNoDirectory_thenExcept() {
         assertThrows(NoSuchFileException.class, () -> FilesUtils.getAllFilesFromDirectory(NEW_DIR_PATH, Extension.MD));
     }
 
@@ -144,12 +164,12 @@ class FilesUtilsTest {
      *   TEST getFileName method    *
      * **************************** */
     @Test
-    void whenGetFileNameUsingGetAllFilesName_thenCorrect()  {
+    void whenGetFileNameUsingGetAllFilesName_thenCorrect() {
         assertEquals(NEW_MD_FILE_NAME, FilesUtils.getFileName(NEW_FILE_PATH));
     }
 
     @Test
-    void whenGetFileNameUsingGetAllFilesName_withNullPath_thenExcept()  {
+    void whenGetFileNameUsingGetAllFilesName_withNullPath_thenExcept() {
         assertThrows(NullPointerException.class, () -> FilesUtils.getFileName(null));
     }
 
@@ -176,5 +196,9 @@ class FilesUtilsTest {
 
         Files.deleteIfExists(Path.of(NEW_DIR_PATH));
         Files.deleteIfExists(Path.of(DIR_FOR_TESTING));
+
+        File readOnlyDir = new File(NO_ACCESS_DIR);
+        readOnlyDir.setReadable(true);
+
     }
 }
