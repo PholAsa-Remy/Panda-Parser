@@ -1,16 +1,10 @@
 package fr.uparis.pandaparser.utils;
 
-import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.config.Extension;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import javax.imageio.stream.FileImageInputStream;
-
-import static fr.uparis.pandaparser.config.TestConfig.INPUT_TEST_DIR;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +12,9 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.NotDirectoryException;
 import java.nio.file.Path;
+
+import static fr.uparis.pandaparser.config.TestConfig.INPUT_TEST_DIR;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Class to Test FileUtilsMethods
@@ -34,8 +31,8 @@ class FilesUtilsTest {
     private static final String NEW_FILE_PATH = DIR_FOR_TESTING + NEW_MD_FILE_NAME;
     private static final String EXISTING_FILE_PATH = DIR_FOR_TESTING + "existing-file-to-test.md";
     private static final String TEXT = DIR_FOR_TESTING + "# hello panda parser";
-    private static final String NO_ACCESS_DIR = "src/test/resources/read-only-dir";
-    private static final String NO_ACCESS_DIR_INPUT = "src/test/resources/read-only-dir/input";
+    private static final String NO_ACCESS_DIR = "src" + File.separator + "test" + File.separator + "resources" + File.separator + "read-only-dir";
+    private static final String NO_ACCESS_DIR_INPUT = "src" + File.separator + "test" + File.separator + "resources" + File.separator + "read-only-dir" + File.separator + "input";
 
 
     @BeforeAll
