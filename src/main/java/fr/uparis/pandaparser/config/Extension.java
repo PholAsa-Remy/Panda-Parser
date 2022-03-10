@@ -8,7 +8,7 @@ package fr.uparis.pandaparser.config;
  * @since Fev 2022
  */
 public enum Extension {
-    MD (".md"), TOML(".toml");
+    MD (".md"), TOML(".toml"), HTML(".html");
 
     private final String extensionName;
     Extension(String extension) {
