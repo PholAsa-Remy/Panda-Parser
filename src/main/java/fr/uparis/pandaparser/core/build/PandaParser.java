@@ -71,6 +71,8 @@ public abstract class PandaParser {
         public Builder setOutput(String output) {
             if (!output.endsWith(File.separator))
                 this.output = output + File.separator;
+            else
+                this.output = output;
             return this;
         }
 
