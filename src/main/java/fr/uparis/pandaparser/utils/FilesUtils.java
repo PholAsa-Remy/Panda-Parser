@@ -115,6 +115,17 @@ public class FilesUtils {
     }
 
     /**
+     * List static files within a directory.
+     *
+     * @param input directory source path
+     * @param output directory destination path
+     * @throws IOException if the directory doesn't exist.
+     */
+    public static void copyFileFromInputToOutput(String input, String output) throws IOException {
+        Files.copy(Paths.get(input), new FileOutputStream(output));
+    }
+
+    /**
      * Get file name from path
      *
      * @param filePath path to the file.
