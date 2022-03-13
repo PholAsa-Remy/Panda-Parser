@@ -108,8 +108,8 @@ public class FilesUtils {
                 .stream().filter(file -> {
                     String extension = FilenameUtils.getExtension(file);
                     return StaticFileType.IMAGES.getExtensions().contains(extension) ||
-                            StaticFileType.VIDEOS.getExtensions().contains(FilenameUtils.getExtension(extension))||
-                            StaticFileType.STYLES.getExtensions().contains(FilenameUtils.getExtension(extension));
+                            StaticFileType.VIDEOS.getExtensions().contains(extension)||
+                            StaticFileType.STYLES.getExtensions().contains(extension);
                         })
         .collect(Collectors.toSet());
     }
