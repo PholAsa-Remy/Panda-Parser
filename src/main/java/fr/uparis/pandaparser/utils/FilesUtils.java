@@ -2,12 +2,16 @@ package fr.uparis.pandaparser.utils;
 
 
 import fr.uparis.pandaparser.config.Extension;
+import fr.uparis.pandaparser.core.build.ParserType;
+import fr.uparis.pandaparser.core.build.site.StaticFileType;
+import org.apache.commons.io.FilenameUtils;
 import lombok.NonNull;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -99,6 +103,24 @@ public class FilesUtils {
         return getAllFilesFromDirectory(directory)
                 .stream().filter(file -> file.endsWith(extension.getExtensionName()))
                 .collect(Collectors.toSet());
+    }
+
+    /**
+     * List static files within a directory.
+     *
+     * @param directory directory path
+     * @return set of file paths
+     * @throws IOException if the directory doesn't exist.
+     */
+    public static Set<String> getAllStaticFilesFromDirectory(@NonNull final String directory) throws IOException {
+        return getAllFilesFromDirectory(directory)
+                .stream().filter(file -> {
+                    String extension = FilenameUtils.getExtension(file);
+                    return StaticFileType.IMAGES.getExtensions().contains(extension) ||
+                            StaticFileType.VIDEOS.getExtensions().contains(FilenameUtils.getExtension(extension))||
+                            StaticFileType.STYLES.getExtensions().contains(FilenameUtils.getExtension(extension));
+                        })
+        .collect(Collectors.toSet());
     }
 
     /**
