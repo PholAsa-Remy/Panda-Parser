@@ -20,6 +20,7 @@ public class Config {
     public static final ParserType DEFAULT_PARSER_TYPE = ParserType.SITE;
     public static final int DEFAULT_MACHINE_JOB = Runtime.getRuntime().availableProcessors();
     public static final String DEFAULT_CONTENT_DIR = "content";
+    public static final String DEFAULT_STATIC_DIR = "static";
     public static final String DEFAULT_INDEX_NAME = "index.md";
 
     /* Server Compile */
