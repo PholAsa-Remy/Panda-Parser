@@ -28,8 +28,11 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 
-    implementation 'jtidy:jtidy:4aug2000r7-dev' // A HTML Checker (Home page -> http://jtidy.sourceforge.net/)
+    // A HTML Checker (Home page -> http://jtidy.sourceforge.net/)
+    implementation 'jtidy:jtidy:4aug2000r7-dev'
 
+    //get extension
+    implementation 'org.apache.commons:commons-io:1.3.2'
 }
 
 test {
