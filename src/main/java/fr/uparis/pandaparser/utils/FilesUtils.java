@@ -4,7 +4,6 @@ package fr.uparis.pandaparser.utils;
 import fr.uparis.pandaparser.config.Extension;
 import fr.uparis.pandaparser.core.build.ParserType;
 import fr.uparis.pandaparser.core.build.site.StaticFileType;
-import org.apache.commons.io.FilenameUtils;
 import lombok.NonNull;
 
 import java.io.*;
@@ -115,7 +114,7 @@ public class FilesUtils {
     public static Set<String> getAllStaticFilesFromDirectory(@NonNull final String directory) throws IOException {
         return getAllFilesFromDirectory(directory)
                 .stream().filter(file -> {
-                    String extension = file.substring(file.lastIndexOf("." ) + 1);
+                    String extension = file.substring(file.lastIndexOf("." ));
                     return StaticFileType.IMAGES.getExtensions().contains(extension) ||
                             StaticFileType.VIDEOS.getExtensions().contains(extension)||
                             StaticFileType.STYLES.getExtensions().contains(extension);

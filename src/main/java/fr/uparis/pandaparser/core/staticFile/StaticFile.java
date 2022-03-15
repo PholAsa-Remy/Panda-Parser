@@ -27,7 +27,7 @@ public class StaticFile {
     public static void setAllStaticFiles(String input, String output) throws IOException {
         String inputDirectoryPath = input + Config.DEFAULT_STATIC_DIR;
         String outputDirectoryPath = output + Config.DEFAULT_STATIC_DIR;
-        Set<String> staticFiles = getAllStaticFiles(input);
+        Set<String> staticFiles = getAllStaticFiles(inputDirectoryPath);
         staticFiles.forEach((file) -> {
             try {
                 FilesUtils.copyFileFromInputToOutput( inputDirectoryPath + "/" + file,outputDirectoryPath + "/" + file);
@@ -36,6 +36,6 @@ public class StaticFile {
             }
         });
         log.info("static : Successful transfer static files from " + inputDirectoryPath
-                + "to " + outputDirectoryPath);
+                + " to " + outputDirectoryPath);
     }
 }
