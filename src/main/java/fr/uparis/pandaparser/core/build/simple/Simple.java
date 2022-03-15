@@ -87,7 +87,7 @@ public class Simple extends PandaParser {
 
             String inputFileName = FilesUtils.getHtmlFilenameFromMdFile(FilesUtils.getFileName(input));
             String fileContent = getFileContent(input);
-            String html = buildHtml(fileContent);
+            String html = beautifyHtml(buildHtml(fileContent));
             createFileFromContent(this.output + inputFileName ,html);
             log.info("MD 2 HTML parser : input" + this.input + " -> out: " + this.output + inputFileName);
         }catch(IOException e){
