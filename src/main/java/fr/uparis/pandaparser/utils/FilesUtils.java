@@ -115,7 +115,7 @@ public class FilesUtils {
     public static Set<String> getAllStaticFilesFromDirectory(@NonNull final String directory) throws IOException {
         return getAllFilesFromDirectory(directory)
                 .stream().filter(file -> {
-                    String extension = FilenameUtils.getExtension(file);
+                    String extension = file.substring(file.lastIndexOf("." ) + 1);
                     return StaticFileType.IMAGES.getExtensions().contains(extension) ||
                             StaticFileType.VIDEOS.getExtensions().contains(extension)||
                             StaticFileType.STYLES.getExtensions().contains(extension);
