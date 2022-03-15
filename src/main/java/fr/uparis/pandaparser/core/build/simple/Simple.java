@@ -74,7 +74,6 @@ public class Simple extends PandaParser {
     private String beautifyHtml (String htmlContent){
         Tidy tidy = new Tidy();
         tidy.setIndentContent(true);
-        tidy.setErrout(null);
         ByteArrayInputStream inputStream = new ByteArrayInputStream(htmlContent.getBytes());
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         tidy.parse(inputStream,outputStream);
