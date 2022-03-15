@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.net.URL;
 
-import static org.junit.jupiter.api.Assertions.*;
 class SimpleTest {
 
     private static final PandaParser.Builder parserBuilder = PandaParser.builder();
@@ -19,16 +18,19 @@ class SimpleTest {
         p.parse();
     }
 
+    /*Parse Empty MD*/
     @Test
     void testParseEmptyMd(){
         testParse ("EmptyMarkDown");
     }
 
+    /*Parse Simple MD */
     @Test
     void testParseSimpleMd(){
         testParse ("BasicMarkDown");
     }
 
+    /*Parse Lorem Ipsum MD */
     @Test
     void testParseLoremIpsumMd(){
         testParse ("LoremIpsumMarkDown");
