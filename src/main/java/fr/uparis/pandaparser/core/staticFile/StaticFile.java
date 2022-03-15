@@ -12,7 +12,7 @@ public class StaticFile {
 
     /**
      * @param input directory source path
-     * get all static filenames in the directory
+     * Get all static filenames in the directory
      * @return set Of static filenames
      */
     private Set<String> getAllStaticFiles(String input) throws IOException {
@@ -22,7 +22,7 @@ public class StaticFile {
     /**
      * @param input directory source path
      * @param output directory destination path
-     * copy all the static files from input directory to output directory
+     * Copy all the static files from input directory to output directory
      */
     public void setAllStaticFiles(String input, String output) throws IOException {
         String inputDirectoryPath = input + Config.DEFAULT_STATIC_DIR;
