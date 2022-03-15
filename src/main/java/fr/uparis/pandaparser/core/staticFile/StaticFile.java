@@ -15,7 +15,7 @@ public class StaticFile {
      * Get all static filenames in the directory
      * @return set Of static filenames
      */
-    private Set<String> getAllStaticFiles(String input) throws IOException {
+    private static Set<String> getAllStaticFiles(String input) throws IOException {
         return FilesUtils.getAllStaticFilesFromDirectory(input);
     }
 
@@ -24,7 +24,7 @@ public class StaticFile {
      * @param output directory destination path
      * Copy all the static files from input directory to output directory
      */
-    public void setAllStaticFiles(String input, String output) throws IOException {
+    public static void setAllStaticFiles(String input, String output) throws IOException {
         String inputDirectoryPath = input + Config.DEFAULT_STATIC_DIR;
         String outputDirectoryPath = output + Config.DEFAULT_STATIC_DIR;
         Set<String> staticFiles = getAllStaticFiles(input);
