@@ -5,6 +5,8 @@ import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.extern.java.Log;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Set;
 
 @Log
@@ -28,9 +30,10 @@ public class StaticFile {
         String inputDirectoryPath = input + Config.DEFAULT_STATIC_DIR;
         String outputDirectoryPath = output + Config.DEFAULT_STATIC_DIR;
         Set<String> staticFiles = getAllStaticFiles(inputDirectoryPath);
+        Files.createDirectories(Paths.get(outputDirectoryPath));
         staticFiles.forEach((file) -> {
             try {
-                FilesUtils.copyFileFromInputToOutput( inputDirectoryPath + "/" + file,outputDirectoryPath + "/" + file);
+                FilesUtils.copyFileFromInputToOutput( inputDirectoryPath + file.substring(file.lastIndexOf("/")),outputDirectoryPath + file.substring(file.lastIndexOf("/")));
             } catch (IOException e) {
                 e.printStackTrace();
             }
