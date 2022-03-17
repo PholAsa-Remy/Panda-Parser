@@ -4,9 +4,9 @@ package fr.uparis.pandaparser.config;
 import fr.uparis.pandaparser.core.build.ParserType;
 
 import java.io.File;
-import java.util.Locale;
 
 public class Config {
+
 
 
     private Config () {}
@@ -25,5 +25,9 @@ public class Config {
 
     /* Server Compile */
     public static final Integer DEFAULT_PORT = 8080;
+
+    public static final Integer EXIT_SUCCESS = 0;
+    public static final int EXIT_FAILURE  = 1;
+
 }
 
