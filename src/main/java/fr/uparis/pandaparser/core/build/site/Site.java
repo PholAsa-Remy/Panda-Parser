@@ -6,14 +6,13 @@ import fr.uparis.pandaparser.core.build.PandaParser;
 import fr.uparis.pandaparser.core.build.ParserType;
 import fr.uparis.pandaparser.core.build.parallel.ThreadParser;
 import fr.uparis.pandaparser.utils.FilesUtils;
+import fr.uparis.pandaparser.utils.ThreadUtils;
 import lombok.extern.java.Log;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 /**
@@ -26,22 +25,26 @@ import java.util.stream.Collectors;
 @Log
 public class Site extends PandaParser {
 
+    /*Thread pool*/
     private final ExecutorService threadPool;
+
 
     public Site(String input, String output, boolean watch, int jobs) {
         super(input, output, watch, jobs, ParserType.SITE);
-        this.threadPool = Executors.newFixedThreadPool(jobs);
+        this.threadPool = Executors.newFixedThreadPool(this.jobs);
     }
 
     @Override
     public void parse() {
         try {
             /* parse all files */
-            this.parseAllMdFilesToHtml();
+            //this.parseAllMdFilesToHtml();
 
+            this.fastParseAllMdFilesToHtml();
         } catch (IOException e) {
-            // FIXME
             log.warning("input <" + this.input + "> invalide format");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -67,10 +70,12 @@ public class Site extends PandaParser {
     }
 
     private List<ThreadParser> getAllThreadParser() throws IOException {
-        return this.getAllMdFiles().stream().map(inputFilePath -> new ThreadParser(input, output)).collect(Collectors.toList());
+        return this.getAllMdFiles().stream().map(inputFilePath -> new ThreadParser(inputFilePath, output)).collect(Collectors.toList());
     }
 
     private void fastParseAllMdFilesToHtml() throws IOException, InterruptedException {
-        List<Future<String>> futures = this.threadPool.invokeAll(this.getAllThreadParser());
+        List<Future<String>> futures =  this.threadPool.invokeAll(getAllThreadParser());
+        this.threadPool.shutdown();
+        ThreadUtils.logAllFutures(futures);
     }
 }
