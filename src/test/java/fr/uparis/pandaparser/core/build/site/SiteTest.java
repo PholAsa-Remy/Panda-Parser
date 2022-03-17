@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 
 import static fr.uparis.pandaparser.config.TestConfig.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SiteTest {
@@ -41,4 +42,13 @@ class SiteTest {
         assertTrue (file2.exists());
         assertTrue  (file3.exists());
     }
+
+    @Test
+    void checkNoStaticFilesIsNotTransferInTheStaticDirectory(){
+        PandaParser testStatic = PandaParser.builder().setInput(INPUT_TEST_DIR).setOutput(OUTPUT_TEST_DIR).build();
+        testStatic.parse();
+        File file = new File (OUTPUT_TEST_DIR + TEST_MD_STATIC_PATH);
+        assertFalse (file.exists());
+    }
+
 }
