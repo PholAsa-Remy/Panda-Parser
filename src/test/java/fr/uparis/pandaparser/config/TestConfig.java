@@ -10,4 +10,5 @@ public class TestConfig {
     public static final String TEST_MP3_PATH = "/static/01.Ren'ai_Circulation.mp3";
     public static final String TEST_JPG_PATH = "/static/koharu.jpg";
     public static final String TEST_CSS_PATH = "/static/exampleTest.css";
+    public static final String TEST_MD_STATIC_PATH = "/static/exampleTest.md";
 }
