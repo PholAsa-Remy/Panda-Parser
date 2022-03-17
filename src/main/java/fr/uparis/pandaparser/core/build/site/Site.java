@@ -43,6 +43,7 @@ public class Site extends PandaParser {
             //this.parseAllMdFilesToHtml();
 
             this.fastParseAllMdFilesToHtml();
+
         } catch (IOException e) {
             log.warning("input <" + this.input + "> invalide format");
         } catch (InterruptedException e) {
@@ -72,19 +73,25 @@ public class Site extends PandaParser {
     }
 
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     */
     private List<ThreadParser> getAllThreadParser() throws IOException {
         return this.getAllMdFiles().stream().map(inputFilePath -> new ThreadParser(inputFilePath, output)).collect(Collectors.toList());
     }
 
+    /**
+     *
+     * @throws IOException
+     * @throws InterruptedException
+     */
     private void fastParseAllMdFilesToHtml() throws IOException, InterruptedException {
         List<Future<String>> futures =  this.threadPool.invokeAll(getAllThreadParser());
         this.threadPool.shutdown();
         ThreadUtils.logAllFutures(futures);
     }
-
-
-
-
 
     private void moveAllStaticFiles() throws IOException{
         try{
