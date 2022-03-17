@@ -2,12 +2,15 @@ package fr.uparis.pandaparser.utils;
 
 
 import fr.uparis.pandaparser.config.Extension;
+import fr.uparis.pandaparser.core.build.ParserType;
+import fr.uparis.pandaparser.core.build.site.StaticFileType;
 import lombok.NonNull;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -90,6 +93,35 @@ public class FilesUtils {
         return getAllFilesFromDirectory(directory)
                 .stream().filter(file -> file.endsWith(extension.getExtensionName()))
                 .collect(Collectors.toSet());
+    }
+
+    /**
+     * List static files within a directory.
+     *
+     * @param directory directory path
+     * @return set of file paths
+     * @throws IOException if the directory doesn't exist.
+     */
+    public static Set<String> getAllStaticFilesFromDirectory(@NonNull final String directory) throws IOException {
+        return getAllFilesFromDirectory(directory)
+                .stream().filter(file -> {
+                    String extension = file.substring(file.lastIndexOf("." ));
+                    return StaticFileType.IMAGES.getExtensions().contains(extension) ||
+                            StaticFileType.VIDEOS.getExtensions().contains(extension)||
+                            StaticFileType.STYLES.getExtensions().contains(extension);
+                        })
+        .collect(Collectors.toSet());
+    }
+
+    /**
+     * List static files within a directory.
+     *
+     * @param input directory source path
+     * @param output directory destination path
+     * @throws IOException if the directory doesn't exist.
+     */
+    public static void copyFileFromInputToOutput(String input, String output) throws IOException {
+        Files.copy(Paths.get(input), new FileOutputStream(output));
     }
 
     /**
