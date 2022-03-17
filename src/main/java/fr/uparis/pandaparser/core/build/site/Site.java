@@ -37,7 +37,6 @@ public class Site extends PandaParser {
     @Override
     public void parse() {
         try {
-
             //this.parseAllMdFilesToHtml();
 
             this.fastParseAllMdFilesToHtml();
