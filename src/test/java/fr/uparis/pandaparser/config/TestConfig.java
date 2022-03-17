@@ -7,4 +7,9 @@ public class TestConfig {
     public static final String INPUT_TEST_DIR = "src" + File.separator + "test" + File.separator + "resources" + File.separator + "builder-test";
     public static final String OUTPUT_TEST_DIR = "src" + File.separator + "test" + File.separator + "resources" + File.separator + "test-output";
     public static final String MD_FILE = INPUT_TEST_DIR + File.separator + Config.DEFAULT_CONTENT_DIR + Config.DEFAULT_INDEX_NAME;
+
+    public static final String INPUT_UNIT_MD_DIR = "src" + File.separator + "test" + File.separator + "resources/md-file-test/";
+    public static final String EMPTY_MD_TEST = INPUT_UNIT_MD_DIR + "EmptyMarkDown.md";
+    public static final String BASIC_MD_TEST = INPUT_UNIT_MD_DIR + "BasicMarkDown.md";
+    public static final String LOREM_IPSUM_MD_TEST = INPUT_UNIT_MD_DIR + "LoremIpsumMarkDown.md";
 }

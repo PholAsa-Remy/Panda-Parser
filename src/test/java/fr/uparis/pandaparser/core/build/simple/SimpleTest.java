@@ -1,5 +1,7 @@
 package fr.uparis.pandaparser.core.build.simple;
 
+import fr.uparis.pandaparser.config.Config;
+import fr.uparis.pandaparser.config.TestConfig;
 import fr.uparis.pandaparser.core.build.PandaParser;
 import org.junit.jupiter.api.Test;
 
@@ -10,10 +12,8 @@ class SimpleTest {
     private static final PandaParser.Builder parserBuilder = PandaParser.builder();
 
     private void testParse (String fileName){
-        URL resource = getClass().getClassLoader().getResource(fileName + ".md");
-        assert resource != null;
-        parserBuilder.setInput(resource.getPath());
-        parserBuilder.setOutput("testHTMLBuild");
+        parserBuilder.setInput(fileName);
+        parserBuilder.setOutput(TestConfig.OUTPUT_TEST_DIR);
         PandaParser p = parserBuilder.build();
         p.parse();
     }
@@ -21,18 +21,18 @@ class SimpleTest {
     /*Parse Empty MD*/
     @Test
     void testParseEmptyMd(){
-        testParse ("EmptyMarkDown");
+        testParse (TestConfig.EMPTY_MD_TEST);
     }
 
     /*Parse Simple MD */
     @Test
     void testParseSimpleMd(){
-        testParse ("BasicMarkDown");
+        testParse (TestConfig.BASIC_MD_TEST);
     }
 
     /*Parse Lorem Ipsum MD */
     @Test
     void testParseLoremIpsumMd(){
-        testParse ("LoremIpsumMarkDown");
+        testParse (TestConfig.LOREM_IPSUM_MD_TEST);
     }
 }
