@@ -25,7 +25,7 @@ for arg in "$@"; do
 done
 
 # Compilation - to delete ?
-gradle --warning-mode all  build > /dev/null
+#gradle --warning-mode all  build > /dev/null
 
 
 # Execution
