@@ -48,15 +48,24 @@ public class FilesUtils {
      * Create html file from content
      *
      * @param filePath file path
-     * @param content     text to write in file
+     * @param content  text to write in file
      */
     public static void createFileFromContent(@NonNull final String filePath, @NonNull final String content) throws IOException {
         File file = new File(filePath);
-        if (!file.getParentFile().exists() && !file.getParentFile().mkdirs())
-            throw new RuntimeException("can't create directory: " + file.getParentFile().getName());
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write(content);
         }
+    }
+
+    /**
+     *
+     * @param path
+     * @throws IOException
+     */
+    public static void createDirectoryIfNotExiste(final String path) throws IOException {
+        File directory = new File(path);
+        if (!directory.exists() && !directory.mkdirs())
+            throw new RuntimeException("can't create directory: " + directory.getName());
     }
 
     /**

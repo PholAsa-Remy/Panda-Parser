@@ -2,8 +2,10 @@ package fr.uparis.pandaparser.core.cmd;
 
 import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.core.build.PandaParser;
+import fr.uparis.pandaparser.utils.FilesUtils;
 import picocli.CommandLine.*;
 
+import java.io.IOException;
 import java.util.concurrent.Callable;
 
 @Command(name = "build", description = "Traduction d'un ou plusieurs fichiers Markdown en fichier(s) HTML5", mixinStandardHelpOptions = true)
@@ -25,11 +27,19 @@ public class BuildCommand implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        PandaParser parser = PandaParser.builder()
+        try {
+            this.setUpPandaParser().parse();
+            return Config.EXIT_SUCCESS;
+        } catch (Exception exception) {
+            return Config.EXIT_FAILURE;
+        }
+    }
+
+    private PandaParser setUpPandaParser() throws IOException {
+        FilesUtils.createDirectoryIfNotExiste(output);
+        return PandaParser.builder()
                 .setInput(input).setOutput(output)
                 .setJobs(jobs).isWatched(watched)
                 .build();
-        parser.parse();
-        return 0;
     }
 }
