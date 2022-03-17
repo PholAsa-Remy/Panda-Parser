@@ -4,6 +4,7 @@ import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.config.Extension;
 import fr.uparis.pandaparser.core.build.PandaParser;
 import fr.uparis.pandaparser.core.build.ParserType;
+import fr.uparis.pandaparser.core.build.parallel.ThreadParser;
 import fr.uparis.pandaparser.core.staticFile.StaticFile;
 import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.extern.java.Log;
@@ -31,8 +32,6 @@ public class Site extends PandaParser {
         try {
             /* parse all files */
             this.parseAllMdFilesToHtml();
-            /* move all static files */
-            this.moveAllStaticFiles();
 
         } catch (IOException e) {
             // FIXME
@@ -60,6 +59,13 @@ public class Site extends PandaParser {
         String contentDirectoryPath = this.input + Config.DEFAULT_CONTENT_DIR;
         return FilesUtils.getAllFilesFromDirectory(contentDirectoryPath, Extension.MD);
     }
+
+
+    private List<ThreadParser> getAllThreadParser() throws IOException {
+        return this.getAllMdFiles().stream().map(inputFilePath -> new ThreadParser(input, output)).collect(Collectors.toList());
+    }
+
+
 
     private void moveAllStaticFiles() throws IOException{
         try{
