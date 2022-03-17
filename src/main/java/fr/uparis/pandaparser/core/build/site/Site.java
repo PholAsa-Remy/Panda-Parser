@@ -10,7 +10,12 @@ import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.extern.java.Log;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 /**
  * Traduction d’un site complet
@@ -22,8 +27,11 @@ import java.util.Set;
 @Log
 public class Site extends PandaParser {
 
+    private final ExecutorService threadPool;
+
     public Site(String input, String output, boolean watch, int jobs) {
         super(input, output, watch, jobs, ParserType.SITE);
+        this.threadPool = Executors.newFixedThreadPool(jobs);
     }
 
 
@@ -64,6 +72,12 @@ public class Site extends PandaParser {
     private List<ThreadParser> getAllThreadParser() throws IOException {
         return this.getAllMdFiles().stream().map(inputFilePath -> new ThreadParser(input, output)).collect(Collectors.toList());
     }
+
+    private void fastParseAllMdFilesToHtml() throws IOException, InterruptedException {
+        List<Future<String>> futures = this.threadPool.invokeAll(this.getAllThreadParser());
+    }
+
+
 
 
 
