@@ -69,4 +69,8 @@ public class Site extends PandaParser {
     private List<ThreadParser> getAllThreadParser() throws IOException {
         return this.getAllMdFiles().stream().map(inputFilePath -> new ThreadParser(input, output)).collect(Collectors.toList());
     }
+
+    private void fastParseAllMdFilesToHtml() throws IOException, InterruptedException {
+        List<Future<String>> futures = this.threadPool.invokeAll(this.getAllThreadParser());
+    }
 }
