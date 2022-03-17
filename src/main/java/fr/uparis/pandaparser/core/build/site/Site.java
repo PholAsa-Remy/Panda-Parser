@@ -35,7 +35,6 @@ public class Site extends PandaParser {
         this.threadPool = Executors.newFixedThreadPool(this.jobs);
     }
 
-
     @Override
     public void parse() {
         try {
