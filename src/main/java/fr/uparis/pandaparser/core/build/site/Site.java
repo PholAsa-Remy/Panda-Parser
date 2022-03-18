@@ -100,8 +100,4 @@ public class Site extends PandaParser {
             e.printStackTrace();
         }
     }
-
-    private void fastParseAllMdFilesToHtml() throws IOException, InterruptedException {
-        List<Future<String>> futures = this.threadPool.invokeAll(this.getAllThreadParser());
-    }
 }
