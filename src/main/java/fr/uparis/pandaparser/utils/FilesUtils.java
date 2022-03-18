@@ -2,7 +2,6 @@ package fr.uparis.pandaparser.utils;
 
 
 import fr.uparis.pandaparser.config.Extension;
-import fr.uparis.pandaparser.core.build.ParserType;
 import fr.uparis.pandaparser.core.build.site.StaticFileType;
 import lombok.NonNull;
 
@@ -10,7 +9,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -55,17 +53,16 @@ public class FilesUtils {
      */
     public static void createFileFromContent(@NonNull final String filePath, @NonNull final String content) throws IOException {
         File file = new File(filePath);
+        createDirectoryIfNotExiste(file.getParentFile().getPath());
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write(content);
         }
     }
 
     /**
-     *
-     * @param path
-     * @throws IOException
+     *  Create directory if not existe
      */
-    public static void createDirectoryIfNotExiste(final String path) throws IOException {
+    public static void createDirectoryIfNotExiste(final String path) {
         File directory = new File(path);
         if (!directory.exists() && !directory.mkdirs())
             throw new RuntimeException("can't create directory: " + directory.getName());

@@ -38,11 +38,14 @@ public class Site extends PandaParser {
     @Override
     public void parse() {
         try {
-            /* parse all files */
+            /*Parse all files */
             //this.parseAllMdFilesToHtml();
 
+            /*Fast parsing*/
             this.fastParseAllMdFilesToHtml();
 
+            /*Move all static files */
+            this.moveAllStaticFiles();
         } catch (IOException e) {
             log.warning("input <" + this.input + "> invalide format");
         } catch (InterruptedException e) {
@@ -73,27 +76,24 @@ public class Site extends PandaParser {
 
 
     /**
-     *
-     * @return
-     * @throws IOException
+     * get All Threads
+     * @return threads parser
      */
     private List<ThreadParser> getAllThreadParser() throws IOException {
         return this.getAllMdFiles().stream().map(inputFilePath -> new ThreadParser(inputFilePath, output)).collect(Collectors.toList());
     }
 
     /**
-     *
-     * @throws IOException
-     * @throws InterruptedException
+     * Fast parsing using thread
      */
     private void fastParseAllMdFilesToHtml() throws IOException, InterruptedException {
-        List<Future<String>> futures =  this.threadPool.invokeAll(getAllThreadParser());
+        List<Future<String>> futures = this.threadPool.invokeAll(getAllThreadParser());
         this.threadPool.shutdown();
         ThreadUtils.logAllFutures(futures);
     }
 
-    private void moveAllStaticFiles() throws IOException{
-        try{
+    private void moveAllStaticFiles() throws IOException {
+        try {
             StaticFile.setAllStaticFiles(this.input, this.output);
         } catch (IOException e) {
             log.warning("moveAllStaticFiles failed");
