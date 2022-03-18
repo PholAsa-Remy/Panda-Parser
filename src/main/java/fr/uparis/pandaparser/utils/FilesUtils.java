@@ -127,7 +127,7 @@ public class FilesUtils {
      * @param output directory destination path
      * @throws IOException if the directory doesn't exist.
      */
-    public static void copyFileFromInputToOutput(String input, String output) throws IOException {
+    public static void copyFileFromInputToOutput(final String input, final String output) throws IOException {
         Files.copy(Paths.get(input), new FileOutputStream(output));
     }
 
