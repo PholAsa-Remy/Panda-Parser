@@ -29,7 +29,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 
     // A HTML Checker (Home page -> http://jtidy.sourceforge.net/)
-    implementation 'jtidy:jtidy:4aug2000r7-dev'
+    implementation files('libs/jtidy-4aug2000r7-dev.jar')
 
     //get extension
     implementation 'org.apache.commons:commons-io:1.3.2'
