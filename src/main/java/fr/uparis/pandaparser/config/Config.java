@@ -5,12 +5,15 @@ import fr.uparis.pandaparser.core.build.ParserType;
 
 import java.io.File;
 
+/**
+ * @author panda-parser group
+ * @version 1.0.0
+ * @since Mars 2022
+ */
 public class Config {
-
 
     private Config() {
     }
-
 
     public static final String APP_NAME = "panda-parser";
 
@@ -28,6 +31,7 @@ public class Config {
     /* Server Compile */
     public static final Integer DEFAULT_PORT = 8080;
 
+    /* Commandline exit status */
     public static final Integer EXIT_SUCCESS = 0;
     public static final int EXIT_FAILURE = 1;
 

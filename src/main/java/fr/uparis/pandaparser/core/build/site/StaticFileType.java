@@ -1,4 +1,4 @@
-package fr.uparis.pandaparser.core.build.site.staticFile;
+package fr.uparis.pandaparser.core.build.site;
 
 import fr.uparis.pandaparser.utils.FilesUtils;
 

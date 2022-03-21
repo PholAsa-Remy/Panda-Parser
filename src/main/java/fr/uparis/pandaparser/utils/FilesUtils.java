@@ -2,7 +2,7 @@ package fr.uparis.pandaparser.utils;
 
 
 import fr.uparis.pandaparser.config.Extension;
-import fr.uparis.pandaparser.core.build.site.staticFile.StaticFileType;
+import fr.uparis.pandaparser.core.build.site.StaticFileType;
 import lombok.NonNull;
 
 import java.io.*;

@@ -11,6 +11,11 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
+/**
+ * @author panda-parser group
+ * @version 1.0.0
+ * @since Mars 2022
+ */
 @Log
 public record ThreadStaticFilesCopy(String input, String output) implements Callable<String> {
 
