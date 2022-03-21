@@ -32,23 +32,23 @@ class SiteTest {
     }
 
     @Test
-    void checkStaticFilesWhenBuildingSite(){
+    void checkStaticFilesWhenBuildingSite() {
         PandaParser testStatic = PandaParser.builder().setInput(INPUT_TEST_DIR).setOutput(OUTPUT_TEST_DIR).build();
         testStatic.parse();
-        File file1 = new File (OUTPUT_TEST_DIR + TEST_JPG_PATH);
-        File file2 = new File (OUTPUT_TEST_DIR + TEST_CSS_PATH);
-        File file3 = new File (OUTPUT_TEST_DIR + TEST_MP3_PATH);
-        assertTrue (file1.exists());
-        assertTrue (file2.exists());
-        assertTrue  (file3.exists());
+        File file1 = new File(OUTPUT_TEST_DIR + TEST_JPG_PATH);
+        File file2 = new File(OUTPUT_TEST_DIR + TEST_CSS_PATH);
+        File file3 = new File(OUTPUT_TEST_DIR + TEST_MP3_PATH);
+        assertTrue(file1.exists());
+        assertTrue(file2.exists());
+        assertTrue(file3.exists());
     }
 
     @Test
-    void checkNoStaticFilesIsNotTransferInTheStaticDirectory(){
+    void checkNoStaticFilesIsNotTransferInTheStaticDirectory() {
         PandaParser testStatic = PandaParser.builder().setInput(INPUT_TEST_DIR).setOutput(OUTPUT_TEST_DIR).build();
         testStatic.parse();
-        File file = new File (OUTPUT_TEST_DIR + TEST_MD_STATIC_PATH);
-        assertFalse (file.exists());
+        File file = new File(OUTPUT_TEST_DIR + TEST_MD_STATIC_PATH);
+        assertFalse(file.exists());
     }
 
 }

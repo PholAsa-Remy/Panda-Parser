@@ -2,7 +2,7 @@ package fr.uparis.pandaparser.utils;
 
 
 import fr.uparis.pandaparser.config.Extension;
-import fr.uparis.pandaparser.core.build.site.StaticFileType;
+import fr.uparis.pandaparser.core.build.site.staticFile.StaticFileType;
 import lombok.NonNull;
 
 import java.io.*;
@@ -60,7 +60,7 @@ public class FilesUtils {
     }
 
     /**
-     *  Create directory if not existe
+     * Create directory if not existe
      */
     public static void createDirectoryIfNotExiste(final String path) {
         File directory = new File(path);
@@ -111,19 +111,14 @@ public class FilesUtils {
      */
     public static Set<String> getAllStaticFilesFromDirectory(@NonNull final String directory) throws IOException {
         return getAllFilesFromDirectory(directory)
-                .stream().filter(file -> {
-                    String extension = file.substring(file.lastIndexOf("." ));
-                    return StaticFileType.IMAGES.getExtensions().contains(extension) ||
-                            StaticFileType.VIDEOS.getExtensions().contains(extension)||
-                            StaticFileType.STYLES.getExtensions().contains(extension);
-                        })
-        .collect(Collectors.toSet());
+                .stream().filter(StaticFileType::isStatic)
+                .collect(Collectors.toSet());
     }
 
     /**
      * List static files within a directory.
      *
-     * @param input directory source path
+     * @param input  directory source path
      * @param output directory destination path
      * @throws IOException if the directory doesn't exist.
      */
@@ -151,5 +146,9 @@ public class FilesUtils {
     public static String getHtmlFilenameFromMdFile(@NonNull final String mdFilename) {
         return mdFilename.substring(0, mdFilename.length() - Extension.MD.getExtensionName().length())
                 + Extension.HTML.getExtensionName();
+    }
+
+    public static String getFileExtension(@NonNull final String filename) {
+        return filename.substring(filename.lastIndexOf("."));
     }
 }

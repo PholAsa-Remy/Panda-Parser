@@ -5,7 +5,7 @@ import fr.uparis.pandaparser.config.Extension;
 import fr.uparis.pandaparser.core.build.PandaParser;
 import fr.uparis.pandaparser.core.build.ParserType;
 import fr.uparis.pandaparser.core.build.parallel.ThreadParser;
-import fr.uparis.pandaparser.core.staticFile.StaticFile;
+import fr.uparis.pandaparser.core.build.parallel.ThreadStaticFilesCopy;
 import fr.uparis.pandaparser.utils.FilesUtils;
 import fr.uparis.pandaparser.utils.ThreadUtils;
 import lombok.extern.java.Log;
@@ -13,7 +13,9 @@ import lombok.extern.java.Log;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 /**
@@ -38,19 +40,22 @@ public class Site extends PandaParser {
     @Override
     public void parse() {
         try {
-            /*Parse all files */
-            //this.parseAllMdFilesToHtml();
 
-            /*Fast parsing*/
-            this.fastParseAllMdFilesToHtml();
+            this.startPoolThreadParsing();
 
-            /*Move all static files */
-            this.moveAllStaticFiles();
         } catch (IOException e) {
             log.warning("input <" + this.input + "> invalide format");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private void startPoolThreadParsing() throws IOException, InterruptedException {
+        List<Future<String>> threadParserResults = this.threadPool.invokeAll(this.getAllThreadParser());
+        List<Future<String>> threadStaticCopyResults = this.threadPool.invokeAll(this.getAllThreadStaticFilesCopy());
+        this.threadPool.shutdown();
+        ThreadUtils.logAllFutures(threadParserResults);
+        ThreadUtils.logAllFutures(threadStaticCopyResults);
     }
 
     /**
@@ -88,17 +93,14 @@ public class Site extends PandaParser {
      * Fast parsing using thread
      */
     private void fastParseAllMdFilesToHtml() throws IOException, InterruptedException {
-        List<Future<String>> futures = this.threadPool.invokeAll(getAllThreadParser());
+        List<Future<String>> futures = this.threadPool.invokeAll(this.getAllThreadParser());
         this.threadPool.shutdown();
         ThreadUtils.logAllFutures(futures);
     }
 
-    private void moveAllStaticFiles() throws IOException {
-        try {
-            StaticFile.setAllStaticFiles(this.input, this.output);
-        } catch (IOException e) {
-            log.warning("moveAllStaticFiles failed");
-            e.printStackTrace();
-        }
+    private List<ThreadStaticFilesCopy> getAllThreadStaticFilesCopy() {
+        String inputStaticFilePath = this.input + Config.DEFAULT_STATIC_DIR;
+        String outputStaticFilePath = this.output + Config.DEFAULT_STATIC_DIR;
+        return ThreadStaticFilesCopy.createListOfThreadStaticFilesCopy(inputStaticFilePath, outputStaticFilePath);
     }
 }
