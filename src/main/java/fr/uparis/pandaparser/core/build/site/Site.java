@@ -77,6 +77,7 @@ public class Site extends PandaParser {
 
     /**
      * get All Threads
+     *
      * @return threads parser
      */
     private List<ThreadParser> getAllThreadParser() throws IOException {
