@@ -17,7 +17,11 @@ import java.util.stream.Collectors;
  * @since Mars 2022
  */
 @Log
-public record ThreadStaticFilesCopy(String input, String output) implements Callable<String> {
+public class ThreadStaticFilesCopy extends AbstractThread {
+
+    public ThreadStaticFilesCopy(@NonNull final String input, @NonNull final String output) {
+        super(input, output);
+    }
 
     @Override
     public String call() throws Exception {
