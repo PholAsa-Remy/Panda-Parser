@@ -3,7 +3,7 @@ package fr.uparis.pandaparser.core.build.site;
 import org.junit.jupiter.api.Test;
 
 import static fr.uparis.pandaparser.config.TestConfig.JAVA_EXTENSION_FILE;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class StaticFileTypeTest {
 

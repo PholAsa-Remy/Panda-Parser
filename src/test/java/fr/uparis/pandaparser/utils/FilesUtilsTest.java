@@ -43,6 +43,16 @@ class FilesUtilsTest {
      *   TEST getContentFromPath method    *
      * *********************************** */
 
+    @AfterAll
+    static void cleanAll() throws IOException {
+
+        Files.deleteIfExists(Path.of(EXISTING_FILE_PATH));
+        Files.deleteIfExists(Path.of(NEW_FILE_PATH));
+
+        Files.deleteIfExists(Path.of(NEW_DIR_PATH));
+        Files.deleteIfExists(Path.of(DIR_FOR_TESTING));
+    }
+
     @Test
     void whenReadExistingFileUsingGetContentFromPath_thenCorrect() throws IOException {
         assertEquals(TEXT, FilesUtils.getFileContent(EXISTING_FILE_PATH));
@@ -53,14 +63,14 @@ class FilesUtilsTest {
         assertThrows(IOException.class, () -> FilesUtils.getFileContent(NEW_FILE_PATH));
     }
 
+    /* ************************************** *
+     *   TEST createFileFromContent method    *
+     * ************************************** */
+
     @Test
     void whenReadNullFileUsingGetContentFromPath_thenExcept() {
         assertThrows(NullPointerException.class, () -> FilesUtils.getFileContent(null));
     }
-
-    /* ************************************** *
-     *   TEST createFileFromContent method    *
-     * ************************************** */
 
     @Test
     void whenCreatingFileUsingCreateFileFromContent_thenCorrect() throws IOException {
@@ -77,15 +87,15 @@ class FilesUtilsTest {
         assertThrows(NullPointerException.class, () -> FilesUtils.createFileFromContent(null, TEXT));
     }
 
-    @Test
-    void whenCreatingFileUsingCreateFileFromContent_WithNullContent_thenExcept() {
-        assertThrows(NullPointerException.class, () -> FilesUtils.createFileFromContent(NEW_FILE_PATH, null));
-    }
-
 
     /* ***************************************** *
      *   TEST getAllFilesFromDirectory method    *
      * ***************************************** */
+
+    @Test
+    void whenCreatingFileUsingCreateFileFromContent_WithNullContent_thenExcept() {
+        assertThrows(NullPointerException.class, () -> FilesUtils.createFileFromContent(NEW_FILE_PATH, null));
+    }
 
     @Test
     void whenListingFilesUsingGetAllFilesFromDirectory_withNullDir_thenExcept() {
@@ -155,14 +165,14 @@ class FilesUtilsTest {
         assertEquals(NEW_MD_FILE_NAME, FilesUtils.getFileName(NEW_FILE_PATH));
     }
 
+    /* ****************************************** *
+     *   TEST getHtmlFilenameFromMdFile method    *
+     * ****************************************** */
+
     @Test
     void whenGetFileNameUsingGetAllFilesName_withNullPath_thenExcept() {
         assertThrows(NullPointerException.class, () -> FilesUtils.getFileName(null));
     }
-
-    /* ****************************************** *
-     *   TEST getHtmlFilenameFromMdFile method    *
-     * ****************************************** */
 
     @Test
     void whenGetHtmlFilenameFromNullMdFile_thenNullPointerExcept() {
@@ -188,15 +198,5 @@ class FilesUtilsTest {
     void whenCreateDirectory_WithNotExistDirectory_thenCorrect() throws IOException {
         FilesUtils.createDirectoryIfNotExiste(NOT_EXISTING_DIR);
         assertTrue(Files.deleteIfExists(Path.of(NOT_EXISTING_DIR)));
-    }
-
-    @AfterAll
-    static void cleanAll() throws IOException {
-
-        Files.deleteIfExists(Path.of(EXISTING_FILE_PATH));
-        Files.deleteIfExists(Path.of(NEW_FILE_PATH));
-
-        Files.deleteIfExists(Path.of(NEW_DIR_PATH));
-        Files.deleteIfExists(Path.of(DIR_FOR_TESTING));
     }
 }
