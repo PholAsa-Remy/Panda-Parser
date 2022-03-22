@@ -10,6 +10,7 @@ import lombok.extern.java.Log;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -39,14 +40,12 @@ public class Site extends PandaParser {
 
             this.startPoolThreadParsing();
 
-        } catch (IOException e) {
+        } catch (Exception exception) {
             log.warning("input <" + this.input + "> invalide format");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
-    private void startPoolThreadParsing() throws IOException, InterruptedException {
+    private void startPoolThreadParsing() throws IOException, InterruptedException, ExecutionException {
         List<Future<String>> threadParserResults = this.threadPool.invokeAll(this.getAllThreadParser());
         List<Future<String>> threadStaticCopyResults = this.threadPool.invokeAll(this.getAllThreadStaticFilesCopier());
         this.threadPool.shutdown();

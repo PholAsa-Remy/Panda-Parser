@@ -9,16 +9,17 @@ import java.util.concurrent.Future;
 @Log
 public class ThreadUtils {
 
-    public static void logFuture(final Future<String> future) {
-        try {
-            log.info(future.get());
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+    private ThreadUtils() {
     }
 
-    public static void logAllFutures(final List<Future<String>> futures) {
-        futures.forEach(ThreadUtils::logFuture);
+    public static void logFuture(final Future<String> future) throws ExecutionException, InterruptedException {
+        log.info(future.get());
+    }
+
+    public static void logAllFutures(final List<Future<String>> futures) throws ExecutionException, InterruptedException {
+        for (Future<String> future : futures)
+            logFuture(future);
+
     }
 
 }

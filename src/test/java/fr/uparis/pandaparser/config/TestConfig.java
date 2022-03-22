@@ -17,4 +17,7 @@ public class TestConfig {
     public static final String TEST_JPG_PATH = "" + File.separator + "static" + File.separator + "koharu.jpg";
     public static final String TEST_CSS_PATH = "" + File.separator + "static" + File.separator + "exampleTest.css";
     public static final String TEST_MD_STATIC_PATH = "" + File.separator + "static" + File.separator + "exampleTest.md";
+
+    public static final String JAVA_EXTENSION_FILE = "NotStaticFile.java";
+    public static final String NOT_EXISTING_DIR = "not-existing-dir";
 }

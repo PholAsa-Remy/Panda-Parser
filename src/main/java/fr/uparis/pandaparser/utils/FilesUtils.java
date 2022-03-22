@@ -62,10 +62,10 @@ public class FilesUtils {
     /**
      * Create directory if not existe
      */
-    public static void createDirectoryIfNotExiste(final String path) {
+    public static void createDirectoryIfNotExiste(final String path) throws IOException {
         File directory = new File(path);
-        if (!directory.exists() && !directory.mkdirs())
-            throw new RuntimeException("can't create directory: " + directory.getName());
+        if (!directory.exists())
+            Files.createDirectory(Path.of(path));
     }
 
 
