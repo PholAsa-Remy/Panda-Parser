@@ -16,8 +16,37 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
- * Traduction d’un site complet
+ * Traduction d'un site complet
  *
+ * <p>
+ * Translation of a complete site, stored as a full tree on the filesystem,
+ * into another  tree.  The site follows a  very  specific  tree structure.
+ * The project must contain the following elements :
+ * <ul>
+ *     <li>At the root, a site.toml configuration file using the TOML format.
+ *     Using the TOML format makes it easily extensible.</li>
+ *     <li>In the contents sub-directory, a set of .md files containing the
+ *     documents to be converted into web pages including at least one index.md
+ *     file which will serve as the root of the site.</li>
+ * </ul>
+ * </p>
+ *
+ * <h3> Usage exemple </h3>
+ *
+ * <pre> {@code
+ *  public class PandaParserTest {
+ *      private PandaParser siteBuilder(String inputDir, String outputDir) {
+ *         return PandaParser.builder()
+ *                 .setInput(inputDir).setOutput(outputDir)
+ *                 .build();
+ *     }
+ *     public void parse () {
+ *         siteBuilder().parse("my-site", "out");
+ *     }
+ *  }
+ * }</pre>
+ *
+ *  * See also : {@link PandaParser}
  * @author panda-parser groupe
  * @version 1.0.0
  * @since Fev 2022
@@ -48,7 +77,7 @@ public class Site extends PandaParser {
     /**
      * Submit all threads
      *
-     * @see  Thread {@link ExecutorService} {@link ThreadParser} {@link ThreadStaticFilesCopier}
+     * See also : {@link ThreadParser}, {@link ThreadStaticFilesCopier}, {@link Thread}, {@link ExecutorService}
      */
     private void startPoolThreadParsing() throws IOException, InterruptedException, ExecutionException {
         List<Future<String>> threadParserResults = this.threadPool.invokeAll(this.getAllThreadParser());
