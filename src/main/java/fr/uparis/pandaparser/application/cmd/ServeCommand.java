@@ -1,7 +1,8 @@
-package fr.uparis.pandaparser.core.cmd;
+package fr.uparis.pandaparser.application.cmd;
 
 import fr.uparis.pandaparser.config.Config;
-import picocli.CommandLine.*;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 import java.util.concurrent.Callable;
 

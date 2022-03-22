@@ -2,7 +2,6 @@ package fr.uparis.pandaparser.utils;
 
 
 import fr.uparis.pandaparser.config.Extension;
-import fr.uparis.pandaparser.core.build.ParserType;
 import fr.uparis.pandaparser.core.build.site.StaticFileType;
 import lombok.NonNull;
 
@@ -10,7 +9,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -51,16 +49,25 @@ public class FilesUtils {
      * Create html file from content
      *
      * @param filePath file path
-     * @param content     text to write in file
+     * @param content  text to write in file
      */
     public static void createFileFromContent(@NonNull final String filePath, @NonNull final String content) throws IOException {
         File file = new File(filePath);
-        if (!file.getParentFile().exists() && !file.getParentFile().mkdirs())
-            throw new RuntimeException("can't create directory: " + file.getParentFile().getName());
+        createDirectoryIfNotExiste(file.getParentFile().getPath());
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write(content);
         }
     }
+
+    /**
+     * Create directory if not existe
+     */
+    public static void createDirectoryIfNotExiste(final String path) throws IOException {
+        File directory = new File(path);
+        if (!directory.exists())
+            Files.createDirectory(Path.of(path));
+    }
+
 
     /**
      * List files within a directory.
@@ -104,23 +111,18 @@ public class FilesUtils {
      */
     public static Set<String> getAllStaticFilesFromDirectory(@NonNull final String directory) throws IOException {
         return getAllFilesFromDirectory(directory)
-                .stream().filter(file -> {
-                    String extension = file.substring(file.lastIndexOf("." ));
-                    return StaticFileType.IMAGES.getExtensions().contains(extension) ||
-                            StaticFileType.VIDEOS.getExtensions().contains(extension)||
-                            StaticFileType.STYLES.getExtensions().contains(extension);
-                        })
-        .collect(Collectors.toSet());
+                .stream().filter(StaticFileType::isStatic)
+                .collect(Collectors.toSet());
     }
 
     /**
      * List static files within a directory.
      *
-     * @param input directory source path
+     * @param input  directory source path
      * @param output directory destination path
      * @throws IOException if the directory doesn't exist.
      */
-    public static void copyFileFromInputToOutput(String input, String output) throws IOException {
+    public static void copyFileFromInputToOutput(final String input, final String output) throws IOException {
         Files.copy(Paths.get(input), new FileOutputStream(output));
     }
 
@@ -144,5 +146,9 @@ public class FilesUtils {
     public static String getHtmlFilenameFromMdFile(@NonNull final String mdFilename) {
         return mdFilename.substring(0, mdFilename.length() - Extension.MD.getExtensionName().length())
                 + Extension.HTML.getExtensionName();
+    }
+
+    public static String getFileExtension(@NonNull final String filename) {
+        return filename.substring(filename.lastIndexOf("."));
     }
 }
