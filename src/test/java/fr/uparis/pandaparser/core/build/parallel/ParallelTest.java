@@ -1,12 +1,10 @@
 package fr.uparis.pandaparser.core.build.parallel;
 
-import fr.uparis.pandaparser.config.TestConfig;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
 import static fr.uparis.pandaparser.config.TestConfig.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ParallelTest {
 

@@ -19,7 +19,6 @@ public class ThreadUtils {
     public static void logAllFutures(final List<Future<String>> futures) throws ExecutionException, InterruptedException {
         for (Future<String> future : futures)
             logFuture(future);
-
     }
 
 }
