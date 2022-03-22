@@ -8,4 +8,5 @@ import java.util.concurrent.Callable;
 public abstract class  AbstractThread implements Callable<String> {
     protected final String input;
     protected final String output;
+
 }
