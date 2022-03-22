@@ -12,6 +12,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * ThreadParser - to translate Md files to Html.
+ *
+ * <p>
+ * see also:
+ * {@link AbstractThread}
+ * {@link fr.uparis.pandaparser.core.build.site.Site}
+ * {@link fr.uparis.pandaparser.core.build.simple.Simple}
+ * </p>
+ *
  * @author panda-parser group
  * @version 1.0.0
  * @since Mars 2022
