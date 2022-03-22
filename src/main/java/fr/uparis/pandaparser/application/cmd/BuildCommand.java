@@ -1,8 +1,9 @@
-package fr.uparis.pandaparser.core.cmd;
+package fr.uparis.pandaparser.application.cmd;
 
 import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.core.build.PandaParser;
-import picocli.CommandLine.*;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 import java.util.concurrent.Callable;
 
@@ -25,11 +26,18 @@ public class BuildCommand implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        PandaParser parser = PandaParser.builder()
+        try {
+            this.setUpPandaParser().parse();
+            return Config.EXIT_SUCCESS;
+        } catch (Exception exception) {
+            return Config.EXIT_FAILURE;
+        }
+    }
+
+    private PandaParser setUpPandaParser() {
+        return PandaParser.builder()
                 .setInput(input).setOutput(output)
                 .setJobs(jobs).isWatched(watched)
                 .build();
-        parser.parse();
-        return 0;
     }
 }

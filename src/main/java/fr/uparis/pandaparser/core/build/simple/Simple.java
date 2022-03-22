@@ -4,13 +4,14 @@ import fr.uparis.pandaparser.core.build.PandaParser;
 import fr.uparis.pandaparser.core.build.ParserType;
 import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.extern.java.Log;
-import org.commonmark.node.*;
+import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
-
-import java.io.*;
-
 import org.w3c.tidy.Tidy;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import static fr.uparis.pandaparser.utils.FilesUtils.createFileFromContent;
 import static fr.uparis.pandaparser.utils.FilesUtils.getFileContent;
@@ -68,28 +69,29 @@ public class Simple extends PandaParser {
 
     /**
      * Make the html more readable
+     *
      * @param htmlContent the content of the html to beautify
      * @return beautifiedHtml the beautified html
      */
-    private String beautifyHtml (String htmlContent){
+    private String beautifyHtml(String htmlContent) {
         Tidy tidy = new Tidy();
         tidy.setIndentContent(true);
         ByteArrayInputStream inputStream = new ByteArrayInputStream(htmlContent.getBytes());
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        tidy.parse(inputStream,outputStream);
+        tidy.parse(inputStream, outputStream);
         return outputStream.toString();
     }
 
     @Override
     public void parse() {
-        try{
+        try {
 
             String inputFileName = FilesUtils.getHtmlFilenameFromMdFile(FilesUtils.getFileName(input));
             String fileContent = getFileContent(input);
             String html = beautifyHtml(buildHtml(fileContent));
-            createFileFromContent(this.output + inputFileName ,html);
+            createFileFromContent(this.output + inputFileName, html);
             log.info("MD 2 HTML parser : input" + this.input + " -> out: " + this.output + inputFileName);
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

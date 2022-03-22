@@ -3,8 +3,10 @@ package fr.uparis.pandaparser.core.build;
 
 import org.junit.jupiter.api.Test;
 
-import static fr.uparis.pandaparser.config.TestConfig.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static fr.uparis.pandaparser.config.TestConfig.INPUT_TEST_DIR;
+import static fr.uparis.pandaparser.config.TestConfig.MD_FILE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Parser Type Tests
