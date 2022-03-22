@@ -1,8 +1,8 @@
-package fr.uparis.pandaparser;
+package fr.uparis.pandaparser.application;
 
 
-import fr.uparis.pandaparser.core.cmd.BuildCommand;
-import fr.uparis.pandaparser.core.cmd.ServeCommand;
+import fr.uparis.pandaparser.application.cmd.BuildCommand;
+import fr.uparis.pandaparser.application.cmd.ServeCommand;
 import picocli.CommandLine;
 import picocli.CommandLine.*;
 
