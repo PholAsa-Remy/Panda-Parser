@@ -35,8 +35,7 @@ public class BuildCommand implements Callable<Integer> {
         }
     }
 
-    private PandaParser setUpPandaParser() throws IOException {
-        FilesUtils.createDirectoryIfNotExiste(output);
+    private PandaParser setUpPandaParser() {
         return PandaParser.builder()
                 .setInput(input).setOutput(output)
                 .setJobs(jobs).isWatched(watched)

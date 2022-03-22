@@ -29,8 +29,17 @@ public class ThreadParser extends AbstractThread {
         return Thread.currentThread().getName() + " : input : " + this.input + " to out: " + this.output;
     }
 
+    /**
+     * Create list of thread parser from input directory
+     *
+     * @param inputDirectory  input
+     * @param outputDirectory output
+     * @return list of thread
+     * @throws IOException io exception
+     */
     public static List<AbstractThread> createListOfThreads(String inputDirectory, String outputDirectory) throws IOException {
         String contentDirectoryPath = inputDirectory + Config.DEFAULT_CONTENT_DIR;
+        FilesUtils.createDirectoryIfNotExiste(outputDirectory);
         return FilesUtils.getAllFilesFromDirectory(contentDirectoryPath, Extension.MD)
                 .stream().map(inputFilePath -> new ThreadParser(inputFilePath, outputDirectory))
                 .collect(Collectors.toList());

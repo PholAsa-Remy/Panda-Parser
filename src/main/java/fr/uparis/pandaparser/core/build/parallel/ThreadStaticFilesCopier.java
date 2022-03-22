@@ -29,19 +29,33 @@ public class ThreadStaticFilesCopier extends AbstractThread {
         return "Copy file from : " + this.input + " to : " + this.output;
     }
 
+    /**
+     * Create list of thread copier from static input
+     *
+     * @param input  input directory
+     * @param output output directory
+     * @return list of thread copier
+     */
     public static List<AbstractThread> createListOfThreads(@NonNull final String input, @NonNull String output) {
         String inputStaticFiles = input + Config.DEFAULT_STATIC_DIR;
         String outputStaticFile = output + Config.DEFAULT_STATIC_DIR;
         try {
             Set<String> staticFilesPath = FilesUtils.getAllStaticFilesFromDirectory(inputStaticFiles);
             FilesUtils.createDirectoryIfNotExiste(outputStaticFile);
-            return staticFilesPath.stream().map(inputFile -> getThreadStaticFilesCopy(inputFile, outputStaticFile)).collect(Collectors.toList());
+            return staticFilesPath.stream().map(inputFile -> createFromInputFileAndOutputDir(inputFile, outputStaticFile)).collect(Collectors.toList());
         } catch (IOException exception) {
             return new ArrayList<>();
         }
     }
 
-    private static ThreadStaticFilesCopier getThreadStaticFilesCopy(String inputFile, String output) {
+    /**
+     * Get thread from input file & output directory
+     *
+     * @param inputFile input file
+     * @param output    output directory
+     * @return new thread with input & output (generated)
+     */
+    private static ThreadStaticFilesCopier createFromInputFileAndOutputDir(String inputFile, String output) {
         String outputFile = output + FilesUtils.getFileName(inputFile);
         return new ThreadStaticFilesCopier(inputFile, outputFile);
     }
