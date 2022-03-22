@@ -45,8 +45,9 @@ import java.util.concurrent.Future;
  *     }
  *  }
  * }</pre>
- *
+ * <p>
  *  * See also : {@link PandaParser}
+ *
  * @author panda-parser groupe
  * @version 1.0.0
  * @since Fev 2022
@@ -54,7 +55,7 @@ import java.util.concurrent.Future;
 @Log
 public class Site extends PandaParser {
 
-    /*Thread pool service*/
+    /*Thread pool service */
     private final ExecutorService threadPool;
 
 
@@ -75,8 +76,13 @@ public class Site extends PandaParser {
     }
 
     /**
-     * Submit all threads
-     *
+     * Parallel translation independent parts of the site:
+     * <p>
+     *     <ul>
+     *         <li>Parallel translation of MDs files to HTMLs</li>
+     *         <li>Parallel addition of static files</li>
+     *     </ul>
+     * <p>
      * See also : {@link ThreadParser}, {@link ThreadStaticFilesCopier}, {@link Thread}, {@link ExecutorService}
      */
     private void startPoolThreadParsing() throws IOException, InterruptedException, ExecutionException {
@@ -88,18 +94,18 @@ public class Site extends PandaParser {
     }
 
     /**
-     * get All Threads parser
+     * Get All Threads parser to translate MDs.
      *
-     * @return threads parser
+     * @return Collection of tasks to submit them in ExecutorService
      */
     private List<AbstractThread> getAllThreadParser() throws IOException {
         return ThreadParser.createListOfThreads(this.input, this.output);
     }
 
     /**
-     * get All Threads to copy statics files
+     * Get All thread to add statics file in the website
      *
-     * @return threads parser
+     * @return Collection of tasks to submit them in ExecutorService
      */
     private List<AbstractThread> getAllThreadStaticFilesCopier() {
         return ThreadStaticFilesCopier.createListOfThreads(this.input, this.output);
