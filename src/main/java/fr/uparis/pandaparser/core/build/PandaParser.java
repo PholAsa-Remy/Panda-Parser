@@ -19,16 +19,14 @@ import java.io.File;
  * @since Fev 2022
  */
 @Log
+@Getter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class PandaParser {
 
-    @Getter
     protected final String input;
-    @Getter
     protected final String output;
     protected final boolean watch;
     protected final int jobs;
-    @Getter
     protected final ParserType type;
 
     /**

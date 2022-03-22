@@ -25,7 +25,7 @@ import java.util.concurrent.Future;
 @Log
 public class Site extends PandaParser {
 
-    /*Thread pool*/
+    /*Thread pool service*/
     private final ExecutorService threadPool;
 
 
@@ -45,6 +45,11 @@ public class Site extends PandaParser {
         }
     }
 
+    /**
+     * Submit all threads
+     *
+     * @see  Thread {@link ExecutorService} {@link ThreadParser} {@link ThreadStaticFilesCopier}
+     */
     private void startPoolThreadParsing() throws IOException, InterruptedException, ExecutionException {
         List<Future<String>> threadParserResults = this.threadPool.invokeAll(this.getAllThreadParser());
         List<Future<String>> threadStaticCopyResults = this.threadPool.invokeAll(this.getAllThreadStaticFilesCopier());
