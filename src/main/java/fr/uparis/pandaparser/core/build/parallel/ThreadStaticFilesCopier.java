@@ -12,6 +12,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * Thread to copy static files
+ *
+ * <p>see also: {@link java.util.concurrent.Callable} {@link AbstractThread}</p>
+ *
  * @author panda-parser group
  * @version 1.0.0
  * @since Mars 2022
