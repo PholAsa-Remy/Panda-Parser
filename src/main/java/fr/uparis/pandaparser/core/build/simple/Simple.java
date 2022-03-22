@@ -4,13 +4,14 @@ import fr.uparis.pandaparser.core.build.PandaParser;
 import fr.uparis.pandaparser.core.build.ParserType;
 import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.extern.java.Log;
-import org.commonmark.node.*;
+import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
-
-import java.io.*;
-
 import org.w3c.tidy.Tidy;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import static fr.uparis.pandaparser.utils.FilesUtils.createFileFromContent;
 import static fr.uparis.pandaparser.utils.FilesUtils.getFileContent;

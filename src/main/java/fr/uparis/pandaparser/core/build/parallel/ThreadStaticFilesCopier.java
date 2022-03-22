@@ -23,12 +23,6 @@ public class ThreadStaticFilesCopier extends AbstractThread {
         super(input, output);
     }
 
-    @Override
-    public String call() throws Exception {
-        FilesUtils.copyFileFromInputToOutput(input, output);
-        return "Copy file from : " + this.input + " to : " + this.output;
-    }
-
     /**
      * Create list of thread copier from static input
      *
@@ -58,6 +52,12 @@ public class ThreadStaticFilesCopier extends AbstractThread {
     private static ThreadStaticFilesCopier createFromInputFileAndOutputDir(String inputFile, String output) {
         String outputFile = output + FilesUtils.getFileName(inputFile);
         return new ThreadStaticFilesCopier(inputFile, outputFile);
+    }
+
+    @Override
+    public String call() throws Exception {
+        FilesUtils.copyFileFromInputToOutput(input, output);
+        return "Copy file from : " + this.input + " to : " + this.output;
     }
 
 }

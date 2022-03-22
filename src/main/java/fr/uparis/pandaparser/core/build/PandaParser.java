@@ -3,13 +3,13 @@ package fr.uparis.pandaparser.core.build;
 import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.core.build.simple.Simple;
 import fr.uparis.pandaparser.core.build.site.Site;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Objects;
 
 /**
  * Classe abstraite PandaParser + classe interne pandaParser. Builder pour créer un Parser.
@@ -32,14 +32,6 @@ public abstract class PandaParser {
     protected final ParserType type;
 
     /**
-     * Permet de faire une traduction d'un/es fichier(s) MD(s) en HTML(s).
-     *
-     * @see Site
-     * @see Simple
-     */
-    public abstract void parse();
-
-    /**
      * Création d'un builder.
      *
      * @return le Builder
@@ -47,6 +39,14 @@ public abstract class PandaParser {
     public static Builder builder() {
         return new Builder();
     }
+
+    /**
+     * Permet de faire une traduction d'un/es fichier(s) MD(s) en HTML(s).
+     *
+     * @see Site
+     * @see Simple
+     */
+    public abstract void parse();
 
     /**
      * Classe interne pour build PandaParser

@@ -4,7 +4,8 @@ package fr.uparis.pandaparser.application;
 import fr.uparis.pandaparser.application.cmd.BuildCommand;
 import fr.uparis.pandaparser.application.cmd.ServeCommand;
 import picocli.CommandLine;
-import picocli.CommandLine.*;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
 
 /**
  * Application - Main Class
@@ -22,7 +23,8 @@ import picocli.CommandLine.*;
 )
 public class Application {
 
-    private Application() {}
+    private Application() {
+    }
 
     /**
      * main method

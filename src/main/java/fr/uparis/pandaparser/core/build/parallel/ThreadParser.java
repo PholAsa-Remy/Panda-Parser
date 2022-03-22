@@ -23,12 +23,6 @@ public class ThreadParser extends AbstractThread {
         super(input, output);
     }
 
-    @Override
-    public String call() throws Exception {
-        PandaParser.builder().setInput(input).setOutput(output).build().parse();
-        return Thread.currentThread().getName() + " : input : " + this.input + " to out: " + this.output;
-    }
-
     /**
      * Create list of thread parser from input directory
      *
@@ -43,6 +37,12 @@ public class ThreadParser extends AbstractThread {
         return FilesUtils.getAllFilesFromDirectory(contentDirectoryPath, Extension.MD)
                 .stream().map(inputFilePath -> new ThreadParser(inputFilePath, outputDirectory))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public String call() throws Exception {
+        PandaParser.builder().setInput(input).setOutput(output).build().parse();
+        return Thread.currentThread().getName() + " : input : " + this.input + " to out: " + this.output;
     }
 
 }

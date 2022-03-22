@@ -14,7 +14,7 @@ MAIN_JAR=build/libs/panda-parser.jar
 CLASSPATH=$(for name in $(ls -1 $LIBS_PATH); do echo "$LIBS_PATH/$name"; done | tr '\n' ':')"$MAIN_JAR"
 
 # Le chemin vers la classe main
-MAIN_CLASS=fr.uparis.pandaparser.Application
+MAIN_CLASS=fr.uparis.pandaparser.application.Application
 
 
 # Stocker les arguments dans ARGS

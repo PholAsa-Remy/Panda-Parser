@@ -24,10 +24,6 @@ public enum StaticFileType {
         this.extensions = extensions;
     }
 
-    public Set<String> getExtensions() {
-        return extensions;
-    }
-
     public static boolean isStatic(String filename) {
         String extension = FilesUtils.getFileExtension(filename);
         for (StaticFileType value : values()) {
@@ -35,5 +31,9 @@ public enum StaticFileType {
                 return true;
         }
         return false;
+    }
+
+    public Set<String> getExtensions() {
+        return extensions;
     }
 }
