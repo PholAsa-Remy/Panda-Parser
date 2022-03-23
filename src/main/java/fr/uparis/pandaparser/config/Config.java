@@ -27,6 +27,9 @@ public class Config {
     /* Commandline exit status */
     public static final Integer EXIT_SUCCESS = 0;
     public static final int EXIT_FAILURE = 1;
+    /* incremental translate */
+    public static final String RECORDER_FILENAME = "loadLastModificationRecorded.ser";
+
     private Config() {
     }
 

@@ -2,6 +2,7 @@ package fr.uparis.pandaparser.utils;
 
 
 import fr.uparis.pandaparser.config.Extension;
+import fr.uparis.pandaparser.core.build.incremental.HistoryManager;
 import fr.uparis.pandaparser.core.build.site.StaticFileType;
 import lombok.NonNull;
 
@@ -10,7 +11,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -83,9 +83,11 @@ public class FilesUtils {
      * @throws IOException if the directory doesn't exist.
      */
     public static Set<String> getAllFilesFromDirectory(@NonNull final String directory) throws IOException {
+        HistoryManager hm = HistoryManager.getInstance();
         try (Stream<Path> stream = Files.list(Paths.get(directory))) {
             return stream.filter(Files::isRegularFile)
-                    .map(Path::toString)
+                    .map(Path::toString) // la condition de incremental
+                    .filter(hm::shouldBeRebuild)
                     .collect(Collectors.toSet());
         }
     }
