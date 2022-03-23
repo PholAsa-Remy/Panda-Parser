@@ -9,6 +9,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,7 +18,7 @@ import java.util.stream.Stream;
 /**
  * FilesUtils class, help methods to manipulate files.
  *
- * @author pada-parser group
+ * @author panda-parser group
  * @version 1.0.0
  * @since Fev 2022
  */
@@ -151,4 +153,20 @@ public class FilesUtils {
     public static String getFileExtension(@NonNull final String filename) {
         return filename.substring(filename.lastIndexOf("."));
     }
+
+
+    /**
+     * get last modification time of input file
+     *
+     * @param filePath path to the file.
+     * @return last modified time
+     * @throws IOException if the directory doesn't exist.
+     */
+    public static long getFileLastModificationDate(@NonNull final String filePath) throws IOException {
+        return Files.readAttributes(Path.of(filePath), BasicFileAttributes.class).lastModifiedTime().toMillis();
+    }
+
+
 }
+
+
