@@ -23,6 +23,9 @@ public class BuildCommand implements Callable<Integer> {
     @Option(names = {"-w", "--watch"}, description = "Surveille les fichiers sources et recompile automatiquement le site à chaque modification, avec recalcul")
     private boolean watched;
 
+    @Option(names = {"--rebuild-all"}, description = "Fichiers modified implique il sera rebuild")
+    private boolean rebuildAll;
+
 
     @Override
     public Integer call() {
@@ -38,6 +41,7 @@ public class BuildCommand implements Callable<Integer> {
         return PandaParser.builder()
                 .setInput(input).setOutput(output)
                 .setJobs(jobs).isWatched(watched)
+                .shouldRebuildAll(rebuildAll)
                 .build();
     }
 }

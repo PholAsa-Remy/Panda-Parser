@@ -28,6 +28,7 @@ public abstract class PandaParser {
     protected final boolean watch;
     protected final int jobs;
     protected final ParserType type;
+    protected final boolean rebuildAll;
 
     /**
      * Création d'un builder.
@@ -59,6 +60,8 @@ public abstract class PandaParser {
         /* Nombre de cœurs de la machine*/
         private int jobs = Config.DEFAULT_MACHINE_JOB;
         private boolean watch = false;
+        /* incremental */
+        private boolean rebuildAll = false;
 
         @Override
         public Builder setInput(String input) {
@@ -90,6 +93,12 @@ public abstract class PandaParser {
             return this;
         }
 
+        @Override
+        public Builder shouldRebuildAll(final boolean rebuildAll) {
+            this.rebuildAll = rebuildAll;
+            return this;
+        }
+
         /**
          * Création d'un parser (Simple ou site complet)
          *
@@ -97,8 +106,8 @@ public abstract class PandaParser {
          */
         public PandaParser build() {
             return (type == ParserType.SITE)
-                    ? new Site(this.input, this.output, this.watch, this.jobs)
-                    : new Simple(this.input, this.output, this.watch, this.jobs);
+                    ? new Site(this.input, this.output, this.watch, this.jobs, this.rebuildAll)
+                    : new Simple(this.input, this.output, this.watch, this.jobs, this.rebuildAll);
         }
     }
 }

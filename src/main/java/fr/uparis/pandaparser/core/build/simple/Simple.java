@@ -29,8 +29,8 @@ public class Simple extends PandaParser {
     /* An instance of the parser of common-markdown library */
     private final org.commonmark.parser.Parser parser = Parser.builder().build();
 
-    public Simple(String input, String output, boolean watch, int jobs) {
-        super(input, output, watch, jobs, ParserType.SIMPLE);
+    public Simple(String input, String output, boolean watch, int jobs, boolean rebuildAll) {
+        super(input, output, watch, jobs, ParserType.SIMPLE, rebuildAll);
     }
 
     /**
@@ -84,8 +84,8 @@ public class Simple extends PandaParser {
 
     @Override
     public void parse() {
+        if(this.rebuildAll) return;
         try {
-
             String inputFileName = FilesUtils.getHtmlFilenameFromMdFile(FilesUtils.getFileName(input));
             String fileContent = getFileContent(input);
             String html = beautifyHtml(buildHtml(fileContent));

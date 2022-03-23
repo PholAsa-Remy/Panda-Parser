@@ -86,8 +86,8 @@ public class FilesUtils {
         HistoryManager hm = HistoryManager.getInstance();
         try (Stream<Path> stream = Files.list(Paths.get(directory))) {
             return stream.filter(Files::isRegularFile)
-                    .map(Path::toString) // la condition de incremental
-                    .filter(hm::shouldBeRebuild)
+                    .map(Path::toString)
+                    .filter(hm::shouldBeRebuild) // incremental
                     .collect(Collectors.toSet());
         }
     }

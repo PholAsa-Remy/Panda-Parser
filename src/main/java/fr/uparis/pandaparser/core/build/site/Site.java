@@ -59,17 +59,15 @@ public class Site extends PandaParser {
     private final ExecutorService threadPool;
 
 
-    public Site(String input, String output, boolean watch, int jobs) {
-        super(input, output, watch, jobs, ParserType.SITE);
+    public Site(String input, String output, boolean watch, int jobs, boolean rebuildAll) {
+        super(input, output, watch, jobs, ParserType.SITE, rebuildAll);
         this.threadPool = Executors.newFixedThreadPool(this.jobs);
     }
 
     @Override
     public void parse() {
         try {
-
             this.startPoolThreadParsing();
-
         } catch (Exception exception) {
             log.warning("input <" + this.input + "> invalide format");
         }
