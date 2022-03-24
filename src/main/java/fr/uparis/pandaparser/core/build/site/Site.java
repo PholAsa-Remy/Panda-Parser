@@ -59,8 +59,8 @@ public class Site extends PandaParser {
     private final ExecutorService threadPool;
 
 
-    public Site(String input, String output, boolean watch, int jobs) {
-        super(input, output, watch, jobs, ParserType.SITE);
+    public Site(String input, String output,String template, boolean watch, int jobs) {
+        super(input, output,template, watch, jobs, ParserType.SITE);
         this.threadPool = Executors.newFixedThreadPool(this.jobs);
     }
 
@@ -99,7 +99,7 @@ public class Site extends PandaParser {
      * @return Collection of tasks to submit them in ExecutorService
      */
     private List<AbstractThread> getAllThreadParser() throws IOException {
-        return ThreadParser.createListOfThreads(this.input, this.output);
+        return ThreadParser.createListOfThreads(this.input, this.output,this.template);
     }
 
     /**
