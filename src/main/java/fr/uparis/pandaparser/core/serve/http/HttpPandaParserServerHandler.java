@@ -1,5 +1,7 @@
 package fr.uparis.pandaparser.core.serve.http;
 
+import fr.uparis.pandaparser.config.Config;
+import fr.uparis.pandaparser.utils.FilesUtils;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.handler.codec.http.*;
@@ -9,6 +11,7 @@ import io.netty.util.CharsetUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -51,6 +54,11 @@ public class HttpPandaParserServerHandler extends SimpleChannelInboundHandler<Fu
         final boolean keepAlive = HttpUtil.isKeepAlive(request);
 
         final String uri = request.uri();
+
+        if (uri.contains(Config.RETURN_TO_HOME)) {
+            sendRedirect(context, "/");
+            return;
+        }
 
         final String path = this.output + sanitizeUri(uri);
 
@@ -151,11 +159,17 @@ public class HttpPandaParserServerHandler extends SimpleChannelInboundHandler<Fu
         return uri.equals(File.separator) ? INDEX_HTML_FILE : uri;
     }
 
+    private void sendRedirect(ChannelHandlerContext ctx, String newUri) {
+        FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, FOUND, Unpooled.EMPTY_BUFFER);
+        response.headers().set(HttpHeaderNames.LOCATION, newUri);
 
-    private void sendError(ChannelHandlerContext context, HttpResponseStatus status) {
-        FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, status, Unpooled.copiedBuffer("Failure: " + status + "\r\n", CharsetUtil.UTF_8));
+        sendAndCleanupConnection(ctx, response);
+    }
+
+    private void sendError(ChannelHandlerContext context, HttpResponseStatus status) throws IOException {
+        String notFound = FilesUtils.getFileContent(Config.NOT_FOUND_404);
+        FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, status, Unpooled.copiedBuffer(notFound, CharsetUtil.UTF_8));
         response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/html; charset=UTF-8");
-
         this.sendAndCleanupConnection(context, response);
     }
 
