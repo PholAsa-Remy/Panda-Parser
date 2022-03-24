@@ -1,5 +1,6 @@
 package fr.uparis.pandaparser.core.build.parallel;
 
+import fr.uparis.pandaparser.config.Config;
 import org.junit.jupiter.api.Test;
 
 import static fr.uparis.pandaparser.config.TestConfig.*;
@@ -10,17 +11,17 @@ class ParallelTest {
 
     @Test
     void createThreadParser_WithValidInputAndOutput_thenCorrect() {
-        new ThreadParser(INPUT_TEST_DIR, OUTPUT_TEST_DIR);
+        new ThreadParser(INPUT_TEST_DIR, OUTPUT_TEST_DIR, Config.DEFAULT_TEMPLATE);
     }
 
     @Test
     void createThreadParser_WithNullInput_thenNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new ThreadParser(null, OUTPUT_TEST_DIR));
+        assertThrows(NullPointerException.class, () -> new ThreadParser(null, OUTPUT_TEST_DIR, Config.DEFAULT_TEMPLATE));
     }
 
     @Test
     void createThreadParser_WithNullOutput_thenNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new ThreadParser(INPUT_TEST_DIR, null));
+        assertThrows(NullPointerException.class, () -> new ThreadParser(INPUT_TEST_DIR, null, Config.DEFAULT_TEMPLATE));
     }
 
 
