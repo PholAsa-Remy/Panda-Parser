@@ -36,6 +36,9 @@ dependencies {
 
     // tomlj
     implementation 'org.tomlj:tomlj:1.0.0'
+
+    // jinjava
+    implementation 'com.hubspot.jinjava:jinjava:2.6.0'
 }
 
 test {
