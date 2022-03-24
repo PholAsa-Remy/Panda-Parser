@@ -28,8 +28,8 @@ import java.util.stream.Collectors;
 @Log
 public class ThreadParser extends AbstractThread {
 
-    public ThreadParser(@NonNull final String input, @NonNull final String output) {
-        super(input, output);
+    public ThreadParser(@NonNull final String input, @NonNull final String output, @NonNull final String template) {
+        super(input, output,template);
     }
 
     /**
@@ -40,17 +40,17 @@ public class ThreadParser extends AbstractThread {
      * @return list of thread
      * @throws IOException io exception
      */
-    public static List<AbstractThread> createListOfThreads(String inputDirectory, String outputDirectory) throws IOException {
+    public static List<AbstractThread> createListOfThreads(String inputDirectory, String outputDirectory,String template) throws IOException {
         String contentDirectoryPath = inputDirectory + Config.DEFAULT_CONTENT_DIR;
         FilesUtils.createDirectoryIfNotExiste(outputDirectory);
         return FilesUtils.getAllFilesFromDirectory(contentDirectoryPath, Extension.MD)
-                .stream().map(inputFilePath -> new ThreadParser(inputFilePath, outputDirectory))
+                .stream().map(inputFilePath -> new ThreadParser(inputFilePath, outputDirectory,template))
                 .collect(Collectors.toList());
     }
 
     @Override
     public String call() throws Exception {
-        PandaParser.builder().setInput(input).setOutput(output).build().parse();
+        PandaParser.builder().setInput(input).setOutput(output).setTemplate(template).build().parse();
         return Thread.currentThread().getName() + " : input : " + this.input + " to out: " + this.output;
     }
 
