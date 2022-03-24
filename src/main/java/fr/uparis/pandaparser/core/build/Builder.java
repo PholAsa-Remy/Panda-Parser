@@ -57,5 +57,5 @@ public interface Builder {
      *
      * @return le builder
      */
-    Builder shouldRebuildAll(final boolean buildAll);
+    Builder setRebuildAll(final boolean buildAll);
 }

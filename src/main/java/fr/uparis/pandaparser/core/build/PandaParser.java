@@ -1,6 +1,7 @@
 package fr.uparis.pandaparser.core.build;
 
 import fr.uparis.pandaparser.config.Config;
+import fr.uparis.pandaparser.core.build.incremental.HistoryManager;
 import fr.uparis.pandaparser.core.build.simple.Simple;
 import fr.uparis.pandaparser.core.build.site.Site;
 import lombok.AccessLevel;
@@ -29,6 +30,7 @@ public abstract class PandaParser {
     protected final int jobs;
     protected final ParserType type;
     protected final boolean rebuildAll;
+
 
     /**
      * Création d'un builder.
@@ -94,7 +96,7 @@ public abstract class PandaParser {
         }
 
         @Override
-        public Builder shouldRebuildAll(final boolean rebuildAll) {
+        public Builder setRebuildAll(final boolean rebuildAll) {
             this.rebuildAll = rebuildAll;
             return this;
         }
@@ -105,9 +107,10 @@ public abstract class PandaParser {
          * @return PandaParser
          */
         public PandaParser build() {
+            HistoryManager hm = HistoryManager.getInstance(rebuildAll);
             return (type == ParserType.SITE)
                     ? new Site(this.input, this.output, this.watch, this.jobs, this.rebuildAll)
-                    : new Simple(this.input, this.output, this.watch, this.jobs, this.rebuildAll);
+                    : new Simple(this.input, this.output, this.watch, this.jobs,this.rebuildAll);
         }
     }
 }

@@ -41,7 +41,7 @@ public class BuildCommand implements Callable<Integer> {
         return PandaParser.builder()
                 .setInput(input).setOutput(output)
                 .setJobs(jobs).isWatched(watched)
-                .shouldRebuildAll(rebuildAll)
+                .setRebuildAll(rebuildAll)
                 .build();
     }
 }

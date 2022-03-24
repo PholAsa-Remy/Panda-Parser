@@ -83,11 +83,9 @@ public class FilesUtils {
      * @throws IOException if the directory doesn't exist.
      */
     public static Set<String> getAllFilesFromDirectory(@NonNull final String directory) throws IOException {
-        HistoryManager hm = HistoryManager.getInstance();
         try (Stream<Path> stream = Files.list(Paths.get(directory))) {
             return stream.filter(Files::isRegularFile)
                     .map(Path::toString)
-                    .filter(hm::shouldBeRebuild) // incremental
                     .collect(Collectors.toSet());
         }
     }
