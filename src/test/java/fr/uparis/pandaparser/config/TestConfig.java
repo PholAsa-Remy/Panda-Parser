@@ -20,4 +20,6 @@ public class TestConfig {
 
     public static final String JAVA_EXTENSION_FILE = "NotStaticFile.java";
     public static final String NOT_EXISTING_DIR = "not-existing-dir";
+    public static final String NOT_EXISTING_FILE = "not-existing-file.md";
+    public static final String NOT_EXISTING_TEMPLATE = "not-existing-template.html";
 }
