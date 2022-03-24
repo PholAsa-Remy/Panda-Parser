@@ -28,6 +28,6 @@ public class HttpPandaParserServerInitializer extends ChannelInitializer<SocketC
         pipeline.addLast(new HttpServerCodec());
         pipeline.addLast(new HttpObjectAggregator(65536));
         pipeline.addLast(new ChunkedWriteHandler());
-
+        pipeline.addLast(new HttpPandaParserServerHandler(this.output));
     }
 }
