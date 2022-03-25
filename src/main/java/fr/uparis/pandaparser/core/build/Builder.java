@@ -51,11 +51,4 @@ public interface Builder {
      * @return le builder
      */
     Builder isWatched(final boolean watched);
-
-    /**
-     * Activer le BuildAll automatique.
-     *
-     * @return le builder
-     */
-    Builder setRebuildAll(final boolean buildAll);
 }

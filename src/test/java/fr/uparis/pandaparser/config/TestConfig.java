@@ -11,6 +11,7 @@ public class TestConfig {
     public static final String INPUT_UNIT_MD_DIR = "src" + File.separator + "test" + File.separator + "resources" + File.separator + "md-file-test" + File.separator + "";
     public static final String EMPTY_MD_TEST = INPUT_UNIT_MD_DIR + "EmptyMarkDown.md";
     public static final String BASIC_MD_TEST = INPUT_UNIT_MD_DIR + "BasicMarkDown.md";
+    public static final String BASIC_MD_FILE_FOR_INCREMENTAL = INPUT_UNIT_MD_DIR + "BasicMarkDownForIncremental.md";
     public static final String LOREM_IPSUM_MD_TEST = INPUT_UNIT_MD_DIR + "LoremIpsumMarkDown.md";
 
     public static final String TEST_MP3_PATH = "" + File.separator + "static" + File.separator + "01.Ren'ai_Circulation.mp3";

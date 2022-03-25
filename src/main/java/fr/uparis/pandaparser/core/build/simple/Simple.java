@@ -30,8 +30,8 @@ public class Simple extends PandaParser {
     /* An instance of the parser of common-markdown library */
     private final org.commonmark.parser.Parser parser = Parser.builder().build();
 
-    public Simple(String input, String output, boolean watch, int jobs, boolean rebuildAll) {
-        super(input, output, watch, jobs, ParserType.SIMPLE, rebuildAll);
+    public Simple(String input, String output, boolean watch, int jobs) {
+        super(input, output, watch, jobs, ParserType.SIMPLE);
     }
 
     /**
@@ -88,11 +88,6 @@ public class Simple extends PandaParser {
         boolean shouldBeRebuild = HistoryManager.shouldBeRebuild(input);
         System.out.println(FilesUtils.getFileName(input) + " : " + (shouldBeRebuild ? "Yes Rebuild" : "NO Rebuild"));
         if (!shouldBeRebuild) return;
-        try {
-            HistoryManager.updateLastModificationsFile(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         try {
             String inputFileName = FilesUtils.getHtmlFilenameFromMdFile(FilesUtils.getFileName(input));
             String fileContent = getFileContent(input);

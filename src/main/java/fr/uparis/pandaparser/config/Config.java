@@ -28,9 +28,8 @@ public class Config {
     public static final Integer EXIT_SUCCESS = 0;
     public static final int EXIT_FAILURE = 1;
     /* incremental translate */
-    public static final String FOLDER_CONTAINER = String.join(File.separator, "src", "main", "java", "fr", "uparis","pandaparser","core","build","incremental")+ File.separator;
-    public static final String RECORDER_FILENAME = FOLDER_CONTAINER + "lastModificationFile.ser";
-
+    public static final String HISTORY_FILE_SIMPLE_PATH = String.join(File.separator, "src","test","resources","cache","historyFile-Simple.ser");
+    public static final String HISTORY_FILE_SITE_NAME = ".historyFile.ser";
     private Config() {
     }
 

@@ -59,8 +59,8 @@ public class Site extends PandaParser {
     private final ExecutorService threadPool;
 
 
-    public Site(String input, String output, boolean watch, int jobs, boolean rebuildAll) {
-        super(input, output, watch, jobs, ParserType.SITE, rebuildAll);
+    public Site(String input, String output, boolean watch, int jobs) {
+        super(input, output, watch, jobs, ParserType.SITE);
         this.threadPool = Executors.newFixedThreadPool(this.jobs);
     }
 
@@ -87,8 +87,8 @@ public class Site extends PandaParser {
         List<Future<String>> threadParserResults = this.threadPool.invokeAll(this.getAllThreadParser());
         List<Future<String>> threadStaticCopyResults = this.threadPool.invokeAll(this.getAllThreadStaticFilesCopier());
         this.threadPool.shutdown();
-        ThreadUtils.logAllFutures(threadParserResults);
-        ThreadUtils.logAllFutures(threadStaticCopyResults);
+       ThreadUtils.logAllFutures(threadParserResults);
+       ThreadUtils.logAllFutures(threadStaticCopyResults);
     }
 
     /**
