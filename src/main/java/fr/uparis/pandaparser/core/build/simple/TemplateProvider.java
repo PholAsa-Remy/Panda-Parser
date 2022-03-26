@@ -16,21 +16,17 @@ import java.util.regex.Pattern;
  */
 @Log
 public class TemplateProvider {
-    private static HashMap <String,String> templateList;
+    private static final HashMap <String,String> templateList = new HashMap<>();
 
     private static String convertTemplate (String templatePath) throws IOException {
         String templateContent = FilesUtils.getFileContent(templatePath);
-        Pattern pattern = Pattern.compile("(\\{\\{ +include +\")([^\"]*)(\" +\\}\\})");
+        Pattern pattern = Pattern.compile("(\\{\\{ +include +\")([^\"]*)(\" +}})");
         Matcher m = pattern.matcher(templateContent);
         templateContent = m.replaceAll("{% include '$2' %}");
         return templateContent;
     }
 
     public static String getTemplate (String templatePath) throws IOException{
-        if (templateList == null){
-            templateList = new HashMap<>();
-        }
-
         if (templateList.containsKey(templatePath))
             return templateList.get(templatePath);
 
