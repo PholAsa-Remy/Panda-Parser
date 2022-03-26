@@ -5,6 +5,8 @@ import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.extern.java.Log;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Template Provider read the template stored in the
@@ -16,16 +18,15 @@ import java.util.HashMap;
 public class TemplateProvider {
     private static HashMap <String,String> templateList;
 
-    private static String readTemplate (String templatePath){
-        try {
-            return FilesUtils.getFileContent(Config.TEMPLATE_DIR + templatePath);
-        }catch (IOException e){
-            log.warning("Template " + templatePath + " not found !");
-            return "";
-        }
+    private static String convertTemplate (String templatePath) throws IOException {
+        String templateContent = FilesUtils.getFileContent(templatePath);
+        Pattern pattern = Pattern.compile("(\\{\\{ +include +\")([^\"]*)(\" +\\}\\})");
+        Matcher m = pattern.matcher(templateContent);
+        templateContent = m.replaceAll("{% include '$2' %}");
+        return templateContent;
     }
 
-    public static String getTemplateContent (String templatePath){
+    public static String getTemplate (String templatePath) throws IOException{
         if (templateList == null){
             templateList = new HashMap<>();
         }
@@ -33,7 +34,7 @@ public class TemplateProvider {
         if (templateList.containsKey(templatePath))
             return templateList.get(templatePath);
 
-        String template_content = readTemplate (templatePath);
+        String template_content = convertTemplate(templatePath);
         templateList.put(templatePath,template_content);
         return template_content;
     }
