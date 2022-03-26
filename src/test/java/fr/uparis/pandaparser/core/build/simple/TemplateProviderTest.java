@@ -34,9 +34,4 @@ class TemplateProviderTest {
         assertEquals("{% include 'P' %}",TemplateProvider.getTemplate(TestConfig.INCLUDE_P_TEMPLATE_TEST));
     }
 
-    @Test
-    void getNotExistingTemplate () {
-        assertThrows(IOException.class,()->{ TemplateProvider.getTemplate(TestConfig.NOT_EXISTING_TEMPLATE_TEST); });
-    }
-
 }
