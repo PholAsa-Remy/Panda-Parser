@@ -16,8 +16,8 @@ public class TestConfig {
     public static final String TEMPLATE_TEST_DIR = "src" + File.separator + "test" + File.separator + "resources" + File.separator + "template-test";
     public static final String EMPTY_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "empty-template.html";
     public static final String INCLUDE_P_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "include-P-template.html";
-    public static final String METADATA_TITLE_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "metadata-date-template.html";
-    public static final String METADATA_DATE_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "metadata-title-template.html";
+    public static final String METADATA_TITLE_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "metadata-title-template.html";
+    public static final String METADATA_DATE_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "metadata-date-template.html";
     public static final String SIMPLE_TEXT_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "simple-text-template.html";
     public static final String NOT_EXISTING_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "not-existing-template.html";
 
