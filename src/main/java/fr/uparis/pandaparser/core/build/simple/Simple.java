@@ -1,17 +1,16 @@
 package fr.uparis.pandaparser.core.build.simple;
 
+import com.hubspot.jinjava.Jinjava;
+import com.hubspot.jinjava.JinjavaConfig;
+import com.hubspot.jinjava.interpret.JinjavaInterpreter;
+import com.hubspot.jinjava.loader.ResourceLocator;
+import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.core.build.PandaParser;
 import fr.uparis.pandaparser.core.build.ParserType;
 import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.extern.java.Log;
-import org.commonmark.node.Node;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
-import org.w3c.tidy.Tidy;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 import static fr.uparis.pandaparser.utils.FilesUtils.createFileFromContent;
 import static fr.uparis.pandaparser.utils.FilesUtils.getFileContent;
@@ -26,70 +25,48 @@ import static fr.uparis.pandaparser.utils.FilesUtils.getFileContent;
 @Log
 public class Simple extends PandaParser {
 
-    /* An instance of the parser of common-markdown library */
-    private final org.commonmark.parser.Parser parser = Parser.builder().build();
-
     public Simple(String input, String output, boolean watch, int jobs) {
         super(input, output, watch, jobs, ParserType.SIMPLE);
     }
 
     /**
-     * Parse the header from the file content
-     *
-     * @param fileContent the content of the file to parse
-     * @return head
+     * use the metadata to complete the template
+     * @param meta meta create base on the fileContent
+     * @param template template content
+     * @return template completed with the metadata
      */
-    private String buildHeader(String fileContent) {
-        return "<head><title>Title</title></head>";
-    }
+    private String applyTemplate (Metadata meta, String template){
+        //set the path for jinjava
+        JinjavaConfig config = new JinjavaConfig();
+        Jinjava jinjava = new Jinjava(config);
+        ResourceLocator resource = new ResourceLocator() {
+            @Override
+            public String getString(String fullName, Charset encoding, JinjavaInterpreter interpreter) throws IOException {
 
-    /**
-     * Parse the body from the file content
-     *
-     * @param fileContent the content of the file to parse
-     * @return body
-     */
-    private String buildBody(String fileContent) {
-        Node document = parser.parse(fileContent);
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
-        return "<body>" + renderer.render(document) + "</body>";
-    }
+                return FilesUtils.getFileContent(fullName);
+            }
+        };
+        jinjava.setResourceLocator(resource);
 
-    /**
-     * Parse the html from the file content
-     *
-     * @param fileContent the content of the file to parse
-     * @return html
-     */
-    private String buildHtml(String fileContent) {
-        String header = buildHeader(fileContent);
-        String body = buildBody(fileContent);
-        return "<!DOCTYPE html><html>" + header + body + "</html>";
-    }
-
-    /**
-     * Make the html more readable
-     *
-     * @param htmlContent the content of the html to beautify
-     * @return beautifiedHtml the beautified html
-     */
-    private String beautifyHtml(String htmlContent) {
-        Tidy tidy = new Tidy();
-        tidy.setIndentContent(true);
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(htmlContent.getBytes());
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        tidy.parse(inputStream, outputStream);
-        return outputStream.toString();
+        return jinjava.render(template, meta.getMetadata());
     }
 
     @Override
     public void parse() {
         try {
-
             String inputFileName = FilesUtils.getHtmlFilenameFromMdFile(FilesUtils.getFileName(input));
             String fileContent = getFileContent(input);
-            String html = beautifyHtml(buildHtml(fileContent));
-            createFileFromContent(this.output + inputFileName, html);
+            Metadata meta = new Metadata(fileContent);
+
+            //if there is a path for the template in the metadata, take the path otherwise take the default template
+            String FileContentAfterTemplate;
+            if (meta.getMetadata().containsKey("template")){
+                FileContentAfterTemplate = applyTemplate(meta, TemplateProvider.getTemplate(meta.getMetadata().get("template").toString()));
+            }else {
+                FileContentAfterTemplate = applyTemplate(meta, TemplateProvider.getTemplate(Config.DEFAULT_TEMPLATE));
+            }
+
+            createFileFromContent(this.output + inputFileName, FileContentAfterTemplate);
             log.info("MD 2 HTML parser : input" + this.input + " -> out: " + this.output + inputFileName);
         } catch (IOException e) {
             e.printStackTrace();
