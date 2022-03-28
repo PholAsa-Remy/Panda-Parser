@@ -18,20 +18,53 @@ import java.util.regex.Pattern;
 public class TemplateProvider {
     private static final HashMap <String,String> templateList = new HashMap<>();
 
+    /**
+     * convert the template to the right format for jinjava
+     *
+     * @param templatePath template path
+     * @return new template with the right format for jinjava
+     * @throws IOException if the path doesn't exist.
+     */
     private static String convertTemplate (String templatePath) throws IOException {
         String templateContent = FilesUtils.getFileContent(templatePath);
-        Pattern pattern = Pattern.compile("(\\{\\{ +include +\")([^\"]*)(\" +}})");
-        Matcher m = pattern.matcher(templateContent);
-        templateContent = m.replaceAll("{% include '$2' %}");
+
+        //convert {{ include "path" }} to {% include "path" %}
+        Pattern patternInclude = Pattern.compile("(\\{\\{ +include +\")([^\"]*)(\" +}})");
+        Matcher matchInclude = patternInclude.matcher(templateContent);
+        templateContent = matchInclude.replaceAll("{% include \"$2\" %}");
+
+        //convert {{ metadata.title }} to {{ title }}
+        Pattern patternMetadata = Pattern.compile("(\\{\\{ +metadata.)([^\"]*)( +}})");
+        Matcher matchMetadata = patternMetadata.matcher(templateContent);
+        templateContent = matchMetadata.replaceAll("{{ $2 }}");
+
         return templateContent;
     }
 
-    public static String getTemplate (String templatePath) throws IOException{
+    /**
+     * get template, and stock it in the hashmap templateList
+     *
+     * @param templatePath template path
+     * @return return the template if exist, otherwise return the default template
+     * @throws IOException if the path doesn't exist.
+     */
+    public static String getTemplate (String templatePath) {
+
         if (templateList.containsKey(templatePath))
             return templateList.get(templatePath);
 
-        String template_content = convertTemplate(templatePath);
-        templateList.put(templatePath,template_content);
+        String template_content;
+        try {
+            template_content = convertTemplate(templatePath);
+        } catch (IOException e) {
+            try {
+                template_content = convertTemplate(Config.DEFAULT_TEMPLATE);
+            }catch (IOException e1){
+                log.warning("default template not found");
+                return "";
+            }
+        }
+        templateList.put(templatePath, template_content);
         return template_content;
     }
 }
