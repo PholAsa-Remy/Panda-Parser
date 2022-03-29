@@ -37,6 +37,9 @@ dependencies {
     // add 'io.netty:netty-all:4.1.74.Final'
     implementation fileTree(dir: 'libs', include: 'netty*.jar')
 
+    // add tomlj
+    implementation fileTree(dir: 'libs', include: 'tomlj-1.0.0.jar')
+
 }
 
 test {
