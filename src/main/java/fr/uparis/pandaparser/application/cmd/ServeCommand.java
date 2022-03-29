@@ -29,7 +29,7 @@ public class ServeCommand implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        Serve serve = new Serve(input, output, watched, jobs, ParserType.SERVE, port);
+        Serve serve = new Serve(input, output, null, watched, jobs, ParserType.SERVE, port);
         serve.start();
         return 0;
     }

@@ -8,8 +8,8 @@ import fr.uparis.pandaparser.core.serve.http.HttpPandaParserServer;
 public class Serve extends PandaParser {
 
     private final int port;
-    public Serve(String input, String output, boolean watch, int jobs, ParserType type, int port) {
-        super(input, output, watch, jobs, type);
+    public Serve(String input, String output, String template, boolean watch, int jobs, ParserType type, int port) {
+        super(input, output, template, watch, jobs, type);
         this.port = port;
     }
 
