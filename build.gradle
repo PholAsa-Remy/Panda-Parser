@@ -16,11 +16,9 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
 
-
     // commonmark-java
     implementation files('libs/commonmark-0.18.1.jar')
     implementation files('libs/picocli-4.6.3.jar')
-
 
     // lombok
     compileOnly 'org.projectlombok:lombok:1.18.22'
