@@ -93,7 +93,8 @@ public class Simple extends PandaParser {
             String fileContent = getFileContent(input);
             String html = beautifyHtml(buildHtml(fileContent));
             createFileFromContent(this.output + inputFileName, html);
-//            log.info("MD 2 HTML parser : input" + this.input + " -> out: " + this.output + inputFileName);
+            log.info("MD 2 HTML parser : input" + this.input + " -> out: " + this.output + inputFileName);
+            HistoryManager.getInstance().update(input);
         } catch (IOException e) {
             e.printStackTrace();
         }

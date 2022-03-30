@@ -1,15 +1,7 @@
 package fr.uparis.pandaparser.core.build.incremental;
 
-import fr.uparis.pandaparser.config.Config;
-import fr.uparis.pandaparser.utils.FilesUtils;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import static fr.uparis.pandaparser.config.TestConfig.BASIC_MD_TEST;
-import static fr.uparis.pandaparser.config.TestConfig.BASIC_MD_FILE_FOR_INCREMENTAL;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HistoryManagerTest {

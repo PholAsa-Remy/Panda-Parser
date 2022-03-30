@@ -2,81 +2,86 @@ package fr.uparis.pandaparser.core.build.incremental;
 
 import fr.uparis.pandaparser.core.build.ParserType;
 import fr.uparis.pandaparser.exception.InstanceAlreadyExistsException;
+import fr.uparis.pandaparser.exception.InstanceInitialisationException;
 import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.Data;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static fr.uparis.pandaparser.config.Config.HISTORY_FILE_SIMPLE_PATH;
 import static fr.uparis.pandaparser.config.Config.HISTORY_FILE_SITE_NAME;
 
-@Data
-@RequiredArgsConstructor
 @Log
-public final class HistoryManager implements Serializable{
+@Data
+public final class HistoryManager implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private static HistoryManager instance;
+    /* instance */
+    private volatile static HistoryManager INSTANCE;
 
-    private Map<String, Long> filesLastModifiedMap;
     private boolean rebuildAll;
     private String historyFilePath;
+    private Map<String, Long> filesLastModifiedMap;
 
-    public HistoryManager(String historyFilePath, Boolean rebuildAll) {
-        this.historyFilePath=historyFilePath;
-        this.rebuildAll=rebuildAll;
-        this.filesLastModifiedMap=new HashMap<>();
+    private HistoryManager(String historyFilePath, Boolean rebuildAll) {
+        this.rebuildAll = rebuildAll;
+        this.filesLastModifiedMap = new HashMap<>();
+        this.historyFilePath = historyFilePath;
     }
 
     public static HistoryManager getInstance() {
-        return instance;
+        if (INSTANCE == null)
+            throw new InstanceInitialisationException("instance must be initialised with setHistoryManagerInstance");
+        return INSTANCE;
     }
 
     public static void setHistoryManagerInstance(@NonNull String input, @NonNull Boolean rebuildAll) {
-        if(instance==null){
-            instance=loadInstanceFromHistoryFile(getHistoryFilePathFromInput(input), rebuildAll);
+        if (INSTANCE == null) {
+            INSTANCE = loadInstanceFromHistoryFile(getHistoryFilePathFromInput(input), rebuildAll);
             return;
         }
         throw new InstanceAlreadyExistsException("Instance is already exist");
     }
 
     private static HistoryManager loadInstanceFromHistoryFile(@NonNull String input, @NonNull Boolean rebuildAll) {
-
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(input))){
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(input))) {
             return (HistoryManager) objectInputStream.readObject();
-        }catch (ClassNotFoundException | IOException ioException){
+        } catch (ClassNotFoundException | IOException ioException) {
             return new HistoryManager(input, rebuildAll);
         }
     }
 
-
     public Boolean shouldBeRebuild(String filePath) {
-        if(this.rebuildAll) return true;
-        try {
-            Long lastRecorded = this.filesLastModifiedMap.get(filePath);
-            long newRecorded = FilesUtils.getFileLastModificationDate(filePath);
-            if(newRecorded > lastRecorded) {
-                this.filesLastModifiedMap.put(filePath, newRecorded);
-                return true;
-            }
-        } catch (Exception exception) {
-            return true;
-        }
-        return false;
+        return this.rebuildAll || fileIsUpdated(filePath);
     }
 
-    public void save(){
-        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.historyFilePath))){
+    private boolean fileIsUpdated(String filePath) {
+        try {
+            return !this.filesLastModifiedMap.containsKey(filePath) || !Objects.equals(this.filesLastModifiedMap.get(filePath), FilesUtils.getFileLastModificationDate(filePath));
+        } catch (IOException ioException) {
+            return true;
+        }
+    }
+
+    public void update(String filepath) {
+        try {
+            this.filesLastModifiedMap.put(filepath, FilesUtils.getFileLastModificationDate(filepath));
+        } catch (IOException ignored) {
+        }
+    }
+
+    public void save() {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.historyFilePath))) {
             objectOutputStream.writeObject(this);
             objectOutputStream.flush();
-        }catch (Exception exception){
+        } catch (Exception exception) {
             log.warning("save history file failed");
         }
     }
