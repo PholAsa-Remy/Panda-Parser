@@ -43,7 +43,7 @@ public class ThreadStaticFilesCopier extends AbstractThread {
             FilesUtils.createDirectoryIfNotExiste(outputStaticFile);
             return staticFilesPath
                     .stream()
-                    .filter(HistoryManager::shouldBeRebuild) // incremental
+                    .filter(HistoryManager.getInstance()::shouldBeRebuild) // incremental
                     .map(inputFile -> createFromInputFileAndOutputDir(inputFile, outputStaticFile)).collect(Collectors.toList());
         } catch (IOException exception) {
             return new ArrayList<>();

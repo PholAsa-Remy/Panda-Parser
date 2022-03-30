@@ -85,7 +85,7 @@ public class Simple extends PandaParser {
 
     @Override
     public void parse() {
-        boolean shouldBeRebuild = HistoryManager.shouldBeRebuild(input);
+        boolean shouldBeRebuild = HistoryManager.getInstance().shouldBeRebuild(input);
         System.out.println(FilesUtils.getFileName(input) + " : " + (shouldBeRebuild ? "Yes Rebuild" : "NO Rebuild"));
         if (!shouldBeRebuild) return;
         try {

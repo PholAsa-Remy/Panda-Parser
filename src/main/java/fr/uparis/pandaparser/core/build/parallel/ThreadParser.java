@@ -46,7 +46,7 @@ public class ThreadParser extends AbstractThread {
         FilesUtils.createDirectoryIfNotExiste(outputDirectory);
         return FilesUtils.getAllFilesFromDirectory(contentDirectoryPath, Extension.MD)
             .stream()
-            .filter(HistoryManager::shouldBeRebuild) // incremental
+            .filter(HistoryManager.getInstance()::shouldBeRebuild) // incremental
             .map(inputFilePath -> new ThreadParser(inputFilePath, outputDirectory))
             .collect(Collectors.toList());
     }

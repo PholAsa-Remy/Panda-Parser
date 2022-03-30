@@ -28,11 +28,10 @@ public class BuildCommand implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        HistoryManager.getInstance(input, rebuildAll);
-        HistoryManager.loadHistoryFile();
+        HistoryManager.setHistoryManagerInstance(input, rebuildAll);
         try {
             this.setUpPandaParser().parse();
-            HistoryManager.saveHistoryFile();
+            HistoryManager.getInstance().save();
             return Config.EXIT_SUCCESS;
         } catch (Exception exception) {
             return Config.EXIT_FAILURE;

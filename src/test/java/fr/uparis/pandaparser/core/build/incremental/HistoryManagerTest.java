@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class HistoryManagerTest {
 
     private void init(String input, Boolean rebuildAll){
-        HistoryManager.getInstance(input, rebuildAll);
-        HistoryManager.loadHistoryFile();
+        //HistoryManager.getInstance(input, rebuildAll);
+        //HistoryManager.loadHistoryFile();
 //        try {
 //            HistoryManager.saveHistoryFile();
 //        } catch (Exception ignored) {}
@@ -28,7 +28,7 @@ class HistoryManagerTest {
         boolean rebuildAll = false;
         init(input, rebuildAll);
         // assert here
-        assertTrue(HistoryManager.shouldBeRebuild(input));
+        assertTrue(HistoryManager.getInstance().shouldBeRebuild(input));
     }
 /*
     @Test
