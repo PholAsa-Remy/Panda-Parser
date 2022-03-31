@@ -10,8 +10,9 @@ class MetadataTest {
 
     @Test
     void testSimpleMetadata (){
-        Metadata test = new Metadata("+++ title = \"test simple metadata help me please.\" +++ body pillow");
-        test.getMetadata().get("title");
-        log.info(test.getMetadata().get("title").toString());
+        String bodyContent = " body pillow";
+        Metadata test = new Metadata("+++ title = \"test simple metadata help me please.\" +++" + bodyContent, bodyContent);
+        assertEquals("test simple metadata help me please.", test.getMetadata().get("title"));
+        assertEquals(bodyContent, test.getMetadata().get("content"));
     }
 }

@@ -2,13 +2,9 @@ package fr.uparis.pandaparser.core.build.simple;
 
 import lombok.*;
 import lombok.extern.java.Log;
-import org.commonmark.node.Node;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
 import org.tomlj.Toml;
 import org.tomlj.TomlParseResult;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -26,9 +22,6 @@ import java.util.regex.Pattern;
 @Log
 public class Metadata {
 
-    /* An instance of the parser of common-markdown library */
-    private final org.commonmark.parser.Parser parser = Parser.builder().build();
-
     @Getter
     private HashMap<String,Object> metadata;
 
@@ -37,7 +30,7 @@ public class Metadata {
      * the content under the header of the file
      * @param fileContent file content
      */
-    public Metadata(String fileContent) {
+    public Metadata(String fileContent, String fileContentWithoutHeader) {
         metadata = new HashMap<>();
 
         Pattern pattern = Pattern.compile("(?:\\+{3})((?:.|\\n)*?)(?:\\+{3})");
@@ -56,16 +49,6 @@ public class Metadata {
             String next = itr.next();
             metadata.put(next, result.get(next).toString());
         }
-        // remove the header from the fileContent
-        Pattern patternHeader = Pattern.compile("(?:\\+{3})((?:.|\\n)*?)(?:\\+{3})");
-        Matcher matchHeader = patternHeader.matcher(fileContent);
-        String fileContentNoHeader = matchHeader.replaceAll("");
-
-        //parse the fileContentNoHeader in html for the key "content"
-        Node document = parser.parse(fileContentNoHeader);
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
-        String newFileContentHTML = renderer.render(document);
-        metadata.put("content", newFileContentHTML);
+        metadata.put("content", fileContentWithoutHeader);
     }
-
 }
