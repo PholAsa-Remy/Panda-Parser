@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static fr.uparis.pandaparser.utils.FilesUtils.usePatternToReplace;
+
 /**
  * Template Provider read the template stored in the
  * template folder for the parser to use
@@ -27,17 +29,10 @@ public class TemplateProvider {
      */
     private static String convertTemplate (String templatePath) throws IOException {
         String templateContent = FilesUtils.getFileContent(templatePath);
-
         //convert {{ include "path" }} to {% include "path" %}
-        Pattern patternInclude = Pattern.compile("(\\{\\{ +include +\")([^\"]*)(\" +}})");
-        Matcher matchInclude = patternInclude.matcher(templateContent);
-        templateContent = matchInclude.replaceAll("{% include \"$2\" %}");
-
+        templateContent = usePatternToReplace(templateContent, "(\\{\\{ +include +\")([^\"]*)(\" +}})", "{% include \"$2\" %}");
         //convert {{ metadata.title }} to {{ title }}
-        Pattern patternMetadata = Pattern.compile("(\\{\\{ +metadata.)([^\"]*)( +}})");
-        Matcher matchMetadata = patternMetadata.matcher(templateContent);
-        templateContent = matchMetadata.replaceAll("{{ $2 }}");
-
+        templateContent = usePatternToReplace(templateContent, "(\\{\\{ +metadata.)([^\"]*)( +}})", "{{ $2 }}");
         return templateContent;
     }
 

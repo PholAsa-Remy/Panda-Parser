@@ -18,8 +18,7 @@ import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static fr.uparis.pandaparser.utils.FilesUtils.createFileFromContent;
-import static fr.uparis.pandaparser.utils.FilesUtils.getFileContent;
+import static fr.uparis.pandaparser.utils.FilesUtils.*;
 
 /**
  * Translation from markdown to HTML
@@ -63,9 +62,7 @@ public class Simple extends PandaParser {
     private String getBodyContentWithoutHeaderHTML (String fileContent){
 
         // remove the header from the fileContent
-        Pattern patternHeader = Pattern.compile("(?:\\+{3})((?:.|\\n)*?)(?:\\+{3})");
-        Matcher matchHeader = patternHeader.matcher(fileContent);
-        String fileContentWithoutHeader = matchHeader.replaceAll("");
+        String fileContentWithoutHeader = usePatternToReplace(fileContent, "(?:\\+{3})((?:.|\\n)*?)(?:\\+{3})", "");
 
         //parse the fileContentWithoutHeader in html for the key "content"
         Node document = parser.parse(fileContentWithoutHeader);
