@@ -37,28 +37,6 @@ public class Simple extends PandaParser {
         super(input, output, watch, jobs, ParserType.SIMPLE);
     }
 
-    /**
-     * use the metadata to complete the template
-     * @param meta meta create base on the fileContent
-     * @param template template content
-     * @return template completed with the metadata
-     */
-    private String applyTemplate (Metadata meta, String template){
-        //set the path for jinjava
-        JinjavaConfig config = new JinjavaConfig();
-        Jinjava jinjava = new Jinjava(config);
-        ResourceLocator resource = new ResourceLocator() {
-            @Override
-            public String getString(String fullName, Charset encoding, JinjavaInterpreter interpreter) throws IOException {
-
-                return FilesUtils.getFileContent(fullName);
-            }
-        };
-        jinjava.setResourceLocator(resource);
-
-        return jinjava.render(template, meta.getMetadata());
-    }
-
     private String getBodyContentWithoutHeaderHTML (String fileContent){
 
         // remove the header from the fileContent
@@ -78,14 +56,8 @@ public class Simple extends PandaParser {
 
             String bodyContentHTML = getBodyContentWithoutHeaderHTML(fileContent);
             Metadata meta = new Metadata(fileContent, bodyContentHTML);
-
             //if there is a path for the template in the metadata, take the path otherwise take the default template
-            String FileContentAfterTemplate;
-            if (meta.getMetadata().containsKey("template")){
-                FileContentAfterTemplate = applyTemplate(meta, TemplateProvider.getTemplate(meta.getMetadata().get("template").toString()));
-            }else {
-                FileContentAfterTemplate = applyTemplate(meta, TemplateProvider.getTemplate(Config.DEFAULT_TEMPLATE));
-            }
+            String FileContentAfterTemplate = TemplateProvider.applyTemplate(meta);
             createFileFromContent(this.output + inputFileName, FileContentAfterTemplate);
             log.info("MD 2 HTML parser : input" + this.input + " -> out: " + this.output + inputFileName);
         } catch (IOException e) {

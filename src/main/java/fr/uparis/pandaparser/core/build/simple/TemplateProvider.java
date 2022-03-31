@@ -1,9 +1,14 @@
 package fr.uparis.pandaparser.core.build.simple;
 
+import com.hubspot.jinjava.Jinjava;
+import com.hubspot.jinjava.JinjavaConfig;
+import com.hubspot.jinjava.interpret.JinjavaInterpreter;
+import com.hubspot.jinjava.loader.ResourceLocator;
 import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.extern.java.Log;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,7 +46,6 @@ public class TemplateProvider {
      *
      * @param templatePath template path
      * @return return the template if exist, otherwise return the default template
-     * @throws IOException if the path doesn't exist.
      */
     public static String getTemplate (String templatePath) {
 
@@ -61,5 +65,26 @@ public class TemplateProvider {
         }
         templateList.put(templatePath, template_content);
         return template_content;
+    }
+
+    /**
+     * use the metadata to complete the template
+     * @param meta meta create base on the fileContent
+     * @return template completed with the metadata
+     */
+    public static String applyTemplate (Metadata meta){
+        String template = meta.getMetadata().containsKey("template") ? meta.getMetadata().get("template").toString() : Config.DEFAULT_TEMPLATE;
+        String templateContent =  getTemplate(template);
+        //set the path for jinjava
+        JinjavaConfig config = new JinjavaConfig();
+        Jinjava jinjava = new Jinjava(config);
+        ResourceLocator resource = new ResourceLocator() {
+            @Override
+            public String getString(String fullName, Charset encoding, JinjavaInterpreter interpreter) throws IOException {
+                return FilesUtils.getFileContent(fullName);
+            }
+        };
+        jinjava.setResourceLocator(resource);
+        return jinjava.render(templateContent, meta.getMetadata());
     }
 }
