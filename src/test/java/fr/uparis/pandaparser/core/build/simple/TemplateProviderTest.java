@@ -20,23 +20,18 @@ class TemplateProviderTest {
 
     @Test
     void getMetadataDateTemplate () throws IOException {
-        assertEquals("{{ metadata.date }}",TemplateProvider.getTemplate(TestConfig.METADATA_DATE_TEMPLATE_TEST));
+        assertEquals("{{ date }}",TemplateProvider.getTemplate(TestConfig.METADATA_DATE_TEMPLATE_TEST));
 
     }
 
     @Test
     void getMetadataTitleTemplate () throws IOException {
-        assertEquals("{{ metadata.title }}",TemplateProvider.getTemplate(TestConfig.METADATA_TITLE_TEMPLATE_TEST));
+        assertEquals("{{ title }}",TemplateProvider.getTemplate(TestConfig.METADATA_TITLE_TEMPLATE_TEST));
     }
 
     @Test
     void getIncludePTemplate () throws IOException {
-        assertEquals("{% include 'P' %}",TemplateProvider.getTemplate(TestConfig.INCLUDE_P_TEMPLATE_TEST));
-    }
-
-    @Test
-    void getNotExistingTemplate () {
-        assertThrows(IOException.class,()->{ TemplateProvider.getTemplate(TestConfig.NOT_EXISTING_TEMPLATE_TEST); });
+        assertEquals("{% include \"P\" %}",TemplateProvider.getTemplate(TestConfig.INCLUDE_P_TEMPLATE_TEST));
     }
 
 }

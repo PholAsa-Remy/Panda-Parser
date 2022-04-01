@@ -25,7 +25,12 @@ public class Metadata {
     @Getter
     private HashMap<String,Object> metadata;
 
-    public Metadata(String fileContent) {
+    /**
+     * Constructor Metadata, get the list of metadata in the header of the fileContent and
+     * the content under the header of the file
+     * @param fileContent file content
+     */
+    public Metadata(String fileContent, String fileContentWithoutHeader) {
         metadata = new HashMap<>();
 
         Pattern pattern = Pattern.compile("(?:\\+{3})((?:.|\\n)*?)(?:\\+{3})");
@@ -42,8 +47,8 @@ public class Metadata {
 
         while(itr.hasNext()){
             String next = itr.next();
-            metadata.put(next,result.get(next));
+            metadata.put(next, result.get(next).toString());
         }
+        metadata.put("content", fileContentWithoutHeader);
     }
-
 }
