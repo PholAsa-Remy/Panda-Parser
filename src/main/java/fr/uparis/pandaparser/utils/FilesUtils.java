@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -150,5 +152,19 @@ public class FilesUtils {
 
     public static String getFileExtension(@NonNull final String filename) {
         return filename.substring(filename.lastIndexOf("."));
+    }
+
+    /**
+     * Replace all pattern matcher with the replacement
+     *
+     * @param fileContent fileContent
+     * @param regularExpression use the regularExpression to match pattern in the fileContent
+     * @param replacement replace all matcher "regularExpression" with the "replacement"
+     * @return String file content with all matcher "regularExpression" replace by "replacement"
+     */
+    public static String usePatternToReplace(String fileContent, String regularExpression, String replacement){
+        Pattern pattern = Pattern.compile(regularExpression);
+        Matcher matcher = pattern.matcher(fileContent);
+        return matcher.replaceAll(replacement);
     }
 }
