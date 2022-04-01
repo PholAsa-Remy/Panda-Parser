@@ -1,12 +1,10 @@
 package fr.uparis.pandaparser.core.build.incremental;
-
-import fr.uparis.pandaparser.config.TestConfig;
-import fr.uparis.pandaparser.utils.FilesUtils;
+import fr.uparis.pandaparser.exception.InstanceInitialisationException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class HistoryManagerTest {
 
@@ -18,6 +16,12 @@ class HistoryManagerTest {
         }
     }
 
+    @Test
+    void whenAttemptingToSettingInstanceTwice_thenItShouldFail() {
+        HistoryManager.setHistoryManagerInstance("", true);
+        // assert here
+        Assertions.assertThrows(InstanceInitialisationException.class, ()-> HistoryManager.setHistoryManagerInstance("", true));
+    }
 
     @Test
     void whenItsNewFile_thenItShouldRebuild() {
@@ -26,6 +30,24 @@ class HistoryManagerTest {
         init(input, rebuildAll);
         // assert here
         assertTrue(HistoryManager.getInstance().shouldBeRebuild(input));
+    }
+
+    @Test
+    void whenBuildAllIsTrue_thenItShouldRebuild() {
+        String input = "whatever.md";
+        boolean rebuildAll = true;
+        init(input, rebuildAll);
+        // assert here
+        assertTrue(HistoryManager.getInstance().shouldBeRebuild(input));
+    }
+
+    @Test
+    void whenBuildAllIsFalse_thenItShouldRebuild() {
+        String input = "whatever.md";
+        boolean rebuildAll = false;
+        init(input, rebuildAll);
+        // assert here
+        assertFalse(HistoryManager.getInstance().shouldBeRebuild(input));
     }
 
 /*
