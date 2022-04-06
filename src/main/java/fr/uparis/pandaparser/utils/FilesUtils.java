@@ -2,6 +2,7 @@ package fr.uparis.pandaparser.utils;
 
 
 import fr.uparis.pandaparser.config.Extension;
+import fr.uparis.pandaparser.core.build.incremental.HistoryManager;
 import fr.uparis.pandaparser.core.build.site.StaticFileType;
 import lombok.NonNull;
 
@@ -9,6 +10,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -154,6 +156,20 @@ public class FilesUtils {
         return filename.substring(filename.lastIndexOf("."));
     }
 
+
+    /**
+     * get last modification time of input file
+     *
+     * @param filePath path to the file.
+     * @return last modified time
+     * @throws IOException if the directory doesn't exist.
+     */
+    public static long getFileLastModificationDate(@NonNull final String filePath) throws IOException {
+        return Files.readAttributes(Path.of(filePath), BasicFileAttributes.class).lastModifiedTime().toMillis();
+    }
+
+
+
     /**
      * Replace all pattern matcher with the replacement
      *
@@ -168,3 +184,5 @@ public class FilesUtils {
         return matcher.replaceAll(replacement);
     }
 }
+
+

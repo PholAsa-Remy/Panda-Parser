@@ -1,6 +1,7 @@
 package fr.uparis.pandaparser.core.build;
 
 import fr.uparis.pandaparser.config.Config;
+import fr.uparis.pandaparser.core.build.incremental.HistoryManager;
 import fr.uparis.pandaparser.core.build.simple.Simple;
 import fr.uparis.pandaparser.core.build.site.Site;
 import lombok.AccessLevel;

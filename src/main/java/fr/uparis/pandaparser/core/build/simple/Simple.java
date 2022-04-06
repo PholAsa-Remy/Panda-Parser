@@ -7,6 +7,7 @@ import com.hubspot.jinjava.loader.ResourceLocator;
 import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.core.build.PandaParser;
 import fr.uparis.pandaparser.core.build.ParserType;
+import fr.uparis.pandaparser.core.build.incremental.HistoryManager;
 import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.extern.java.Log;
 import org.commonmark.node.Node;
@@ -50,6 +51,9 @@ public class Simple extends PandaParser {
 
     @Override
     public void parse() {
+        boolean shouldBeRebuild = HistoryManager.getInstance().shouldBeRebuild(input);
+        System.out.println(FilesUtils.getFileName(input) + " : " + (shouldBeRebuild ? "Yes Rebuild" : "NO Rebuild"));
+        if (!shouldBeRebuild) return;
         try {
             String inputFileName = FilesUtils.getHtmlFilenameFromMdFile(FilesUtils.getFileName(input));
             String fileContent = getFileContent(input);
@@ -60,6 +64,7 @@ public class Simple extends PandaParser {
             String FileContentAfterTemplate = TemplateProvider.applyTemplate(meta);
             createFileFromContent(this.output + inputFileName, FileContentAfterTemplate);
             log.info("MD 2 HTML parser : input" + this.input + " -> out: " + this.output + inputFileName);
+            HistoryManager.getInstance().update(input);
         } catch (IOException e) {
             e.printStackTrace();
         }

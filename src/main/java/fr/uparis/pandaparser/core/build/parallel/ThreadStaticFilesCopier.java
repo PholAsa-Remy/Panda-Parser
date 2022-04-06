@@ -1,6 +1,7 @@
 package fr.uparis.pandaparser.core.build.parallel;
 
 import fr.uparis.pandaparser.config.Config;
+import fr.uparis.pandaparser.core.build.incremental.HistoryManager;
 import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.NonNull;
 import lombok.extern.java.Log;
@@ -40,7 +41,10 @@ public class ThreadStaticFilesCopier extends AbstractThread {
         try {
             Set<String> staticFilesPath = FilesUtils.getAllStaticFilesFromDirectory(inputStaticFiles);
             FilesUtils.createDirectoryIfNotExiste(outputStaticFile);
-            return staticFilesPath.stream().map(inputFile -> createFromInputFileAndOutputDir(inputFile, outputStaticFile)).collect(Collectors.toList());
+            return staticFilesPath
+                    .stream()
+                    .filter(HistoryManager.getInstance()::shouldBeRebuild) // incremental
+                    .map(inputFile -> createFromInputFileAndOutputDir(inputFile, outputStaticFile)).collect(Collectors.toList());
         } catch (IOException exception) {
             return new ArrayList<>();
         }

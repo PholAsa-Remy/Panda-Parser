@@ -3,6 +3,7 @@ package fr.uparis.pandaparser.core.build.parallel;
 import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.config.Extension;
 import fr.uparis.pandaparser.core.build.PandaParser;
+import fr.uparis.pandaparser.core.build.incremental.HistoryManager;
 import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.NonNull;
 import lombok.extern.java.Log;
@@ -44,8 +45,10 @@ public class ThreadParser extends AbstractThread {
         String contentDirectoryPath = inputDirectory + Config.DEFAULT_CONTENT_DIR;
         FilesUtils.createDirectoryIfNotExiste(outputDirectory);
         return FilesUtils.getAllFilesFromDirectory(contentDirectoryPath, Extension.MD)
-                .stream().map(inputFilePath -> new ThreadParser(inputFilePath, outputDirectory))
-                .collect(Collectors.toList());
+            .stream()
+            .filter(HistoryManager.getInstance()::shouldBeRebuild) // incremental
+            .map(inputFilePath -> new ThreadParser(inputFilePath, outputDirectory))
+            .collect(Collectors.toList());
     }
 
     @Override
