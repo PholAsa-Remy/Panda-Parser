@@ -52,16 +52,16 @@ class HistoryManagerTest {
     @Test
     void whenModifyFile_thenItShouldRebuild() {
         File file =new File(TestConfig.BASIC_MD_TEST);
-        file.setLastModified(System.currentTimeMillis());
-        HistoryManager.setHistoryManagerInstance(TestConfig.BASIC_MD_TEST, false);
+        boolean setLastModifiedFile= file.setLastModified(System.currentTimeMillis());
+        HistoryManager.setHistoryManagerInstance(TestConfig.BASIC_MD_TEST, !setLastModifiedFile);
         assertTrue(HistoryManager.getInstance().shouldBeRebuild(TestConfig.BASIC_MD_TEST));
     }
 
     @Test
     void whenFileIsUpdated_thenCorrect() {
         File file =new File(TestConfig.BASIC_MD_TEST);
-        file.setLastModified(System.currentTimeMillis());
-        HistoryManager.setHistoryManagerInstance(TestConfig.BASIC_MD_TEST, false);
+        boolean setLastModifiedFile= file.setLastModified(System.currentTimeMillis());
+        HistoryManager.setHistoryManagerInstance(TestConfig.BASIC_MD_TEST, !setLastModifiedFile);
         assertTrue(HistoryManager.getInstance().fileIsUpdated(TestConfig.BASIC_MD_TEST));
     }
 
