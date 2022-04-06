@@ -1,8 +1,9 @@
 package fr.uparis.pandaparser.core.build.incremental;
-import fr.uparis.pandaparser.exception.InstanceInitialisationException;
+import fr.uparis.pandaparser.config.TestConfig;
+import fr.uparis.pandaparser.exception.InstanceAlreadyExistsException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
+import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -17,18 +18,17 @@ class HistoryManagerTest {
     }
 
     @Test
-    void whenAttemptingToSettingInstanceTwice_thenItShouldFail() {
+    void whenAttemptingToSettingInstanceTwice_thenInstanceAlreadyExistsException() {
         HistoryManager.setHistoryManagerInstance("", true);
-        // assert here
-        Assertions.assertThrows(InstanceInitialisationException.class, ()-> HistoryManager.setHistoryManagerInstance("", true));
+        Assertions.assertThrows(InstanceAlreadyExistsException.class, ()-> HistoryManager.setHistoryManagerInstance("", true));
     }
+
 
     @Test
     void whenItsNewFile_thenItShouldRebuild() {
         String input = "newRandomName" + Math.random() + ".md";
         boolean rebuildAll = false;
         init(input, rebuildAll);
-        // assert here
         assertTrue(HistoryManager.getInstance().shouldBeRebuild(input));
     }
 
@@ -37,7 +37,6 @@ class HistoryManagerTest {
         String input = "whatever.md";
         boolean rebuildAll = true;
         init(input, rebuildAll);
-        // assert here
         assertTrue(HistoryManager.getInstance().shouldBeRebuild(input));
     }
 
@@ -46,42 +45,24 @@ class HistoryManagerTest {
         String input = "whatever.md";
         boolean rebuildAll = false;
         init(input, rebuildAll);
-        // assert here
-        assertFalse(HistoryManager.getInstance().shouldBeRebuild(input));
+        assertTrue(HistoryManager.getInstance().shouldBeRebuild(input));
     }
 
-/*
-    @Test
-    void whenSameFileTwice_thenItShouldNOTdRebuild() {
-        String input = TestConfig.MD_FILE;
-        boolean rebuildAll = false;
-        init(input, rebuildAll);
-        // assert here
-        assertFalse(HistoryManager.getInstance().shouldBeRebuild(input));
-    }
-
-    @Test
-    void whenSameFileTwiceButWrongPath_thenItShouldRebuild() {
-        HistoryManager.getInstance().shouldBeRebuild("newRandomName.md");
-        assertTrue(HistoryManager.getInstance().shouldBeRebuild("newRandomName.md"));
-    }
 
     @Test
     void whenModifyFile_thenItShouldRebuild() {
-        HistoryManager.getInstance().shouldBeRebuild(TestConfig.BASIC_MD_FILE_FOR_INCREMENTAL);
-        try {
-            FilesUtils.copyFileFromInputToOutput(TestConfig.BASIC_MD_TEST, TestConfig.BASIC_MD_FILE_FOR_INCREMENTAL);
-        } catch (IOException e) {
-            System.err.println("File not found. Please scan in new file.");
-        }
-        assertTrue(HistoryManager.getInstance().shouldBeRebuild(TestConfig.BASIC_MD_FILE_FOR_INCREMENTAL));
+        File file =new File(TestConfig.BASIC_MD_TEST);
+        file.setLastModified(System.currentTimeMillis());
+        HistoryManager.setHistoryManagerInstance(TestConfig.BASIC_MD_TEST, false);
+        assertTrue(HistoryManager.getInstance().shouldBeRebuild(TestConfig.BASIC_MD_TEST));
     }
-
-
 
     @Test
-    void updateLastModificationsFile() {
+    void whenFileIsUpdated_thenCorrect() {
+        File file =new File(TestConfig.BASIC_MD_TEST);
+        file.setLastModified(System.currentTimeMillis());
+        HistoryManager.setHistoryManagerInstance(TestConfig.BASIC_MD_TEST, false);
+        assertTrue(HistoryManager.getInstance().fileIsUpdated(TestConfig.BASIC_MD_TEST));
     }
 
-*/
 }

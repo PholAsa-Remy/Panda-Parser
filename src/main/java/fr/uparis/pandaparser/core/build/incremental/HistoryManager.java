@@ -62,7 +62,7 @@ public final class HistoryManager implements Serializable {
         return this.rebuildAll || fileIsUpdated(filePath);
     }
 
-    private boolean fileIsUpdated(String filePath) {
+    public boolean fileIsUpdated(String filePath) {
         try {
             return !this.filesLastModifiedMap.containsKey(filePath) || !Objects.equals(this.filesLastModifiedMap.get(filePath), FilesUtils.getFileLastModificationDate(filePath));
         } catch (IOException ioException) {
