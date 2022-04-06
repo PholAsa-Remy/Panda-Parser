@@ -34,8 +34,8 @@ public class Simple extends PandaParser {
     /* An instance of the parser of common-markdown library */
     private final org.commonmark.parser.Parser parser = Parser.builder().build();
 
-    public Simple(String input, String output, boolean watch, int jobs) {
-        super(input, output, watch, jobs, ParserType.SIMPLE);
+    public Simple(String input, String output, String template, boolean watch, int jobs) {
+        super(input, output, template, watch, jobs, ParserType.SIMPLE);
     }
 
     private String getBodyContentWithoutHeaderHTML (String fileContent){

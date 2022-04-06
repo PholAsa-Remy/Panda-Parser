@@ -24,8 +24,12 @@ public class Config {
     /* Defaults directories */
     public static final String DEFAULT_CONTENT_DIR = "content" + File.separator;
     public static final String DEFAULT_STATIC_DIR = "static" + File.separator;
+
     /* Server Compile */
     public static final Integer DEFAULT_PORT = 8080;
+    public static final String NOT_FOUND_404 = "src/main/resources/static/404.html".replace("/", File.separator);
+    public static final String RETURN_TO_HOME="return_to_Home";
+
     /* Commandline exit status */
     public static final Integer EXIT_SUCCESS = 0;
     public static final int EXIT_FAILURE = 1;

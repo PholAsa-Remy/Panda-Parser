@@ -34,8 +34,11 @@ dependencies {
     //get extension
     implementation 'org.apache.commons:commons-io:1.3.2'
 
-    // tomlj
-    implementation 'org.tomlj:tomlj:1.0.0'
+    // add 'io.netty:netty-all:4.1.74.Final'
+    implementation fileTree(dir: 'libs', include: 'netty*.jar')
+
+    // add tomlj
+    implementation fileTree(dir: 'libs', include: 'tomlj-1.0.0.jar')
 
     // jinjava
     implementation 'com.hubspot.jinjava:jinjava:2.6.0'

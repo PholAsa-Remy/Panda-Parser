@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class ThreadStaticFilesCopier extends AbstractThread {
 
     public ThreadStaticFilesCopier(@NonNull final String input, @NonNull final String output) {
-        super(input, output);
+        super(input, output,null);
     }
 
     /**
