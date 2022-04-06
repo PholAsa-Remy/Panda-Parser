@@ -1,7 +1,6 @@
 package fr.uparis.pandaparser.config;
 
 import java.io.File;
-import java.io.FileDescriptor;
 
 public class TestConfig {
 
@@ -26,7 +25,7 @@ public class TestConfig {
     public static final String TEST_JPG_PATH = "" + File.separator + "static" + File.separator + "koharu.jpg";
     public static final String TEST_CSS_PATH = "" + File.separator + "static" + File.separator + "exampleTest.css";
     public static final String TEST_MD_STATIC_PATH = "" + File.separator + "static" + File.separator + "exampleTest.md";
-    public static final String TEST_HISTORY_FILE_PATH= INPUT_TEST_DIR + "historyFile.ser";
+    public static final String TEST_HISTORY_FILE_PATH = INPUT_TEST_DIR + "historyFile.ser";
 
     public static final String JAVA_EXTENSION_FILE = "NotStaticFile.java";
     public static final String NOT_EXISTING_DIR = "not-existing-dir";
