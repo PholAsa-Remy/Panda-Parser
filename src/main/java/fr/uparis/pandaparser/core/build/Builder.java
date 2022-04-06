@@ -33,6 +33,7 @@ public interface Builder {
 
     /**
      * Specifier le template choisi
+     *
      * @param template le template choisi
      * @return le builder
      */

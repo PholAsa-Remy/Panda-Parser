@@ -1,6 +1,6 @@
 package fr.uparis.pandaparser.core.build.simple;
 
-import lombok.*;
+import lombok.Getter;
 import lombok.extern.java.Log;
 import org.tomlj.Toml;
 import org.tomlj.TomlParseResult;
@@ -23,11 +23,12 @@ import java.util.regex.Pattern;
 public class Metadata {
 
     @Getter
-    private HashMap<String,Object> metadata;
+    private HashMap<String, Object> metadata;
 
     /**
      * Constructor Metadata, get the list of metadata in the header of the fileContent and
      * the content under the header of the file
+     *
      * @param fileContent file content
      */
     public Metadata(String fileContent, String fileContentWithoutHeader) {
@@ -35,7 +36,7 @@ public class Metadata {
 
         Pattern pattern = Pattern.compile("(?:\\+{3})((?:.|\\n)*?)(?:\\+{3})");
         Matcher m = pattern.matcher(fileContent);
-        String data ="";
+        String data = "";
         while (m.find()) {
             data = m.group(1);
         }
@@ -45,7 +46,7 @@ public class Metadata {
         Set<String> keys = result.dottedKeySet();
         Iterator<String> itr = keys.iterator();
 
-        while(itr.hasNext()){
+        while (itr.hasNext()) {
             String next = itr.next();
             metadata.put(next, result.get(next).toString());
         }

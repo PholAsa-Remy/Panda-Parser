@@ -1,9 +1,11 @@
 package fr.uparis.pandaparser.application.cmd;
+
 import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.core.build.PandaParser;
 import fr.uparis.pandaparser.core.build.incremental.HistoryManager;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
+
 import java.util.concurrent.Callable;
 
 @Command(name = "build", description = "Translation of one or more Markdown files into HTML5 file(s)", mixinStandardHelpOptions = true)

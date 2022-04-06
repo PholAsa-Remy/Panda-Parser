@@ -25,11 +25,10 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 public class HttpPandaParserServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
-    private final String output;
-    private FullHttpRequest request;
-
     private static final Pattern INSECURE_URI = Pattern.compile(".*[<>&\"].*");
     private static final String INDEX_HTML_FILE = "index.html";
+    private final String output;
+    private FullHttpRequest request;
 
 
     public HttpPandaParserServerHandler(String output) {
@@ -38,6 +37,28 @@ public class HttpPandaParserServerHandler extends SimpleChannelInboundHandler<Fu
         this.output = output;
     }
 
+    private static String sanitizeUri(String uri) {
+        // Decode the path.
+        uri = URLDecoder.decode(uri, StandardCharsets.UTF_8);
+
+        if (uri.isEmpty() || uri.charAt(0) != '/') {
+            return null;
+        }
+
+        // Convert file separators.
+        uri = uri.replace('/', File.separatorChar);
+
+        // Simplistic dumb security check.
+        // You will have to do something serious in the production environment.
+        if (uri.contains(File.separator + '.') ||
+                uri.contains('.' + File.separator) ||
+                uri.charAt(0) == '.' || uri.charAt(uri.length() - 1) == '.' ||
+                INSECURE_URI.matcher(uri).matches()) {
+            return null;
+        }
+
+        return uri.equals(File.separator) ? INDEX_HTML_FILE : uri;
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext context, FullHttpRequest request) throws Exception {
@@ -133,30 +154,6 @@ public class HttpPandaParserServerHandler extends SimpleChannelInboundHandler<Fu
             lastContentFuture.addListener(ChannelFutureListener.CLOSE);
         }
 
-    }
-
-
-    private static String sanitizeUri(String uri) {
-        // Decode the path.
-        uri = URLDecoder.decode(uri, StandardCharsets.UTF_8);
-
-        if (uri.isEmpty() || uri.charAt(0) != '/') {
-            return null;
-        }
-
-        // Convert file separators.
-        uri = uri.replace('/', File.separatorChar);
-
-        // Simplistic dumb security check.
-        // You will have to do something serious in the production environment.
-        if (uri.contains(File.separator + '.') ||
-                uri.contains('.' + File.separator) ||
-                uri.charAt(0) == '.' || uri.charAt(uri.length() - 1) == '.' ||
-                INSECURE_URI.matcher(uri).matches()) {
-            return null;
-        }
-
-        return uri.equals(File.separator) ? INDEX_HTML_FILE : uri;
     }
 
     private void sendRedirect(ChannelHandlerContext ctx, String newUri) {

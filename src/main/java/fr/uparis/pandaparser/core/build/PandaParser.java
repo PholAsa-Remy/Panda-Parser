@@ -87,10 +87,11 @@ public abstract class PandaParser {
         }
 
         @Override
-        public Builder setTemplate (String template){
+        public Builder setTemplate(String template) {
             this.template = template;
             return this;
         }
+
         @Override
         public Builder isWatched(final boolean watched) {
             this.watch = watched;

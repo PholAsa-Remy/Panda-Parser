@@ -1,7 +1,6 @@
 package fr.uparis.pandaparser.core.build.parallel;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 
 import java.util.concurrent.Callable;

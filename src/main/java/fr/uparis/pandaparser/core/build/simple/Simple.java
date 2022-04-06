@@ -1,10 +1,5 @@
 package fr.uparis.pandaparser.core.build.simple;
 
-import com.hubspot.jinjava.Jinjava;
-import com.hubspot.jinjava.JinjavaConfig;
-import com.hubspot.jinjava.interpret.JinjavaInterpreter;
-import com.hubspot.jinjava.loader.ResourceLocator;
-import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.core.build.PandaParser;
 import fr.uparis.pandaparser.core.build.ParserType;
 import fr.uparis.pandaparser.core.build.incremental.HistoryManager;
@@ -15,9 +10,6 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static fr.uparis.pandaparser.utils.FilesUtils.*;
 
@@ -38,7 +30,7 @@ public class Simple extends PandaParser {
         super(input, output, template, watch, jobs, ParserType.SIMPLE);
     }
 
-    private String getBodyContentWithoutHeaderHTML (String fileContent){
+    private String getBodyContentWithoutHeaderHTML(String fileContent) {
 
         // remove the header from the fileContent
         String fileContentWithoutHeader = usePatternToReplace(fileContent, "(?:\\+{3})((?:.|\\n)*?)(?:\\+{3})", "");

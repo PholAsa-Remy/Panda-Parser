@@ -2,7 +2,6 @@ package fr.uparis.pandaparser.utils;
 
 
 import fr.uparis.pandaparser.config.Extension;
-import fr.uparis.pandaparser.core.build.incremental.HistoryManager;
 import fr.uparis.pandaparser.core.build.site.StaticFileType;
 import lombok.NonNull;
 
@@ -169,16 +168,15 @@ public class FilesUtils {
     }
 
 
-
     /**
      * Replace all pattern matcher with the replacement
      *
-     * @param fileContent fileContent
+     * @param fileContent       fileContent
      * @param regularExpression use the regularExpression to match pattern in the fileContent
-     * @param replacement replace all matcher "regularExpression" with the "replacement"
+     * @param replacement       replace all matcher "regularExpression" with the "replacement"
      * @return String file content with all matcher "regularExpression" replace by "replacement"
      */
-    public static String usePatternToReplace(String fileContent, String regularExpression, String replacement){
+    public static String usePatternToReplace(String fileContent, String regularExpression, String replacement) {
         Pattern pattern = Pattern.compile(regularExpression);
         Matcher matcher = pattern.matcher(fileContent);
         return matcher.replaceAll(replacement);

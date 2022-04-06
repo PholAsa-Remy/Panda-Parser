@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class ThreadParser extends AbstractThread {
 
     public ThreadParser(@NonNull final String input, @NonNull final String output, @NonNull final String template) {
-        super(input, output,template);
+        super(input, output, template);
     }
 
     /**
@@ -40,11 +40,11 @@ public class ThreadParser extends AbstractThread {
      * @return list of thread
      * @throws IOException io exception
      */
-    public static List<AbstractThread> createListOfThreads(String inputDirectory, String outputDirectory,String template) throws IOException {
+    public static List<AbstractThread> createListOfThreads(String inputDirectory, String outputDirectory, String template) throws IOException {
         String contentDirectoryPath = inputDirectory + Config.DEFAULT_CONTENT_DIR;
         FilesUtils.createDirectoryIfNotExiste(outputDirectory);
         return FilesUtils.getAllFilesFromDirectory(contentDirectoryPath, Extension.MD)
-                .stream().map(inputFilePath -> new ThreadParser(inputFilePath, outputDirectory,template))
+                .stream().map(inputFilePath -> new ThreadParser(inputFilePath, outputDirectory, template))
                 .collect(Collectors.toList());
     }
 
