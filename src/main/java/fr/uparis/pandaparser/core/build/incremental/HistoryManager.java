@@ -147,4 +147,11 @@ public final class HistoryManager implements Serializable {
             input += File.separator;
         return type.equals(ParserType.SITE) ? input + HISTORY_FILE_SITE_NAME : HISTORY_FILE_SIMPLE_PATH;
     }
+
+    public void setting(String historyFilePath, Boolean rebuildAll) {
+        this.rebuildAll = rebuildAll;
+        this.filesLastModifiedMap = new HashMap<>();
+        this.historyFilePath = historyFilePath;
+    }
+
 }
