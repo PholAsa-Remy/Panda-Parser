@@ -41,15 +41,17 @@ public class ThreadParser extends AbstractThread {
      * @throws IOException io exception
      */
     public static List<AbstractThread> createListOfThreads(String inputDirectory, String outputDirectory, String template) throws IOException {
-        String contentDirectoryPath = inputDirectory + Config.DEFAULT_CONTENT_DIR;
+        String inputContentDirectoryPath = inputDirectory + Config.DEFAULT_CONTENT_DIR;
+        String outputContentDirectoryPath = outputDirectory + Config.DEFAULT_CONTENT_DIR;
         FilesUtils.createDirectoryIfNotExiste(outputDirectory);
-        return FilesUtils.getAllFilesFromDirectory(contentDirectoryPath, Extension.MD)
-                .stream().map(inputFilePath -> new ThreadParser(inputFilePath, outputDirectory, template))
+        FilesUtils.createDirectoryIfNotExiste(outputContentDirectoryPath);
+        return FilesUtils.getAllFilesFromDirectory(inputContentDirectoryPath, Extension.MD)
+                .stream().map(inputFilePath -> new ThreadParser(inputFilePath, outputContentDirectoryPath, template))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public String call() throws Exception {
+    public String call() {
         PandaParser.builder().setInput(input).setOutput(output).setTemplate(template).build().parse();
         return Thread.currentThread().getName() + " : input : " + this.input + " to out: " + this.output;
     }
