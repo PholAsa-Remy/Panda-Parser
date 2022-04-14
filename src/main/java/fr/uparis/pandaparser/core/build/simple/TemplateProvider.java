@@ -13,6 +13,7 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 
 import static fr.uparis.pandaparser.utils.FilesUtils.usePatternToReplace;
+import static fr.uparis.pandaparser.utils.RegExUtils.*;
 
 /**
  * Template Provider read the template stored in the
@@ -34,10 +35,8 @@ public class TemplateProvider {
      */
     private static String convertTemplate(String templatePath) throws IOException {
         String templateContent = FilesUtils.getFileContent(templatePath);
-        //convert {{ include "path" }} to {% include "path" %}
-        templateContent = usePatternToReplace(templateContent, "(\\{\\{ +include +\")([^\"]*)(\" +}})", "{% include \"$2\" %}");
-        //convert {{ metadata.title }} to {{ title }}
-        templateContent = usePatternToReplace(templateContent, "(\\{\\{ +metadata.)([^\"]*)( +}})", "{{ $2 }}");
+        templateContent = convertInclude(templateContent);
+        templateContent = removeMetadataDot(templateContent);
         return templateContent;
     }
 
