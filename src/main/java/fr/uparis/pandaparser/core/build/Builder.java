@@ -32,14 +32,6 @@ public interface Builder {
     Builder setOutput(final String output);
 
     /**
-     * Specifier le template choisi
-     *
-     * @param template le template choisi
-     * @return le builder
-     */
-    Builder setTemplate(final String template);
-
-    /**
      * Specifier le nombre de fils d’exécution alloués à la traduction
      * (= e fils d’exécution que la machine a de cœurs.)
      *

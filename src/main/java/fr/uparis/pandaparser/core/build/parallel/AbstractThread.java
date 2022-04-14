@@ -1,6 +1,6 @@
 package fr.uparis.pandaparser.core.build.parallel;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 
 import java.util.concurrent.Callable;
@@ -17,9 +17,8 @@ import java.util.concurrent.Callable;
  * @since Mars 2022
  */
 @Log
-@AllArgsConstructor
+@RequiredArgsConstructor
 public abstract class AbstractThread implements Callable<String> {
     protected final String input;
     protected final String output;
-    protected final String template;
 }

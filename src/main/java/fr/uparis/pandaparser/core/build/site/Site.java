@@ -59,17 +59,15 @@ public class Site extends PandaParser {
     private final ExecutorService threadPool;
 
 
-    public Site(String input, String output, String template, boolean watch, int jobs) {
-        super(input, output, template, watch, jobs, ParserType.SITE);
+    public Site(String input, String output, boolean watch, int jobs) {
+        super(input, output, watch, jobs, ParserType.SITE);
         this.threadPool = Executors.newFixedThreadPool(this.jobs);
     }
 
     @Override
     public void parse() {
         try {
-
             this.startPoolThreadParsing();
-
         } catch (Exception exception) {
             log.warning("input <" + this.input + "> invalide format");
         }
@@ -89,8 +87,8 @@ public class Site extends PandaParser {
         List<Future<String>> threadParserResults = this.threadPool.invokeAll(this.getAllThreadParser());
         List<Future<String>> threadStaticCopyResults = this.threadPool.invokeAll(this.getAllThreadStaticFilesCopier());
         this.threadPool.shutdown();
-        ThreadUtils.logAllFutures(threadParserResults);
-        ThreadUtils.logAllFutures(threadStaticCopyResults);
+       ThreadUtils.logAllFutures(threadParserResults);
+       ThreadUtils.logAllFutures(threadStaticCopyResults);
     }
 
     /**
@@ -99,7 +97,7 @@ public class Site extends PandaParser {
      * @return Collection of tasks to submit them in ExecutorService
      */
     private List<AbstractThread> getAllThreadParser() throws IOException {
-        return ThreadParser.createListOfThreads(this.input, this.output, this.template);
+        return ThreadParser.createListOfThreads(this.input, this.output);
     }
 
     /**

@@ -12,7 +12,7 @@ import lombok.NonNull;
  */
 public enum ParserType {
 
-    SIMPLE, SITE, SERVE;
+    SIMPLE, SITE;
 
     /**
      * Récupérer le type de parser à partir du nom fichier.
