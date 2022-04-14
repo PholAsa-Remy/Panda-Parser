@@ -48,7 +48,7 @@ public class Metadata {
 
         while (itr.hasNext()) {
             String next = itr.next();
-            metadata.put(next, result.get(next).toString());
+            metadata.put(next, result.get(next));
         }
         metadata.put("content", fileContentWithoutHeader);
     }

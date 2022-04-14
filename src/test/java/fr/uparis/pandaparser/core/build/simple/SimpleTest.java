@@ -42,4 +42,9 @@ class SimpleTest {
     void testParseUsingNotExistingTemplate() {
         testParse(TestConfig.NOT_EXISTING_TEMPLATE);
     }
+
+    @Test
+    void testParseUsingListLandingTemplate() {
+        testParse(TestConfig.BAKERY_MD_TEST);
+    }
 }
