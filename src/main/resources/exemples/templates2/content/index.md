@@ -1,5 +1,7 @@
-+++ title = "Templates 2 Homepage"
-date = 2021-03-01 +++
++++
+title = "Templates 2 Homepage"
+date = 2021-03-01
++++
 
 # Index
 

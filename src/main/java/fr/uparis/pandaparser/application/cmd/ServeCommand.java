@@ -1,14 +1,12 @@
 package fr.uparis.pandaparser.application.cmd;
 
 import fr.uparis.pandaparser.config.Config;
-import fr.uparis.pandaparser.core.build.ParserType;
-import fr.uparis.pandaparser.core.serve.Serve;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 import java.util.concurrent.Callable;
 
-@Command(name = "serve", description = "Compile le site puis lance un serveur HTTP sur le port 8080 par défaut.", mixinStandardHelpOptions = true)
+@Command(name = "serve", description = "Compile the site and then launch an HTTP server on port 8080 by default.", mixinStandardHelpOptions = true)
 public class ServeCommand implements Callable<Integer> {
 
     @Option(names = {"-i", "--input-dir"}, paramLabel = "INPUT_DIR", description = "Specify a tree to process different from the current directory.")
@@ -30,8 +28,6 @@ public class ServeCommand implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        Serve serve = new Serve(input, output, null, watched, jobs, ParserType.SERVE, port);
-        serve.start();
         return 0;
     }
 

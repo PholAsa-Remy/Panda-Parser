@@ -18,14 +18,13 @@ import static fr.uparis.pandaparser.config.Config.HISTORY_FILE_SITE_NAME;
 
 
 /**
- * Traduction incrémentale
+ *  Traduction incrémentale
  *
  * <p>The target files are only regenerated when the source files
- * on which they depend have been modified</p>
- *
- * @author panda-parser groupe
- * @version 1.0.0
- * @since April 2022
+ *  on which they depend have been modified</p>
+ *  @author panda-parser groupe
+ *  @version 1.0.0
+ *  @since April 2022
  */
 
 @Log
@@ -51,7 +50,6 @@ public final class HistoryManager implements Serializable {
 
     /**
      * Get instance of History Manager
-     *
      * @return instance of HistoryManager
      */
     public static HistoryManager getInstance() {
@@ -62,8 +60,7 @@ public final class HistoryManager implements Serializable {
 
     /**
      * Set instance of HistoryManager
-     *
-     * @param input      file or site to build
+     * @param input file or site to build
      * @param rebuildAll define if we rebuild all or not
      */
     public static void setHistoryManagerInstance(@NonNull String input, @NonNull Boolean rebuildAll) {
@@ -77,7 +74,7 @@ public final class HistoryManager implements Serializable {
     /**
      * Read instance HistoryManager from historyFile
      *
-     * @param input      file or site to build
+     * @param input file or site to build
      * @param rebuildAll define if we rebuild all or not
      * @return HistoryManager
      */
@@ -87,19 +84,6 @@ public final class HistoryManager implements Serializable {
         } catch (ClassNotFoundException | IOException ioException) {
             return new HistoryManager(input, rebuildAll);
         }
-    }
-
-    /**
-     * Get path of historyFile
-     *
-     * @param input the name of historyFile
-     * @return path
-     */
-    private static String getHistoryFilePathFromInput(String input) {
-        ParserType type = ParserType.getType(input);
-        if (type.equals(ParserType.SITE) && !input.endsWith(File.separator))
-            input += File.separator;
-        return type.equals(ParserType.SITE) ? input + HISTORY_FILE_SITE_NAME : HISTORY_FILE_SIMPLE_PATH;
     }
 
     /**
@@ -140,6 +124,7 @@ public final class HistoryManager implements Serializable {
 
     /**
      * Save the instance of HistoryManager in the historyFile
+     *
      */
     public void save() {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.historyFilePath))) {

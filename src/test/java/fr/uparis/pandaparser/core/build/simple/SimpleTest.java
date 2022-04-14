@@ -15,31 +15,21 @@ class SimpleTest {
         p.parse();
     }
 
-    /*Simple parse Empty MD with DEFAULT template */
+    /*Parse Empty MD*/
     @Test
     void testParseEmptyMd() {
         testParse(TestConfig.EMPTY_MD_TEST);
     }
 
-    /*Simple parse Simple MD with DEFAULT template */
+    /*Parse Simple MD */
     @Test
     void testParseSimpleMd() {
         testParse(TestConfig.BASIC_MD_TEST);
     }
 
-    /*Simple parse Lorem Ipsum MD with DEFAULT template */
+    /*Parse Lorem Ipsum MD */
     @Test
     void testParseLoremIpsumMd() {
         testParse(TestConfig.LOREM_IPSUM_MD_TEST);
-    }
-
-    @Test
-    void testParseNotExistingFile() {
-        testParse(TestConfig.NOT_EXISTING_FILE);
-    }
-
-    @Test
-    void testParseUsingNotExistingTemplate() {
-        testParse(TestConfig.NOT_EXISTING_TEMPLATE);
     }
 }
