@@ -8,14 +8,10 @@ import lombok.extern.java.Log;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
-import org.w3c.tidy.Tidy;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import static fr.uparis.pandaparser.utils.FilesUtils.createFileFromContent;
-import static fr.uparis.pandaparser.utils.FilesUtils.getFileContent;
+import static fr.uparis.pandaparser.utils.FilesUtils.*;
 
 /**
  * Translation from markdown to HTML
@@ -30,57 +26,19 @@ public class Simple extends PandaParser {
     /* An instance of the parser of common-markdown library */
     private final org.commonmark.parser.Parser parser = Parser.builder().build();
 
-    public Simple(String input, String output, boolean watch, int jobs) {
-        super(input, output, watch, jobs, ParserType.SIMPLE);
+    public Simple(String input, String output, String template, boolean watch, int jobs) {
+        super(input, output, template, watch, jobs, ParserType.SIMPLE);
     }
 
-    /**
-     * Parse the header from the file content
-     *
-     * @param fileContent the content of the file to parse
-     * @return head
-     */
-    private String buildHeader(String fileContent) {
-        return "<head><title>Title</title></head>";
-    }
+    private String getBodyContentWithoutHeaderHTML(String fileContent) {
 
-    /**
-     * Parse the body from the file content
-     *
-     * @param fileContent the content of the file to parse
-     * @return body
-     */
-    private String buildBody(String fileContent) {
-        Node document = parser.parse(fileContent);
+        // remove the header from the fileContent
+        String fileContentWithoutHeader = usePatternToReplace(fileContent, "(?:\\+{3})((?:.|\\n)*?)(?:\\+{3})", "");
+
+        //parse the fileContentWithoutHeader in html for the key "content"
+        Node document = parser.parse(fileContentWithoutHeader);
         HtmlRenderer renderer = HtmlRenderer.builder().build();
-        return "<body>" + renderer.render(document) + "</body>";
-    }
-
-    /**
-     * Parse the html from the file content
-     *
-     * @param fileContent the content of the file to parse
-     * @return html
-     */
-    private String buildHtml(String fileContent) {
-        String header = buildHeader(fileContent);
-        String body = buildBody(fileContent);
-        return "<!DOCTYPE html><html>" + header + body + "</html>";
-    }
-
-    /**
-     * Make the html more readable
-     *
-     * @param htmlContent the content of the html to beautify
-     * @return beautifiedHtml the beautified html
-     */
-    private String beautifyHtml(String htmlContent) {
-        Tidy tidy = new Tidy();
-        tidy.setIndentContent(true);
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(htmlContent.getBytes());
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        tidy.parse(inputStream, outputStream);
-        return outputStream.toString();
+        return renderer.render(document);
     }
 
     @Override
@@ -91,8 +49,12 @@ public class Simple extends PandaParser {
         try {
             String inputFileName = FilesUtils.getHtmlFilenameFromMdFile(FilesUtils.getFileName(input));
             String fileContent = getFileContent(input);
-            String html = beautifyHtml(buildHtml(fileContent));
-            createFileFromContent(this.output + inputFileName, html);
+
+            String bodyContentHTML = getBodyContentWithoutHeaderHTML(fileContent);
+            Metadata meta = new Metadata(fileContent, bodyContentHTML);
+            //if there is a path for the template in the metadata, take the path otherwise take the default template
+            String FileContentAfterTemplate = TemplateProvider.applyTemplate(meta);
+            createFileFromContent(this.output + inputFileName, FileContentAfterTemplate);
             log.info("MD 2 HTML parser : input" + this.input + " -> out: " + this.output + inputFileName);
             HistoryManager.getInstance().update(input);
         } catch (IOException e) {
