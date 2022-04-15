@@ -12,6 +12,7 @@ import org.commonmark.renderer.html.HtmlRenderer;
 import java.io.IOException;
 
 import static fr.uparis.pandaparser.utils.FilesUtils.*;
+import static fr.uparis.pandaparser.utils.RegExUtils.*;
 
 /**
  * Translation from markdown to HTML
@@ -33,7 +34,7 @@ public class Simple extends PandaParser {
     private String getBodyContentWithoutHeaderHTML(String fileContent) {
 
         // remove the header from the fileContent
-        String fileContentWithoutHeader = usePatternToReplace(fileContent, "(?:\\+{3})((?:.|\\n)*?)(?:\\+{3})", "");
+        String fileContentWithoutHeader = removeHeaderFromContent(fileContent);
 
         //parse the fileContentWithoutHeader in html for the key "content"
         Node document = parser.parse(fileContentWithoutHeader);
