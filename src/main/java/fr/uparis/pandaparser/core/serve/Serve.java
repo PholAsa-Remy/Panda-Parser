@@ -45,7 +45,7 @@ public class Serve extends PandaParser {
     }
 
     private void watchDog() {
-        this.watchDogExecutor.submit(new DirectoryWatcher(input + File.separator + DEFAULT_CONTENT_DIR, output));
+        this.watchDogExecutor.submit(new DirectoryWatcher(input, output));
         log.info("watch dog Started");
     }
 }
