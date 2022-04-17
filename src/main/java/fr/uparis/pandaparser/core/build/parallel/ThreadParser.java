@@ -1,5 +1,6 @@
 package fr.uparis.pandaparser.core.build.parallel;
 
+import fr.uparis.pandaparser.application.Application;
 import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.config.Extension;
 import fr.uparis.pandaparser.core.build.PandaParser;
@@ -8,6 +9,7 @@ import lombok.NonNull;
 import lombok.extern.java.Log;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +48,10 @@ public class ThreadParser extends AbstractThread {
         FilesUtils.createDirectoryIfNotExiste(outputDirectory);
         FilesUtils.createDirectoryIfNotExiste(outputContentDirectoryPath);
         return FilesUtils.getAllFilesFromDirectory(inputContentDirectoryPath, Extension.MD)
-                .stream().map(inputFilePath -> new ThreadParser(inputFilePath, outputContentDirectoryPath, template))
+                .stream().map(inputFilePath -> {
+                    Path parent = Path.of(inputFilePath.split(Config.DEFAULT_CONTENT_DIR)[1]).getParent();
+                    return new ThreadParser(inputFilePath, outputContentDirectoryPath + ((parent == null) ? "" : parent.toString()), template);
+                })
                 .collect(Collectors.toList());
     }
 

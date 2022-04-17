@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -84,11 +84,21 @@ public class FilesUtils {
      * @throws IOException if the directory doesn't exist.
      */
     public static Set<String> getAllFilesFromDirectory(@NonNull final String directory) throws IOException {
+        return getAllFilesFromDirectoryRec(directory);
+    }
+
+    public static Set<String> getAllFilesFromDirectoryRec(String directory) throws IOException {
+        Set<String> files = new HashSet<>();
         try (Stream<Path> stream = Files.list(Paths.get(directory))) {
-            return stream.filter(Files::isRegularFile)
-                    .map(Path::toString)
-                    .collect(Collectors.toSet());
+            Map<Boolean, List<Path>> directoryAndFilesPartition = stream
+                    .collect(Collectors.partitioningBy(Files::isDirectory));
+            files.addAll(directoryAndFilesPartition.get(false).stream()
+                    .map(Path::toString).collect(Collectors.toSet()));
+            for (Path path : directoryAndFilesPartition.get(true)) {
+                files.addAll(getAllFilesFromDirectoryRec(path.toString()));
+            }
         }
+        return files;
     }
 
     /**

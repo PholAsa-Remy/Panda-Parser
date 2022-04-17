@@ -1,5 +1,6 @@
 package fr.uparis.pandaparser.core.serve.watchdog;
 
+import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.core.build.PandaParser;
 import lombok.extern.java.Log;
 
