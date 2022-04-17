@@ -22,7 +22,11 @@ public class TestConfig {
     public static final String SIMPLE_TEXT_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "simple-text-template.html";
     public static final String NOT_EXISTING_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "not-existing-template.html";
     public static final String LANDING_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "landing-template.html";
+    public static final String ARRAY_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "array-template.html";
     public static final String BAKERY_MD_TEST = TEMPLATE_TEST_CONTENT_DIR + File.separator + "bakery.md";
+    public static final String DICTIONARY_MD_TEST = TEMPLATE_TEST_CONTENT_DIR + File.separator + "dictionary_test.md";
+    public static final String ARRAY_MD_TEST = TEMPLATE_TEST_CONTENT_DIR + File.separator + "array_test.md";
+
 
 
     public static final String TEST_MP3_PATH = "" + File.separator + "static" + File.separator + "01.Ren'ai_Circulation.mp3";
