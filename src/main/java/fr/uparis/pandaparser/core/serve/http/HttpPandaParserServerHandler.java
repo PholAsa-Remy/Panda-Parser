@@ -8,6 +8,7 @@ import io.netty.handler.codec.http.*;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedFile;
 import io.netty.util.CharsetUtil;
+import lombok.extern.java.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,6 +24,7 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_0;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 
+@Log
 public class HttpPandaParserServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
     private static final Pattern INSECURE_URI = Pattern.compile(".*[<>&\"].*");
@@ -83,7 +85,7 @@ public class HttpPandaParserServerHandler extends SimpleChannelInboundHandler<Fu
 
         final String path = this.output + sanitizeUri(uri);
 
-        System.out.println("path url  : " + path);
+        log.info("path url  : " + path);
         File file = new File(path);
         if (file.isHidden() || !file.exists()) {
             sendError(context, NOT_FOUND);

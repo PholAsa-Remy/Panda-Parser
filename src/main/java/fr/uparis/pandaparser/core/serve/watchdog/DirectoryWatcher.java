@@ -10,6 +10,7 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.concurrent.Callable;
 
+import static fr.uparis.pandaparser.config.Config.DEFAULT_CONTENT_DIR;
 import static java.nio.file.StandardWatchEventKinds.*;
 
 @Log
@@ -33,7 +34,6 @@ public class DirectoryWatcher implements Callable<String> {
     }
 
     private String watch() {
-        log.info("watch me");
         try {
             WatchKey watchKey;
             while ((watchKey = this.watchService.take()) != null) {
@@ -41,7 +41,7 @@ public class DirectoryWatcher implements Callable<String> {
                     if (!event.context().toString().contains("~")) {
                         PandaParser.builder()
                                 .setInput(this.inputDirectory + File.separator + event.context())
-                                .setOutput(output)
+                                .setOutput(output + File.separator + DEFAULT_CONTENT_DIR)
                                 .build()
                                 .parse();
                     }

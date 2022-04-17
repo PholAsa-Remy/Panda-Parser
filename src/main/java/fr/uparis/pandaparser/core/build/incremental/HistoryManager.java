@@ -84,7 +84,7 @@ public final class HistoryManager implements Serializable {
     private static HistoryManager loadInstanceFromHistoryFile(@NonNull String input, @NonNull Boolean rebuildAll) {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(input))) {
             return (HistoryManager) objectInputStream.readObject();
-        } catch (ClassNotFoundException | IOException ioException) {
+        } catch (ClassNotFoundException | IOException exception) {
             return new HistoryManager(input, rebuildAll);
         }
     }
@@ -134,6 +134,7 @@ public final class HistoryManager implements Serializable {
     public void update(String filepath) {
         try {
             this.filesLastModifiedMap.put(filepath, FilesUtils.getFileLastModificationDate(filepath));
+            save();
         } catch (IOException ignored) {
         }
     }
