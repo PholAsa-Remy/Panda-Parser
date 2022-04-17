@@ -23,7 +23,9 @@ import static io.netty.handler.codec.http.HttpResponseStatus.*;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_0;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
-
+/**
+ * http server handler for panda parser server handler class.
+ */
 @Log
 public class HttpPandaParserServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
@@ -33,12 +35,22 @@ public class HttpPandaParserServerHandler extends SimpleChannelInboundHandler<Fu
     private FullHttpRequest request;
 
 
+    /**
+     * Instantiates a new Http panda parser server handler.
+     *
+     * @param output the output
+     */
     public HttpPandaParserServerHandler(String output) {
         if (!output.endsWith(File.separator))
             output += File.separator;
         this.output = output;
     }
 
+    /**
+     * Gets output.
+     *
+     * @return the output
+     */
     private static String sanitizeUri(String uri) {
         // Decode the path.
         uri = URLDecoder.decode(uri, StandardCharsets.UTF_8);
@@ -61,6 +73,7 @@ public class HttpPandaParserServerHandler extends SimpleChannelInboundHandler<Fu
 
         return uri.equals(File.separator) ? INDEX_HTML_FILE : uri;
     }
+
 
     @Override
     protected void channelRead0(ChannelHandlerContext context, FullHttpRequest request) throws Exception {
