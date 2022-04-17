@@ -11,6 +11,8 @@ import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static fr.uparis.pandaparser.config.Config.DEFAULT_CONTENT_DIR;
+
 @Log
 public class Serve extends PandaParser {
 
@@ -33,7 +35,7 @@ public class Serve extends PandaParser {
     public void start() {
         try {
             this.parse();
-            HttpPandaParserServer httpPandaParserServer = new HttpPandaParserServer(this.port, this.output);
+            HttpPandaParserServer httpPandaParserServer = new HttpPandaParserServer(this.port, this.output + DEFAULT_CONTENT_DIR);
             watchDog();
             httpPandaParserServer.start();
             this.watchDogExecutor.shutdown();
@@ -43,7 +45,7 @@ public class Serve extends PandaParser {
     }
 
     private void watchDog() {
-        this.watchDogExecutor.submit(new DirectoryWatcher(input + File.separator + Config.DEFAULT_CONTENT_DIR, output));
+        this.watchDogExecutor.submit(new DirectoryWatcher(input + File.separator + DEFAULT_CONTENT_DIR, output));
         log.info("watch dog Started");
     }
 }
