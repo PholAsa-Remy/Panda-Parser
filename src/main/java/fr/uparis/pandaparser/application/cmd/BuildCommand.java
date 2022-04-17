@@ -30,8 +30,8 @@ public class BuildCommand implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        HistoryManager.setHistoryManagerInstance(input, rebuildAll);
         try {
+            HistoryManager.setHistoryManagerInstance(input, rebuildAll);
             this.setUpPandaParser().parse();
             HistoryManager.getInstance().save();
             return Config.EXIT_SUCCESS;

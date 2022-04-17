@@ -2,6 +2,7 @@ package fr.uparis.pandaparser.application.cmd;
 
 import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.core.build.ParserType;
+import fr.uparis.pandaparser.core.build.incremental.HistoryManager;
 import fr.uparis.pandaparser.core.serve.Serve;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -29,9 +30,14 @@ public class ServeCommand implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        Serve serve = new Serve(input, output, null, watched, jobs, ParserType.SERVE, port);
-        serve.start();
-        return 0;
+        try {
+            HistoryManager.setHistoryManagerInstance(input, false);
+            Serve serve = new Serve(input, output, null, watched, jobs, ParserType.SERVE, port);
+            serve.start();
+            HistoryManager.getInstance().save();
+            return Config.EXIT_SUCCESS;
+        } catch (Exception e) {
+            return Config.EXIT_FAILURE;
+        }
     }
-
 }
