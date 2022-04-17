@@ -19,6 +19,11 @@ public class Serve extends PandaParser {
     private final int port;
     private final ExecutorService watchDogExecutor = Executors.newSingleThreadExecutor();
 
+    /**
+     * Constructor.
+     *
+     * @param port the port
+     */
     public Serve(String input, String output, String template, boolean watch, int jobs, ParserType type, int port) {
         super(input, output, template, watch, jobs, type);
         this.port = port;
@@ -32,6 +37,9 @@ public class Serve extends PandaParser {
                 .build().parse();
     }
 
+    /**
+     * Start the server
+     */
     public void start() {
         try {
             this.parse();
@@ -44,8 +52,11 @@ public class Serve extends PandaParser {
         }
     }
 
+    /**
+     * Watch the directory for changes
+     */
     private void watchDog() {
-        this.watchDogExecutor.submit(new DirectoryWatcher(input + File.separator + DEFAULT_CONTENT_DIR, output));
+        this.watchDogExecutor.submit(new DirectoryWatcher(input, output));
         log.info("watch dog Started");
     }
 }

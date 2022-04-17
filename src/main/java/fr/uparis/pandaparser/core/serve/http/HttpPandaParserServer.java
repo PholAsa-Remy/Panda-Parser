@@ -16,11 +16,22 @@ import lombok.extern.java.Log;
 import javax.net.ssl.SSLException;
 import java.security.cert.CertificateException;
 
+/**
+ * The type Http panda parser server.
+ *
+ * @param port
+ * @param output
+ */
 @Log
 public record HttpPandaParserServer(int port, String output) {
 
     static final boolean SSL = System.getProperty("ssl") != null;
 
+    /**
+     * The start server.
+     * @throws CertificateException certificate exception
+     * @throws SSLException ssl exception
+     */
     public void start() throws CertificateException, SSLException {
 
         final SslContext sslCtx;

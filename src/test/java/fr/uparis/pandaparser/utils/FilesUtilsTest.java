@@ -112,10 +112,6 @@ class FilesUtilsTest {
         assertThrows(NotDirectoryException.class, () -> FilesUtils.getAllFilesFromDirectory(EXISTING_FILE_PATH));
     }
 
-    @Test
-    void whenListingFilesUsingGetAllFilesFromDirectory_withDir_thenEmpty() throws IOException {
-        assertTrue(FilesUtils.getAllFilesFromDirectory(BUILD_DIR).isEmpty());
-    }
 
     @Test
     void whenListingFilesUsingGetAllFilesFromDirectory_withExistingDir_thenCorrect() throws IOException {
