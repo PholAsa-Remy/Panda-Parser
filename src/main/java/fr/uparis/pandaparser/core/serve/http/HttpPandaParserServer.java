@@ -19,8 +19,8 @@ import java.security.cert.CertificateException;
 /**
  * The type Http panda parser server.
  *
- * @param port
- * @param output
+ * @param port the port
+ * @param output The output
  */
 @Log
 public record HttpPandaParserServer(int port, String output) {
