@@ -11,7 +11,6 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 
 /**
  * http panda parser server initializer.
- *
  */
 public class HttpPandaParserServerInitializer extends ChannelInitializer<SocketChannel> {
 

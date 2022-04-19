@@ -87,6 +87,7 @@ public class HttpPandaParserServerHandler extends SimpleChannelInboundHandler<Fu
             sendError(context, METHOD_NOT_ALLOWED);
             return;
         }
+
         final boolean keepAlive = HttpUtil.isKeepAlive(request);
 
         final String uri = request.uri();
@@ -171,6 +172,12 @@ public class HttpPandaParserServerHandler extends SimpleChannelInboundHandler<Fu
 
     }
 
+    /**
+     * redirect to the given url
+     *
+     * @param ctx    the context
+     * @param newUri the new uri
+     */
     private void sendRedirect(ChannelHandlerContext ctx, String newUri) {
         FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, FOUND, Unpooled.EMPTY_BUFFER);
         response.headers().set(HttpHeaderNames.LOCATION, newUri);
@@ -178,6 +185,13 @@ public class HttpPandaParserServerHandler extends SimpleChannelInboundHandler<Fu
         sendAndCleanupConnection(ctx, response);
     }
 
+    /**
+     * send the error response
+     *
+     * @param context the context
+     * @param status  the status
+     * @throws IOException the io exception
+     */
     private void sendError(ChannelHandlerContext context, HttpResponseStatus status) throws IOException {
         String notFound = FilesUtils.getFileContent(Config.NOT_FOUND_404);
         FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, status, Unpooled.copiedBuffer(notFound, CharsetUtil.UTF_8));
@@ -200,9 +214,7 @@ public class HttpPandaParserServerHandler extends SimpleChannelInboundHandler<Fu
         } else if (request.protocolVersion().equals(HTTP_1_0)) {
             response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
         }
-
         ChannelFuture flushPromise = context.writeAndFlush(response);
-
         if (!keepAlive) {
             // Close the connection as soon as the response is sent.
             flushPromise.addListener(ChannelFutureListener.CLOSE);

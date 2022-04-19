@@ -1,10 +1,8 @@
 package fr.uparis.pandaparser.core.serve.watchdog;
 
-import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.core.build.PandaParser;
 import lombok.extern.java.Log;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -12,19 +10,26 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static fr.uparis.pandaparser.config.Config.DEFAULT_CONTENT_DIR;
 import static java.nio.file.StandardWatchEventKinds.*;
 
+/**
+ * Watchdog for directory.
+ */
 @Log
 public class DirectoryWatcher implements Callable<String> {
 
     private final String inputDirectory;
     private final String output;
+    private final Map<WatchKey, Path> folders = new ConcurrentHashMap<>();
     private WatchService watchService;
 
-    private final Map<WatchKey, Path> folders = new ConcurrentHashMap<>();
 
-
+    /**
+     * Construct a new {@code DirectoryWatcher} for the given directory.
+     *
+     * @param inputDirectory the directory to watch
+     * @param output         the output directory
+     */
     public DirectoryWatcher(String inputDirectory, String output) {
         this.inputDirectory = inputDirectory;
         this.output = output;
@@ -39,6 +44,11 @@ public class DirectoryWatcher implements Callable<String> {
         return this.watch();
     }
 
+    /**
+     * Watch the directory.
+     *
+     * @return the output directory
+     */
     private String watch() {
         try {
             WatchKey watchKey;
@@ -60,24 +70,23 @@ public class DirectoryWatcher implements Callable<String> {
                 watchKey.reset();
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.warning(e.getMessage());
+            Thread.currentThread().interrupt();
         }
         return "end - watch";
     }
 
     /**
-     * Register the given directory, and all its sub-directories, with the
-     * WatchService.
+     * Register the given directory, and all its subdirectories, with the WatchService.
      */
     private void registerFolder(final Path folder) throws IOException {
         // register directory and subdirectories
         Files.walkFileTree(folder, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
-                    throws IOException
-            {
+                    throws IOException {
                 WatchKey key = dir.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
-                log.info("registering folder "+ dir);
+                log.info("registering folder " + dir);
                 folders.put(key, dir);
                 return FileVisitResult.CONTINUE;
             }

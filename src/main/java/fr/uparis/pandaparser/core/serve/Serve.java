@@ -1,19 +1,19 @@
 package fr.uparis.pandaparser.core.serve;
 
-import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.core.build.PandaParser;
 import fr.uparis.pandaparser.core.build.ParserType;
 import fr.uparis.pandaparser.core.serve.http.HttpPandaParserServer;
 import fr.uparis.pandaparser.core.serve.watchdog.DirectoryWatcher;
+import lombok.Getter;
 import lombok.extern.java.Log;
 
-import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static fr.uparis.pandaparser.config.Config.DEFAULT_CONTENT_DIR;
 
 @Log
+@Getter
 public class Serve extends PandaParser {
 
     private final int port;
