@@ -1,8 +1,7 @@
 package fr.uparis.pandaparser.core.build.site;
 
-import fr.uparis.pandaparser.config.Extension;
+import fr.uparis.pandaparser.utils.FilesUtils;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,8 +13,8 @@ import java.util.Set;
  */
 public enum StaticFileType {
 
-    IMAGES(Set.of(".png", ".jpg", "jpg")),
-    VIDEOS(Set.of(".mp4", ".mkv", ".avi")),
+    IMAGES(Set.of(".png", ".jpg", ".jpeg")),
+    VIDEOS(Set.of(".mp4", ".mkv", ".avi", ".mp3")),
     STYLES(Set.of(".css", ".sass", ".scss"));
 
     /* List des formats */
@@ -23,6 +22,15 @@ public enum StaticFileType {
 
     StaticFileType(Set<String> extensions) {
         this.extensions = extensions;
+    }
+
+    public static boolean isStatic(String filename) {
+        String extension = FilesUtils.getFileExtension(filename);
+        for (StaticFileType value : values()) {
+            if (value.getExtensions().contains(extension))
+                return true;
+        }
+        return false;
     }
 
     public Set<String> getExtensions() {

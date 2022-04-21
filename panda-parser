@@ -5,16 +5,7 @@
 # Commande java pour exécuter l'application (ajouter des option jvm ?)
 JAVA_CMD=java
 
-LIBS_PATH=libs
-
 MAIN_JAR=build/libs/panda-parser.jar
-
-# Les jars utiliser (en local)
-# shellcheck disable=SC2045
-CLASSPATH=$(for name in $(ls -1 $LIBS_PATH); do echo "$LIBS_PATH/$name"; done | tr '\n' ':')"$MAIN_JAR"
-
-# Le chemin vers la classe main
-MAIN_CLASS=fr.uparis.pandaparser.Application
 
 
 # Stocker les arguments dans ARGS
@@ -25,8 +16,8 @@ for arg in "$@"; do
 done
 
 # Compilation - to delete ?
-gradle --warning-mode all  build > /dev/null
+#gradle --warning-mode all  build > /dev/null
 
 
 # Execution
-exec "$JAVA_CMD" -cp "$CLASSPATH" "$MAIN_CLASS" $ARGS
+exec "$JAVA_CMD" -jar $MAIN_JAR $ARGS
