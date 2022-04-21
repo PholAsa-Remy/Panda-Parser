@@ -29,9 +29,9 @@ import java.util.concurrent.Future;
  *     documents to be converted into web pages including at least one index.md
  *     file which will serve as the root of the site.</li>
  * </ul>
- * </p>
  *
- * <h3> Usage exemple </h3>
+ *
+ * <h2> Usage exemple </h2>
  *
  * <pre> {@code
  *  public class PandaParserTest {

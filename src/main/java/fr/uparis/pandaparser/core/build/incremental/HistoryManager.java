@@ -35,14 +35,32 @@ public final class HistoryManager implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    /* instance of History Manager */
-    private volatile static HistoryManager INSTANCE;
+    /**
+     * instance unique
+     */
+    private static HistoryManager instance;
 
+    /**
+     * The history file
+     */
+    private File historyFile;
+
+    /**
+     * rebuild all files
+     */
     private boolean rebuildAll;
+    /**
+     * history file path
+     */
     private String historyFilePath;
     private Map<String, Long> filesLastModifiedMap;
 
-
+    /**
+     * Constructor of HistoryManager
+     *
+     * @param historyFilePath history file path
+     * @param rebuildAll      define if we rebuild all or not
+     */
     private HistoryManager(String historyFilePath, Boolean rebuildAll) {
         this.rebuildAll = rebuildAll;
         this.filesLastModifiedMap = new HashMap<>();
@@ -55,9 +73,9 @@ public final class HistoryManager implements Serializable {
      * @return instance of HistoryManager
      */
     public static HistoryManager getInstance() {
-        if (INSTANCE == null)
+        if (instance == null)
             throw new InstanceInitialisationException("instance must be initialised with setHistoryManagerInstance");
-        return INSTANCE;
+        return instance;
     }
 
     /**
@@ -67,8 +85,8 @@ public final class HistoryManager implements Serializable {
      * @param rebuildAll define if we rebuild all or not
      */
     public static void setHistoryManagerInstance(@NonNull String input, @NonNull Boolean rebuildAll) {
-        if (INSTANCE == null) {
-            INSTANCE = loadInstanceFromHistoryFile(getHistoryFilePathFromInput(input), rebuildAll);
+        if (instance == null) {
+            instance = loadInstanceFromHistoryFile(getHistoryFilePathFromInput(input), rebuildAll);
             return;
         }
         throw new InstanceAlreadyExistsException("Instance is already exist");
@@ -135,7 +153,8 @@ public final class HistoryManager implements Serializable {
         try {
             this.filesLastModifiedMap.put(filepath, FilesUtils.getFileLastModificationDate(filepath));
             save();
-        } catch (IOException ignored) {
+        } catch (IOException e) {
+            log.warning("Error while updating the history file");
         }
     }
 

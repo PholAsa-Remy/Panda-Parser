@@ -1,5 +1,6 @@
 package fr.uparis.pandaparser.core.serve;
 
-class ServeTest {
+import org.junit.jupiter.api.Test;
 
+class ServeTest {
 }
