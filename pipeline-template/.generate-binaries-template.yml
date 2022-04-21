@@ -21,7 +21,7 @@
       echo -e '\tfor arg in "$@"; do' >> $SCRIPT_NAME
       echo -e '\tARGS="$ARGS $arg"' >> $SCRIPT_NAME
       echo 'done' >> $SCRIPT_NAME
-      export CLASS_PATHS="$MAIN_JAR"
+      export CLASS_PATHS=$(for name in $(ls -1 $LIBS_PATH); do echo "$LIBS_PATH/$name"; done | tr '\n' ':')"$MAIN_JAR"
       echo java -cp "$CLASS_PATHS" $MAIN_CLASS_PATH '$ARG'>> $SCRIPT_NAME
   artifacts:
     paths:
