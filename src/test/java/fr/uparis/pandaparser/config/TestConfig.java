@@ -14,12 +14,20 @@ public class TestConfig {
     public static final String LOREM_IPSUM_MD_TEST = INPUT_UNIT_MD_DIR + File.separator + "LoremIpsumMarkDown.md";
 
     public static final String TEMPLATE_TEST_DIR = "src" + File.separator + "test" + File.separator + "resources" + File.separator + "template-test";
+    public static final String TEMPLATE_TEST_CONTENT_DIR = "src" + File.separator + "test" + File.separator + "resources" + File.separator + "template-test" + File.separator + "content";
     public static final String EMPTY_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "empty-template.html";
     public static final String INCLUDE_P_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "include-P-template.html";
     public static final String METADATA_TITLE_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "metadata-title-template.html";
     public static final String METADATA_DATE_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "metadata-date-template.html";
     public static final String SIMPLE_TEXT_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "simple-text-template.html";
     public static final String NOT_EXISTING_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "not-existing-template.html";
+    public static final String LANDING_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "landing-template.html";
+    public static final String ARRAY_TEMPLATE_TEST = TEMPLATE_TEST_DIR + File.separator + "array-template.html";
+    public static final String BAKERY_MD_TEST = TEMPLATE_TEST_CONTENT_DIR + File.separator + "bakery.md";
+    public static final String DICTIONARY_MD_TEST = TEMPLATE_TEST_CONTENT_DIR + File.separator + "dictionary_test.md";
+    public static final String ARRAY_MD_TEST = TEMPLATE_TEST_CONTENT_DIR + File.separator + "array_test.md";
+
+
 
     public static final String TEST_MP3_PATH = "" + File.separator + "static" + File.separator + "01.Ren'ai_Circulation.mp3";
     public static final String TEST_JPG_PATH = "" + File.separator + "static" + File.separator + "koharu.jpg";

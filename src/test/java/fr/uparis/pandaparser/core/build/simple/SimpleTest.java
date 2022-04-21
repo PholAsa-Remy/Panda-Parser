@@ -42,4 +42,17 @@ class SimpleTest {
     void testParseUsingNotExistingTemplate() {
         testParse(TestConfig.NOT_EXISTING_TEMPLATE);
     }
+
+    @Test
+    void testParseUsingListLandingTemplate() { testParse(TestConfig.BAKERY_MD_TEST); }
+
+    @Test
+    void testParseUsingDictionaryTemplate() {
+        testParse(TestConfig.DICTIONARY_MD_TEST);
+    }
+
+    @Test
+    void testParseUsingArrayTemplate() {
+        testParse(TestConfig.ARRAY_MD_TEST);
+    }
 }
