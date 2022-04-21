@@ -11,6 +11,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static fr.uparis.pandaparser.utils.RegExUtils.getMetadataContent;
+
 /**
  * metadata
  *
@@ -33,14 +35,7 @@ public class Metadata {
      */
     public Metadata(String fileContent, String fileContentWithoutHeader) {
         metadata = new HashMap<>();
-
-        Pattern pattern = Pattern.compile("(?:\\+{3})((?:.|\\n)*?)(?:\\+{3})");
-        Matcher m = pattern.matcher(fileContent);
-        String data = "";
-        while (m.find()) {
-            data = m.group(1);
-        }
-
+        String data = getMetadataContent(fileContent);
         TomlParseResult result = Toml.parse(data);
         result.errors().forEach(error -> System.err.println(error.toString()));
         Set<String> keys = result.dottedKeySet();
