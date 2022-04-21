@@ -15,8 +15,6 @@
     - cd $BINARIES_DIR
     - mkdir -p $LIBS_PATH
     - cp "../$JAR_PATH/$APP_NAME.jar" $LIBS_PATH
-    - cp ../$LIBS_PATH/*.jar $LIBS_PATH
-    - echo 'Libs used :' $(ls -1 $LIBS_PATH)
     - |
       # create script
       echo 'ARGS=""' > $SCRIPT_NAME
