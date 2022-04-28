@@ -18,5 +18,6 @@
 
 ## wikis :
 
-- [Documentation technique] (https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/wikis/Documentation-technique)
-- [Manuel d'utilisation] (https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/wikis/Manuel-d'utilisation)
+
+- ![Documentation technique](https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/wikis/Documentation-technique)
+- ![Manuel d'utilisation](https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/wikis/Manuel-d'utilisation)
