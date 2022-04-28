@@ -3,6 +3,8 @@ package fr.uparis.pandaparser.core.build.simple;
 import fr.uparis.pandaparser.core.build.PandaParser;
 import fr.uparis.pandaparser.core.build.ParserType;
 import fr.uparis.pandaparser.core.build.incremental.HistoryManager;
+import fr.uparis.pandaparser.core.build.metadata.Metadata;
+import fr.uparis.pandaparser.core.build.template.TemplateProvider;
 import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.extern.java.Log;
 import org.commonmark.Extension;
@@ -34,40 +36,78 @@ public class Simple extends PandaParser {
     List<Extension> extensions = Arrays.asList(TablesExtension.create(), StrikethroughExtension.create());
     private final org.commonmark.parser.Parser parser = Parser.builder().extensions(extensions).build();
 
+    private String inputFileName;
+    private String fileContent;
 
     public Simple(String input, String output, String template, boolean watch, int jobs) {
         super(input, output, template, watch, jobs, ParserType.SIMPLE);
+        init();
     }
 
-    private String getBodyContentWithoutHeaderHTML(String fileContent) {
+    private void init() {
+        try {
+            this.inputFileName = FilesUtils.getHtmlFilenameFromMdFile(FilesUtils.getFileName(input));
+            fileContent = getFileContent(input);
+        } catch (IOException e) {
+            log.warning(e.getMessage());
+        }
+    }
 
+    @Override
+    public void parse() {
+        if (!checkToRebuild()) return;
+        String bodyContentHTML = getBodyContentWithoutHeaderHTML(fileContent);
+        applyTemplate(bodyContentHTML);
+        save();
+    }
+
+    /**
+     * apply the template to the body content
+     *
+     * @return the body content with the template applied
+     */
+    private boolean checkToRebuild() {
+        boolean shouldBeRebuild = HistoryManager.getInstance().shouldBeRebuild(input);
+        log.info(FilesUtils.getFileName(input) + " : " + (shouldBeRebuild ? "Yes Rebuild" : "NO Rebuild"));
+        return shouldBeRebuild;
+    }
+
+    /**
+     * get the body content without the header
+     *
+     * @param fileContent the content of the file
+     * @return the body content without the header
+     */
+    private String getBodyContentWithoutHeaderHTML(String fileContent) {
         // remove the header from the fileContent
         String fileContentWithoutHeader = removeHeaderFromContent(fileContent);
-
         //parse the fileContentWithoutHeader in html for the key "content"
         Node document = parser.parse(fileContentWithoutHeader);
         HtmlRenderer renderer = HtmlRenderer.builder().build();
         return renderer.render(document);
     }
 
-    @Override
-    public void parse() {
-        boolean shouldBeRebuild = HistoryManager.getInstance().shouldBeRebuild(input);
-        System.out.println(FilesUtils.getFileName(input) + " : " + (shouldBeRebuild ? "Yes Rebuild" : "NO Rebuild"));
-        if (!shouldBeRebuild) return;
-        try {
-            String inputFileName = FilesUtils.getHtmlFilenameFromMdFile(FilesUtils.getFileName(input));
-            String fileContent = getFileContent(input);
 
-            String bodyContentHTML = getBodyContentWithoutHeaderHTML(fileContent);
+    /**
+     * Apply the template to the content
+     *
+     * @param bodyContentHTML the content of the body
+     */
+    private void applyTemplate(String bodyContentHTML) {
+        try {
             Metadata meta = new Metadata(fileContent, bodyContentHTML);
-            //if there is a path for the template in the metadata, take the path otherwise take the default template
-            String FileContentAfterTemplate = TemplateProvider.applyTemplate(meta);
-            createFileFromContent(this.output + inputFileName, FileContentAfterTemplate);
-            log.info("MD 2 HTML parser : input" + this.input + " -> out: " + this.output + inputFileName);
-            HistoryManager.getInstance().update(input);
+            String fileContentAfterTemplate = TemplateProvider.applyTemplate(meta);
+            createFileFromContent(this.output + inputFileName, fileContentAfterTemplate);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.warning(e.getMessage());
         }
+    }
+
+    /**
+     * save file changements in the history
+     */
+    private void save() {
+        HistoryManager.getInstance().update(input);
+        log.info("MD 2 HTML parser : input" + this.input + " -> out: " + this.output + inputFileName);
     }
 }
