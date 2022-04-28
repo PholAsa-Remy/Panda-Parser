@@ -44,7 +44,9 @@ class SimpleTest {
     }
 
     @Test
-    void testParseUsingListLandingTemplate() { testParse(TestConfig.BAKERY_MD_TEST); }
+    void testParseUsingListLandingTemplate() {
+        testParse(TestConfig.BAKERY_MD_TEST);
+    }
 
     @Test
     void testParseUsingDictionaryTemplate() {
