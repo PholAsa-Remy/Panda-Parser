@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+/**
+ * Classe utilitaire pour la gestion des threads.
+ */
 @Log
 public class ThreadUtils {
 
@@ -16,15 +19,20 @@ public class ThreadUtils {
      * Log future result
      *
      * @param future future
+     * @throws ExecutionException   execution exception
+     * @throws InterruptedException interrupted exception
      */
     public static void logFuture(final Future<String> future) throws ExecutionException, InterruptedException {
         log.info(future.get());
     }
 
+
     /**
-     * Log future liste result
+     * Log future result
      *
-     * @param futures Liste of futures
+     * @param futures futures
+     * @throws ExecutionException   execution exception
+     * @throws InterruptedException interrupted exception
      */
     public static void logAllFutures(final List<Future<String>> futures) throws ExecutionException, InterruptedException {
         for (Future<String> future : futures)

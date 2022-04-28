@@ -1,19 +1,18 @@
-package fr.uparis.pandaparser.core.build.simple;
+package fr.uparis.pandaparser.core.build.template;
 
 import com.hubspot.jinjava.Jinjava;
 import com.hubspot.jinjava.JinjavaConfig;
-import com.hubspot.jinjava.interpret.JinjavaInterpreter;
 import com.hubspot.jinjava.loader.ResourceLocator;
 import fr.uparis.pandaparser.config.Config;
+import fr.uparis.pandaparser.core.build.metadata.Metadata;
 import fr.uparis.pandaparser.utils.FilesUtils;
 import lombok.extern.java.Log;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 
-import static fr.uparis.pandaparser.utils.FilesUtils.usePatternToReplace;
-import static fr.uparis.pandaparser.utils.RegExUtils.*;
+import static fr.uparis.pandaparser.utils.RegExUtils.convertInclude;
+import static fr.uparis.pandaparser.utils.RegExUtils.removeMetadataDot;
 
 /**
  * Template Provider read the template stored in the
@@ -24,6 +23,10 @@ import static fr.uparis.pandaparser.utils.RegExUtils.*;
  */
 @Log
 public class TemplateProvider {
+
+    private TemplateProvider() {
+    }
+
     private static final HashMap<String, String> templateList = new HashMap<>();
 
     /**
@@ -51,19 +54,19 @@ public class TemplateProvider {
         if (templateList.containsKey(templatePath))
             return templateList.get(templatePath);
 
-        String template_content;
+        String templateContent;
         try {
-            template_content = convertTemplate(templatePath);
+            templateContent = convertTemplate(templatePath);
         } catch (IOException e) {
             try {
-                template_content = convertTemplate(Config.DEFAULT_TEMPLATE);
+                templateContent = convertTemplate(Config.DEFAULT_TEMPLATE);
             } catch (IOException e1) {
                 log.warning("default template not found");
-                return "";
+                return DEFAULT_TEMPLATE;
             }
         }
-        templateList.put(templatePath, template_content);
-        return template_content;
+        templateList.put(templatePath, templateContent);
+        return templateContent;
     }
 
     /**
@@ -73,18 +76,26 @@ public class TemplateProvider {
      * @return template completed with the metadata
      */
     public static String applyTemplate(Metadata meta) {
-        String template = meta.getMetadata().containsKey("template") ? meta.getMetadata().get("template").toString() : Config.DEFAULT_TEMPLATE;
+        String template = meta.getMetadataMap().containsKey("template") ? meta.getMetadataMap().get("template").toString() : Config.DEFAULT_TEMPLATE;
         String templateContent = getTemplate(template);
         //set the path for jinjava
         JinjavaConfig config = new JinjavaConfig();
         Jinjava jinjava = new Jinjava(config);
-        ResourceLocator resource = new ResourceLocator() {
-            @Override
-            public String getString(String fullName, Charset encoding, JinjavaInterpreter interpreter) throws IOException {
-                return FilesUtils.getFileContent(fullName);
-            }
-        };
+        ResourceLocator resource = (fullName, encoding, interpreter) -> FilesUtils.getFileContent(fullName);
         jinjava.setResourceLocator(resource);
-        return jinjava.render(templateContent, meta.getMetadata());
+        return jinjava.render(templateContent, meta.getMetadataMap());
     }
+
+    private static final String DEFAULT_TEMPLATE = """
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <title>{{ metadata.title }}</title>
+                        </head>
+                        <body>
+                        <div id="content">{{ content }}</div>
+                        </body>
+                        </html>
+                        """;
 }

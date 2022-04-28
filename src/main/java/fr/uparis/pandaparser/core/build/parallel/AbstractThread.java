@@ -19,10 +19,16 @@ import java.util.concurrent.Callable;
 @Log
 @AllArgsConstructor
 public abstract class AbstractThread implements Callable<String> {
-    /* input */
+    /**
+     * input
+     **/
     protected final String input;
-    /* output */
+    /**
+     * output
+     **/
     protected final String output;
-    /* template */
+    /**
+     * template
+     **/
     protected final String template;
 }

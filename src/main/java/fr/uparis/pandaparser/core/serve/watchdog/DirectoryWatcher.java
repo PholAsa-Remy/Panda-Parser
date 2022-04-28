@@ -53,13 +53,8 @@ public class DirectoryWatcher implements Callable<String> {
         try {
             WatchKey watchKey;
             while ((watchKey = this.watchService.take()) != null) {
-                WatchKey finalWatchKey = watchKey;
                 watchKey.pollEvents().forEach(event -> {
                     if (!event.context().toString().contains("~")) {
-
-                        Path filepath = (Path) event.context();
-                        Path folder = folders.get(finalWatchKey);
-
                         PandaParser.builder()
                                 .setInput(inputDirectory)
                                 .setOutput(output)

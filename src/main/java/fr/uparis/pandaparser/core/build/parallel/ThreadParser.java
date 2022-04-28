@@ -1,6 +1,5 @@
 package fr.uparis.pandaparser.core.build.parallel;
 
-import fr.uparis.pandaparser.application.Application;
 import fr.uparis.pandaparser.config.Config;
 import fr.uparis.pandaparser.config.Extension;
 import fr.uparis.pandaparser.core.build.PandaParser;
