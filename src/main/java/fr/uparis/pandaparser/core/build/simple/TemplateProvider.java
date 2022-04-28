@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 
-import static fr.uparis.pandaparser.utils.FilesUtils.usePatternToReplace;
-import static fr.uparis.pandaparser.utils.RegExUtils.*;
+import static fr.uparis.pandaparser.utils.RegExUtils.convertInclude;
+import static fr.uparis.pandaparser.utils.RegExUtils.removeMetadataDot;
 
 /**
  * Template Provider read the template stored in the

@@ -16,8 +16,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import static fr.uparis.pandaparser.utils.FilesUtils.*;
-import static fr.uparis.pandaparser.utils.RegExUtils.*;
+import static fr.uparis.pandaparser.utils.FilesUtils.createFileFromContent;
+import static fr.uparis.pandaparser.utils.FilesUtils.getFileContent;
+import static fr.uparis.pandaparser.utils.RegExUtils.removeHeaderFromContent;
 
 /**
  * Translation from markdown to HTML
