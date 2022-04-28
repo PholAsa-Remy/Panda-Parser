@@ -18,4 +18,5 @@
 
 ## wikis :
 
-- starter: https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/wikis/Panda-parser-Starter
+- [Documentation technique] (https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/wikis/Documentation-technique)
+- [Manuel d'utilisation] (https://gaufre.informatique.univ-paris-diderot.fr/bouldja/SSG/wikis/Manuel-d'utilisation)
