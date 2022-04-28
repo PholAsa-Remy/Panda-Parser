@@ -24,8 +24,6 @@ dependencies {
     implementation 'org.commonmark:commonmark-ext-gfm-strikethrough:0.18.2'
 
 
-
-
     // lombok
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'

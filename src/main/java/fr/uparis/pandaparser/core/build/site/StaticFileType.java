@@ -13,8 +13,19 @@ import java.util.Set;
  */
 public enum StaticFileType {
 
+    /**
+     * images extension
+     */
     IMAGES(Set.of(".png", ".jpg", ".jpeg")),
+
+    /**
+     * videos extension
+     */
     VIDEOS(Set.of(".mp4", ".mkv", ".avi", ".mp3")),
+
+    /**
+     * Styles extension
+     */
     STYLES(Set.of(".css", ".sass", ".scss"));
 
     /* List des formats */

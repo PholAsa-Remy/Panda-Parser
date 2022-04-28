@@ -28,7 +28,6 @@ public class TestConfig {
     public static final String ARRAY_MD_TEST = TEMPLATE_TEST_CONTENT_DIR + File.separator + "array_test.md";
 
 
-
     public static final String TEST_MP3_PATH = "" + File.separator + "static" + File.separator + "01.Ren'ai_Circulation.mp3";
     public static final String TEST_JPG_PATH = "" + File.separator + "static" + File.separator + "koharu.jpg";
     public static final String TEST_CSS_PATH = "" + File.separator + "static" + File.separator + "exampleTest.css";
