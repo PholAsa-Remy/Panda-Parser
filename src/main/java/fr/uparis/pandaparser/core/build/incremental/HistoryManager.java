@@ -53,6 +53,10 @@ public final class HistoryManager implements Serializable {
      * history file path
      */
     private String historyFilePath;
+
+    /**
+     * map pour stocker l'historique des fichiers.
+     */
     private Map<String, Long> filesLastModifiedMap;
 
     /**

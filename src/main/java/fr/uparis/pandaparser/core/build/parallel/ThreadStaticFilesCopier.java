@@ -24,6 +24,12 @@ import java.util.stream.Collectors;
 @Log
 public class ThreadStaticFilesCopier extends AbstractThread {
 
+    /**
+     * Thread constructor
+     *
+     * @param input  the input
+     * @param output the output
+     */
     public ThreadStaticFilesCopier(@NonNull final String input, @NonNull final String output) {
         super(input, output, null);
     }
