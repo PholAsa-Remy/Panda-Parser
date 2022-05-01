@@ -34,7 +34,7 @@ public class Config {
     public static final Integer EXIT_SUCCESS = 0;
     public static final int EXIT_FAILURE = 1;
     /* incremental translate */
-    public static final String HISTORY_FILE_SIMPLE_PATH = String.join(File.separator, "src", "test", "resources", "cache", "historyFile-Simple.ser");
+    public static final String HISTORY_FILE_SIMPLE_PATH = "historyFile-Simple.ser";
     public static final String HISTORY_FILE_SITE_NAME = ".historyFile.ser";
 
     private Config() {
