@@ -68,7 +68,9 @@ public class Simple extends PandaParser {
      */
     private boolean checkToRebuild() {
         boolean shouldBeRebuild = HistoryManager.getInstance().shouldBeRebuild(input);
-        log.info(FilesUtils.getFileName(input) + " : " + (shouldBeRebuild ? "Yes Rebuild" : "NO Rebuild"));
+        log.info(FilesUtils.getFileName(input) + " : " + (shouldBeRebuild
+                ? "Rebuild, changes detected: file " + input +" has modified"
+                : "no changes detected"));
         return shouldBeRebuild;
     }
 
