@@ -85,7 +85,7 @@ public class Simple extends PandaParser {
         String fileContentWithoutHeader = removeHeaderFromContent(fileContent);
         //parse the fileContentWithoutHeader in html for the key "content"
         Node document = parser.parse(fileContentWithoutHeader);
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        HtmlRenderer renderer = HtmlRenderer.builder().extensions(extensions).build();
         return renderer.render(document);
     }
 
